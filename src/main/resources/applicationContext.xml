@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="dk.gokartland.booking.domain" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:8889/gokartland-booking" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<bean id="fxmlFactory" class="dk.gokartland.booking.factories.FXMLFactory">
+	</bean>
+
+	<bean id="mainController" class="dk.gokartland.booking.controllers.MainController">
+		<constructor-arg name="bookingDAO" ref="bookingDAO" />
+		<constructor-arg name="fxmlFactory" ref="fxmlFactory" />
+	</bean>
+
+	<bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
+		<constructor-arg name="bookingDAO" ref="bookingDAO" />
+		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="bookingDAO" class="dk.gokartland.booking.dao.BookingDAO">
+		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+
+</beans>
