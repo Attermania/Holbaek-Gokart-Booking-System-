@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class BookingController implements Initializable {
 
     @FXML
-    Button addGokartButton;
+    Button addGokartButton, addPaintballButton;
 
     private FXMLFactory fxmlFactory;
 
@@ -35,5 +35,12 @@ public class BookingController implements Initializable {
             }
         });
 
+        addPaintballButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = fxmlFactory.build(getClass().getResource("addPaintball.fxml"));
+                stage.show();
+            }
+        });
     }
 }

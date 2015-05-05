@@ -38,11 +38,14 @@
 
     </bean>
 
+	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController">
+		<constructor-arg name="bookingService" ref="bookingService"/>
+	</bean>
+
 	<bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
 		<constructor-arg name="bookingDAO" ref="bookingDAO" />
 		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
 
 	<bean id="bookingDAO" class="dk.gokartland.booking.dao.BookingDAO">
 		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
