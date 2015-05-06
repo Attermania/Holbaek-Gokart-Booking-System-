@@ -101,7 +101,7 @@
                </GridPane.margin>
             </TextArea>
             <CheckBox mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16-18" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" text="Opret" GridPane.columnIndex="1" GridPane.rowIndex="11">
+            <Button mnemonicParsing="false" text="Gem" GridPane.columnIndex="1" GridPane.rowIndex="11">
                <font>
                   <Font size="14.0" />
                </font>
@@ -111,7 +111,7 @@
             </Button>
          </children>
       </GridPane>
-      <Label layoutX="251.0" layoutY="6.0" text="Ny Booking">
+      <Label layoutX="251.0" layoutY="6.0" text="Rediger Booking">
          <font>
             <Font size="16.0" />
          </font>
