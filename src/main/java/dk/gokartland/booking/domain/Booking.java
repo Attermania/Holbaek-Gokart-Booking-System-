@@ -1,27 +1,40 @@
 package dk.gokartland.booking.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "bookings")
 public class Booking {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column
-	private String name;
+	private String customerName;
 
-	public Booking(String name) {
-		this.name = name;
+	private String phoneNumber;
+
+	private boolean isBusiness;
+
+	private boolean needsPermission;
+
+	private String email;
+
+	private String comments;
+
+	private String createdBy;
+
+	private List<FacilityBooking> facilityBookings = new ArrayList<>();
+
+	public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy) {
+		this.customerName = customerName;
+		this.phoneNumber = phoneNumber;
+		this.isBusiness = isBusiness;
+		this.needsPermission = needsPermission;
+		this.email = email;
+		this.comments = comments;
+		this.createdBy = createdBy;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
+	public void addFacilityBooking(FacilityBooking facilityBooking) {
+		facilityBookings.add(facilityBooking);
 	}
 }
