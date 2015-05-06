@@ -46,6 +46,14 @@
 		<constructor-arg name="bookingService" ref="bookingService"/>
 	</bean>
 
+    <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController">
+        <constructor-arg name="bookingService" ref="bookingService"/>
+    </bean>
+
+    <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController">
+        <constructor-arg name="bookingService" ref="bookingService"/>
+    </bean>
+
 
 	<bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
 		<constructor-arg name="bookingDAO" ref="bookingDAO" />

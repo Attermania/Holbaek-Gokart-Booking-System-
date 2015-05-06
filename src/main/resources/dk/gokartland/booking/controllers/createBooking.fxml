@@ -91,7 +91,7 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Spisning" GridPane.columnIndex="3" />
+                  <Button fx:id="addDiningButton" mnemonicParsing="false" text="Spisning" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <Label text="Kommentarer:" GridPane.rowIndex="5" />
