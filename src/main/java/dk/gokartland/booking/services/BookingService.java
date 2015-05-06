@@ -11,30 +11,13 @@ import javax.transaction.Transactional;
 
 public class BookingService {
 
-	private BookingDAO bookingDAO;
+    private BookingDAO bookingDAO;
 
-	private EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory;
 
-	public BookingService(BookingDAO bookingDAO, EntityManagerFactory entityManagerFactory) {
-		this.bookingDAO = bookingDAO;
-		this.entityManagerFactory = entityManagerFactory;
-	}
-
-	public Booking create(String name) {
-
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-
-		Booking booking = new Booking(name);
-
-		transaction.begin();
-
-		entityManager.persist(booking);
-		entityManager.flush();
-
-		transaction.commit();
-
-		return booking;
-	}
+    public BookingService(BookingDAO bookingDAO, EntityManagerFactory entityManagerFactory) {
+        this.bookingDAO = bookingDAO;
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
 }
