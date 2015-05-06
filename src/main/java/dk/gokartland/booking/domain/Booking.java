@@ -6,35 +6,36 @@ import java.util.List;
 
 public class Booking {
 
-	private int id;
+    private int id;
 
-	private String customerName;
+    private String customerName;
 
-	private String phoneNumber;
+    private String phoneNumber;
 
-	private boolean isBusiness;
+    private boolean isBusiness;
 
-	private boolean needsPermission;
+    private boolean needsPermission;
 
-	private String email;
+    private String email;
 
-	private String comments;
+    private String comments;
 
-	private String createdBy;
+    private String createdBy;
 
-	private List<FacilityBooking> facilityBookings = new ArrayList<>();
+    private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
-	public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy) {
-		this.customerName = customerName;
-		this.phoneNumber = phoneNumber;
-		this.isBusiness = isBusiness;
-		this.needsPermission = needsPermission;
-		this.email = email;
-		this.comments = comments;
-		this.createdBy = createdBy;
-	}
+    public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy) {
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.isBusiness = isBusiness;
+        this.needsPermission = needsPermission;
+        this.email = email;
+        this.comments = comments;
+        this.createdBy = createdBy;
+    }
 
-	public void addFacilityBooking(FacilityBooking facilityBooking) {
-		facilityBookings.add(facilityBooking);
-	}
+    public void addFacilityBooking(FacilityBooking facilityBooking) {
+        facilityBookings.add(facilityBooking);
+    }
+
 }
