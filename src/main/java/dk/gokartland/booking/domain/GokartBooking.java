@@ -12,7 +12,7 @@ public class GokartBooking extends FacilityBooking {
 
 	private boolean medals;
 
-	public GokartBooking(Date from, Date to, String comments, byte adultCarts, byte childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
+	public GokartBooking(Date from, Date to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
 		super(from, to, comments, (short) (adultCarts + childrenCarts), bookablePlace);
 		this.adultCarts = adultCarts;
 		this.childrenCarts = childrenCarts;

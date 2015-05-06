@@ -41,4 +41,8 @@ public abstract class FacilityBooking {
 	public short getNumberOfPeople() {
 		return numberOfPeople;
 	}
+
+	public boolean isSamePlace(BookablePlace bookablePlace) {
+		return bookablePlace.isSamePlace(bookablePlace);
+	}
 }
