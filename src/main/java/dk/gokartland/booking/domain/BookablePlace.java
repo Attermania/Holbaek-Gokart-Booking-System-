@@ -37,4 +37,14 @@ public class BookablePlace {
     }
 
 
+	public boolean isSamePlace(BookablePlace bookablePlace) {
+
+		for(Place place : places) {
+
+			if( place.isSamePlace(bookablePlace) ) return true;
+
+		}
+
+		return false;
+	}
 }

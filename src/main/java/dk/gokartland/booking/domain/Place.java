@@ -26,4 +26,14 @@ public class Place {
     public boolean isCanBeMultiBooked() {
         return canBeMultiBooked;
     }
+
+
+    public boolean isSamePlace(BookablePlace bookablePlace) {
+
+        for(Place place : bookablePlace.getPlaces()) {
+            if(this == place) return true;
+        }
+
+        return false;
+    }
 }

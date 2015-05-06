@@ -1,13 +1,18 @@
 package dk.gokartland.booking.services;
 
 import dk.gokartland.booking.dao.BookingDAO;
+import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.Booking;
+import dk.gokartland.booking.domain.FacilityBooking;
+import dk.gokartland.booking.domain.GokartBooking;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
 
 public class BookingService {
 
@@ -15,9 +20,26 @@ public class BookingService {
 
     private EntityManagerFactory entityManagerFactory;
 
-    public BookingService(BookingDAO bookingDAO, EntityManagerFactory entityManagerFactory) {
+    public BookingService(BookingDAO bookingDAO) {
         this.bookingDAO = bookingDAO;
-        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    public GokartBooking createGokartBooking(Date from, Date to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws Exception {
+
+        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+
+        return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
+    }
+
+    private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {
+
+        for(FacilityBooking facilityBooking : existingFacilityBookings) {
+            if( facilityBooking.isSamePlace(bookablePlace) ) return true;
+        }
+
+        return false;
     }
 
 }
