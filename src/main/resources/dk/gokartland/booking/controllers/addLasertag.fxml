@@ -7,10 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.gokartland.booking.controllers.AddLasertagController">
    <children>
-      <Label layoutX="140.0" layoutY="14.0" text="Tilføj Lasertag" AnchorPane.leftAnchor="140.0">
-         <font>
-            <Font size="18.0" />
-         </font>
+      <Label styleClass="title" layoutX="140.0" layoutY="14.0" text="Tilføj Lasertag" AnchorPane.leftAnchor="140.0">
       </Label>
       <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
