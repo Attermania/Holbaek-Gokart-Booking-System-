@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class BookingController implements Initializable {
 
     @FXML
-    Button addGokartButton, addPaintballButton;
+    Button addGokartButton, addPaintballButton, addLasertagButton;
 
     private FXMLFactory fxmlFactory;
 
@@ -39,6 +39,14 @@ public class BookingController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 Stage stage = fxmlFactory.build(getClass().getResource("addPaintball.fxml"));
+                stage.show();
+            }
+        });
+
+        addLasertagButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = fxmlFactory.build(getClass().getResource("addLasertag.fxml"));
                 stage.show();
             }
         });

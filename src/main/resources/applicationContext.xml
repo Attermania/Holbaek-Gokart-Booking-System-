@@ -42,6 +42,11 @@
 		<constructor-arg name="bookingService" ref="bookingService"/>
 	</bean>
 
+	<bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController">
+		<constructor-arg name="bookingService" ref="bookingService"/>
+	</bean>
+
+
 	<bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
 		<constructor-arg name="bookingDAO" ref="bookingDAO" />
 		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />

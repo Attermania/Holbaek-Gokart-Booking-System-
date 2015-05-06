@@ -75,7 +75,7 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" text="Lasertag" GridPane.columnIndex="2">
+                  <Button fx:id="addLasertagButton" mnemonicParsing="false" text="Lasertag" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
