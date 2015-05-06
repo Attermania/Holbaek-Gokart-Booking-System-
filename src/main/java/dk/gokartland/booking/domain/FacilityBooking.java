@@ -15,7 +15,7 @@ public abstract class FacilityBooking {
 
 	private short numberOfPeople;
 
-	public FacilityBooking(Date from, Date to, String comments, short numberOfPeople) {
+	public FacilityBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
 		this.comments = comments;
