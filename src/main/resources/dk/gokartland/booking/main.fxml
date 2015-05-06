@@ -58,7 +58,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Reset" GridPane.columnIndex="5" />
+            <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Reset" GridPane.columnIndex="5" />
          </children>
       </GridPane>
    </children>

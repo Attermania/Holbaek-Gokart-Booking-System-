@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
 	@FXML
-	private Button newBookingButton;
+	private Button newBookingButton, resetButton;
 
 	private BookingDAO bookingDAO;
 	private FXMLFactory fxmlFactory;
@@ -35,5 +35,12 @@ public class MainController implements Initializable {
 				stage.show();
 			}
 		});
+
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Insert logic
+            }
+        });
 	}
 }

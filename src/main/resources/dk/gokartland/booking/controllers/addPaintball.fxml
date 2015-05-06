@@ -71,7 +71,7 @@
                </children>
             </GridPane>
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" text="Tilføj" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="addButton" mnemonicParsing="false" text="Tilføj" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
