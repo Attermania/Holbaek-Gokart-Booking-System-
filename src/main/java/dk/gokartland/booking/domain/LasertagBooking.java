@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class LasertagBooking extends FacilityBooking {
 
-    public LasertagBooking(Date from, Date to, String comments, short numberOfPeople) {
-        super(from, to, comments, numberOfPeople);
+    public LasertagBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
+        super(from, to, comments, numberOfPeople, bookablePlace);
     }
 }
