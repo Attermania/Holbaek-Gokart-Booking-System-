@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class PaintballBooking extends FacilityBooking {
 
-    public PaintballBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
+    public PaintballBooking(Date from, Date to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
         super(from, to, comments, numberOfPeople, bookablePlace);
     }
 }

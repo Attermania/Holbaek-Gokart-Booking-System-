@@ -100,7 +100,7 @@
                   <Insets bottom="3.0" />
                </GridPane.margin>
             </TextArea>
-            <CheckBox mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16-18" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <CheckBox mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="createButton" mnemonicParsing="false" text="Opret" GridPane.columnIndex="1" GridPane.rowIndex="11">
                <font>
                   <Font size="14.0" />

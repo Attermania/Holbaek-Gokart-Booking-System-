@@ -26,6 +26,9 @@ public class BookingDAO {
 	public boolean save(Booking booking) {
 
 		return true;
+	}
 
+	public boolean delete(FacilityBooking facilityBooking) {
+		return true;
 	}
 }
