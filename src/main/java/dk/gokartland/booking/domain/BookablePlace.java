@@ -59,4 +59,9 @@ public class BookablePlace {
 
 		return false;
 	}
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
