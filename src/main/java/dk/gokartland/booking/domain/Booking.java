@@ -1,6 +1,5 @@
 package dk.gokartland.booking.domain;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Booking {
 
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
-    public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy) {
+    public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.isBusiness = isBusiness;
