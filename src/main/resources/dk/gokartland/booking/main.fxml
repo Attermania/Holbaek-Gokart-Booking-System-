@@ -12,12 +12,12 @@
             <Button fx:id="newBookingButton" mnemonicParsing="false" text="Ny Booking" />
         </items>
       </ToolBar>
-      <TableView maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Type" />
-            <TableColumn prefWidth="75.0" text="Bane" />
-          <TableColumn prefWidth="75.0" text="Fra" />
-            <TableColumn prefWidth="75.0" text="Til" />
+          <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+          <TableColumn fx:id="placeColumn" prefWidth="75.0" text="Bane" />
+          <TableColumn fx:id="fromColumn" minWidth="75.0" prefWidth="-1.0" text="Fra" />
+          <TableColumn fx:id="toColumn" minWidth="75.0" prefWidth="-1.0" text="Til" />
         </columns>
       </TableView>
       <GridPane layoutX="-20.0" layoutY="530.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -53,7 +53,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox prefHeight="25.0" prefWidth="78.0" promptText="Type" GridPane.columnIndex="4">
+            <ComboBox fx:id="typeSearchComboBox" prefHeight="25.0" promptText="Type" GridPane.columnIndex="4">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

@@ -38,4 +38,11 @@ public class Booking {
         facilityBookings.add(facilityBooking);
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+
+
+
 }

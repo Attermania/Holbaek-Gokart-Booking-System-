@@ -15,12 +15,15 @@ public abstract class FacilityBooking {
 
 	private short numberOfPeople;
 
-	public FacilityBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
+    private BookablePlace bookablePlace;
+
+    public FacilityBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
 		this.comments = comments;
 		this.numberOfPeople = numberOfPeople;
-	}
+        this.bookablePlace = bookablePlace;
+    }
 
 	public int getId() {
 		return id;
@@ -42,7 +45,11 @@ public abstract class FacilityBooking {
 		return numberOfPeople;
 	}
 
-	public boolean isSamePlace(BookablePlace bookablePlace) {
+    public BookablePlace getBookablePlace() {
+        return bookablePlace;
+    }
+
+    public boolean isSamePlace(BookablePlace bookablePlace) {
 		return bookablePlace.isSamePlace(bookablePlace);
 	}
 }
