@@ -23,10 +23,9 @@ public class Place {
         return name;
     }
 
-    public boolean isCanBeMultiBooked() {
+    public boolean CanBeMultiBooked() {
         return canBeMultiBooked;
     }
-
 
     public boolean isSamePlace(BookablePlace bookablePlace) {
 

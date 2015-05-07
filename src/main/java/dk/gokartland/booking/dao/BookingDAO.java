@@ -1,5 +1,6 @@
 package dk.gokartland.booking.dao;
 
+import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.FacilityBooking;
 
 import javax.persistence.EntityManagerFactory;
@@ -20,5 +21,11 @@ public class BookingDAO {
 		List<FacilityBooking> facilityBookings = new ArrayList<>();
 
 		return facilityBookings;
+	}
+
+	public boolean save(Booking booking) {
+
+		return true;
+
 	}
 }

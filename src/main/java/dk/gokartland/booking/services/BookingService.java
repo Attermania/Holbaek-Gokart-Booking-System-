@@ -5,6 +5,7 @@ import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.FacilityBooking;
 import dk.gokartland.booking.domain.GokartBooking;
+import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 
 import javax.persistence.EntityManager;
@@ -28,9 +29,20 @@ public class BookingService {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
 
         return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
+    }
+
+    public Booking createBooking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
+
+        Booking booking = new Booking(customerName, phoneNumber, isBusiness, needsPermission, email, comments, createdBy, facilityBookings);
+
+        boolean persisted = bookingDAO.save(booking);
+
+        if(persisted) return booking;
+
+        return null;
     }
 
     private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {
