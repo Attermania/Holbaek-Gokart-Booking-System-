@@ -22,6 +22,7 @@ public abstract class FacilityBooking {
 	@Column
 	private int numberOfPeople;
 
+	@ManyToOne
     private BookablePlace bookablePlace;
 
 	public FacilityBooking(Date from, Date to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
