@@ -13,9 +13,9 @@ public abstract class FacilityBooking {
 
 	private String comments;
 
-	private short numberOfPeople;
+	private int numberOfPeople;
 
-	public FacilityBooking(Date from, Date to, String comments, short numberOfPeople, BookablePlace bookablePlace) {
+	public FacilityBooking(Date from, Date to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
 		this.comments = comments;
@@ -38,7 +38,7 @@ public abstract class FacilityBooking {
 		return comments;
 	}
 
-	public short getNumberOfPeople() {
+	public int getNumberOfPeople() {
 		return numberOfPeople;
 	}
 

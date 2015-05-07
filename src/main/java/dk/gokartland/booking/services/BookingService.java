@@ -1,10 +1,7 @@
 package dk.gokartland.booking.services;
 
 import dk.gokartland.booking.dao.BookingDAO;
-import dk.gokartland.booking.domain.BookablePlace;
-import dk.gokartland.booking.domain.Booking;
-import dk.gokartland.booking.domain.FacilityBooking;
-import dk.gokartland.booking.domain.GokartBooking;
+import dk.gokartland.booking.domain.*;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 
 import javax.persistence.EntityManager;
@@ -31,6 +28,33 @@ public class BookingService {
         if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
 
         return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
+    }
+
+    public PaintballBooking createPaintballBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+
+        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+
+        return new PaintballBooking(from, to, comments, antal, bookablePlace);
+    }
+
+    public LasertagBooking createLasertagBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+
+        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+
+        return new LasertagBooking(from, to, comments, antal, bookablePlace);
+    }
+
+    public RestaurantBooking createRestaurantBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+
+        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+
+        return new RestaurantBooking(from, to, comments, antal, bookablePlace);
     }
 
     public boolean deleteFacilityBooking(FacilityBooking facilityBooking){
