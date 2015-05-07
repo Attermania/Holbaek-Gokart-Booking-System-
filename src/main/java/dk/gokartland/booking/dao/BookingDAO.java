@@ -21,4 +21,8 @@ public class BookingDAO {
 
 		return facilityBookings;
 	}
+
+	public boolean delete(FacilityBooking facilityBooking) {
+		return true;
+	}
 }

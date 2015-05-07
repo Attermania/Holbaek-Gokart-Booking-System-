@@ -33,6 +33,12 @@ public class BookingService {
         return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
     }
 
+    public boolean deleteFacilityBooking(FacilityBooking facilityBooking){
+
+        return bookingDAO.delete(facilityBooking);
+
+    }
+
     private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {
 
         for(FacilityBooking facilityBooking : existingFacilityBookings) {
