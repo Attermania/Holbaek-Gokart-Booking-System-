@@ -3,7 +3,7 @@ package dk.gokartland.booking.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.Date;
+import java.util.Calendar;
 
 @Entity
 @PrimaryKeyJoinColumn
@@ -21,7 +21,7 @@ public class GokartBooking extends FacilityBooking {
 	@Column
 	private boolean medals;
 
-	public GokartBooking(Date from, Date to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
+	public GokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
 		super(from, to, comments, (short) (adultCarts + childrenCarts), bookablePlace);
 		this.adultCarts = adultCarts;
 		this.childrenCarts = childrenCarts;

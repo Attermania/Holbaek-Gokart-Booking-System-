@@ -5,7 +5,7 @@ import dk.gokartland.booking.domain.FacilityBooking;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class BookingDAO {
@@ -16,7 +16,7 @@ public class BookingDAO {
 		this.entityManagerFactory = entityManagerFactory;
 	}
 
-	public List<FacilityBooking> getFacilityBookingsWithin(Date from, Date to) {
+	public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
 
 		List<FacilityBooking> facilityBookings = new ArrayList<>();
 

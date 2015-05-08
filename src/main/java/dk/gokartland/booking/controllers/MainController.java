@@ -79,8 +79,8 @@ public class MainController implements Initializable {
         places.add(actionbane);
 
 
-        GokartBooking gokartBooking = new GokartBooking(new Date(), new Date(System.currentTimeMillis() + 3600000), "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new Date(), new Date(System.currentTimeMillis() + 3600000), "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
 
         facilityBookings.addAll(gokartBooking, paintballBooking);
 
@@ -110,22 +110,25 @@ public class MainController implements Initializable {
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                DateFormat dateFormat = new SimpleDateFormat();
-                Date date = facilityBooking.getValue().getFrom();
-                String currentTime = dateFormat.format(date);
-
-                return new SimpleStringProperty(currentTime);
+//                DateFormat dateFormat = new SimpleDateFormat();
+//                Calendar date = facilityBooking.getValue().getFrom();
+//                String currentTime = dateFormat.format(date);
+//
+//                return new SimpleStringProperty(currentTime);
+                return new SimpleStringProperty("");
             }
         });
 
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                DateFormat dateFormat = new SimpleDateFormat();
-                Date date = facilityBooking.getValue().getTo();
-                String currentTime = dateFormat.format(date);
-
-                return new SimpleStringProperty(currentTime);
+//                DateFormat dateFormat = new SimpleDateFormat();
+//                Calendar date = facilityBooking.getValue().getTo();
+//                String currentTime = dateFormat.format(date);
+//
+//                return new SimpleStringProperty(currentTime);
+//                return new SimpleStringProperty("--");
+                return new SimpleStringProperty("");
             }
         });
 

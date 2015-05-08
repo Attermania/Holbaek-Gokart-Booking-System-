@@ -4,7 +4,7 @@ import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class BookingService {
@@ -15,7 +15,7 @@ public class BookingService {
         this.bookingDAO = bookingDAO;
     }
 
-    public GokartBooking createGokartBooking(Date from, Date to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws Exception {
+    public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws Exception {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
@@ -35,7 +35,7 @@ public class BookingService {
         return null;
     }
 
-    public PaintballBooking createPaintballBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+    public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
@@ -44,7 +44,7 @@ public class BookingService {
         return new PaintballBooking(from, to, comments, antal, bookablePlace);
     }
 
-    public LasertagBooking createLasertagBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+    public LasertagBooking createLasertagBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
@@ -53,7 +53,7 @@ public class BookingService {
         return new LasertagBooking(from, to, comments, antal, bookablePlace);
     }
 
-    public RestaurantBooking createRestaurantBooking(Date from, Date to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+    public RestaurantBooking createRestaurantBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 

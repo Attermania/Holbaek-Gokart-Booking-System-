@@ -1,7 +1,7 @@
 package dk.gokartland.booking.domain;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Calendar;
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
@@ -11,10 +11,10 @@ public abstract class FacilityBooking {
 	private int id;
 
 	@Column
-	private Date from;
+	private Calendar from;
 
 	@Column
-	private Date to;
+	private Calendar to;
 
 	@Column(length = 2000)
 	private String comments;
@@ -25,7 +25,7 @@ public abstract class FacilityBooking {
 	@ManyToOne
     private BookablePlace bookablePlace;
 
-	public FacilityBooking(Date from, Date to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
+	public FacilityBooking(Calendar from, Calendar to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
 		this.comments = comments;
@@ -40,11 +40,11 @@ public abstract class FacilityBooking {
 		return id;
 	}
 
-	public Date getFrom() {
+	public Calendar getFrom() {
 		return from;
 	}
 
-	public Date getTo() {
+	public Calendar getTo() {
 		return to;
 	}
 
