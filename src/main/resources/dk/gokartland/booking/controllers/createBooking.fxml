@@ -49,12 +49,12 @@
             <Label text="Kræv tilladelse:" GridPane.rowIndex="4" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Oversigt" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TableView maxHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+            <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
               <columns>
-                <TableColumn prefWidth="75.0" text="Type" />
-                <TableColumn prefWidth="75.0" text="Bane" />
-                  <TableColumn prefWidth="75.0" text="Fra" />
-                  <TableColumn prefWidth="75.0" text="Til" />
+                <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+                <TableColumn fx:id="placeColumn" prefWidth="75.0" text="Bane" />
+                  <TableColumn fx:id="fromColumn" prefWidth="75.0" text="Fra" />
+                  <TableColumn fx:id="toColumn" prefWidth="75.0" text="Til" />
               </columns>
             </TableView>
             <Label alignment="CENTER" prefHeight="20.0" prefWidth="487.0" text="Tilføj aktivitet" GridPane.columnIndex="1" GridPane.rowIndex="7">
