@@ -37,7 +37,7 @@
 
     <bean id="bookingController" class="dk.gokartland.booking.controllers.BookingController">
         <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
-
+        <constructor-arg name="bookingService" ref="bookingService"/>
     </bean>
 
 	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController">
