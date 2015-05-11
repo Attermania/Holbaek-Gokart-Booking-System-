@@ -11,17 +11,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class MainController implements Initializable {
@@ -37,6 +33,9 @@ public class MainController implements Initializable {
 
     @FXML
     ComboBox<String> typeSearchComboBox;
+
+    @FXML
+    DatePicker fromDatePicker, toDatePicker;
 
     String typeGokart = "Gokart";
     String typePaintBall = "Paintball";
@@ -64,13 +63,6 @@ public class MainController implements Initializable {
             }
         });
 
-        resetButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // Insert logic
-            }
-        });
-
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
         List<Place> places = new ArrayList<>();
@@ -78,11 +70,20 @@ public class MainController implements Initializable {
         Place actionbane = new Place(2, "Action bane", false);
         places.add(actionbane);
 
+        Calendar toDate = new GregorianCalendar();
+        toDate.add(10, 1);
+        Calendar restaurantFromTime = new GregorianCalendar();
+        restaurantFromTime.add(10, -100);
+        Calendar restaurantToTime = new GregorianCalendar();
+        restaurantToTime.add(10, 80);
 
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
+        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace(1, "Action Bane", places));
+        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace(1, "Diner", places));
 
-        facilityBookings.addAll(gokartBooking, paintballBooking);
+
+        facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);
 
 
         facilityBookingTableView.setItems(facilityBookings);
@@ -110,25 +111,16 @@ public class MainController implements Initializable {
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-//                DateFormat dateFormat = new SimpleDateFormat();
-//                Calendar date = facilityBooking.getValue().getFrom();
-//                String currentTime = dateFormat.format(date);
-//
-//                return new SimpleStringProperty(currentTime);
-                return new SimpleStringProperty("");
+                String fromDate = facilityBooking.getValue().getFrom().getTime().toString();
+                return new SimpleStringProperty(fromDate);
             }
         });
 
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-//                DateFormat dateFormat = new SimpleDateFormat();
-//                Calendar date = facilityBooking.getValue().getTo();
-//                String currentTime = dateFormat.format(date);
-//
-//                return new SimpleStringProperty(currentTime);
-//                return new SimpleStringProperty("--");
-                return new SimpleStringProperty("");
+                String toDate = facilityBooking.getValue().getFrom().getTime().toString();
+                return new SimpleStringProperty(toDate);
             }
         });
 
@@ -145,31 +137,31 @@ public class MainController implements Initializable {
                 switch (typeSearchComboBox.getSelectionModel().getSelectedItem()) {
                     case "Gokart":
                         for (FacilityBooking facilityBooking : facilityBookings) {
-                            if (facilityBooking instanceof GokartBooking){
+                            if (facilityBooking instanceof GokartBooking) {
                                 tempList.addAll(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
                         break;
                     case "Paintball":
-                        for(FacilityBooking facilityBooking : facilityBookings) {
-                            if(facilityBooking instanceof PaintballBooking) {
+                        for (FacilityBooking facilityBooking : facilityBookings) {
+                            if (facilityBooking instanceof PaintballBooking) {
                                 tempList.addAll(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
                         break;
                     case "Lasertag":
-                        for(FacilityBooking facilityBooking : facilityBookings) {
-                            if(facilityBooking instanceof LasertagBooking) {
+                        for (FacilityBooking facilityBooking : facilityBookings) {
+                            if (facilityBooking instanceof LasertagBooking) {
                                 tempList.addAll(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
                         break;
                     case "Restaurant":
-                        for(FacilityBooking facilityBooking : facilityBookings) {
-                            if(facilityBooking instanceof RestaurantBooking) {
+                        for (FacilityBooking facilityBooking : facilityBookings) {
+                            if (facilityBooking instanceof RestaurantBooking) {
                                 tempList.addAll(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
@@ -182,6 +174,57 @@ public class MainController implements Initializable {
             }
         });
 
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
+                tempList.addAll(facilityBookings);
+                facilityBookingTableView.setItems(tempList);
+                fromDatePicker.setValue(LocalDate.now());
+                toDatePicker.setValue(LocalDate.now());
+
+            }
+        });
+
+        fromDatePicker.setValue(LocalDate.now());
+        fromDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Insert logic
+            }
+        });
+
+        toDatePicker.setValue(LocalDate.now());
+        toDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
+
+                search();
+            }
+        });
+
 
     }
+
+    private void search() {
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+
+        ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
+
+        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue(), fromDate.getDayOfMonth());
+        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue(), toDate.getDayOfMonth());
+
+
+        for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
+
+            tempList.addAll(facilityBooking);
+            facilityBookingTableView.setItems(tempList);
+
+        }
+    }
+
 }
