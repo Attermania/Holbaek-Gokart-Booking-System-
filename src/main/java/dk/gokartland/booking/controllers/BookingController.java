@@ -144,13 +144,13 @@ public class BookingController implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object obj) {
-        System.out.println("tis");
-        if(obj instanceof FacilityBooking) {
+        if (obj instanceof FacilityBooking) {
             FacilityBooking facilityBooking = (FacilityBooking) obj;
 
             ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
             facilityBookings.addAll(facilityBooking);
             facilityBookingTableView.setItems(facilityBookings);
+
         }
 
     }
