@@ -92,7 +92,7 @@ public class BookingController implements Initializable, Observer {
             public void handle(ActionEvent event) {
                 boolean isPrivateClient = privateRadioButton.isSelected();
 
-                Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(),  commentsTextArea.getText(), createdByTextField.getText(),)
+                Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(),  commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
 
             }
         });

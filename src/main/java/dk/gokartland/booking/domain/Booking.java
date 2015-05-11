@@ -11,7 +11,7 @@ public class Booking {
 
     private String phoneNumber;
 
-    private boolean isBusiness;
+    private boolean isPrivateClient;
 
     private boolean needsPermission;
 
@@ -23,10 +23,10 @@ public class Booking {
 
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
-    public Booking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
+    public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
-        this.isBusiness = isBusiness;
+        this.isPrivateClient = isPrivateClient;
         this.needsPermission = needsPermission;
         this.email = email;
         this.comments = comments;

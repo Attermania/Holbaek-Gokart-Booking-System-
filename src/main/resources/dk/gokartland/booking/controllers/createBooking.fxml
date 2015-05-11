@@ -31,15 +31,15 @@
             <Label text="Kunde navn:" />
             <Label text="Kunde tlf:" GridPane.rowIndex="1" />
             <Label text="Kunde email:" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <RadioButton mnemonicParsing="false" selected="true" text="Privat" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <toggleGroup>
-                  <ToggleGroup fx:id="privateOrBusiness" />
-               </toggleGroup>
+            <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
+            <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <fx:define>
+                <ToggleGroup fx:id="privateOrBusinessToggleGroup"/>
+            </fx:define>
+            <RadioButton fx:id="privateRadioButton" mnemonicParsing="false" selected="true" text="Privat" GridPane.columnIndex="1" GridPane.rowIndex="3" toggleGroup="$privateOrBusinessToggleGroup">
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Erhverv" toggleGroup="$privateOrBusiness" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <RadioButton mnemonicParsing="false" text="Erhverv" toggleGroup="$privateOrBusinessToggleGroup" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="80.0" />
                </GridPane.margin>
@@ -47,7 +47,7 @@
             <Label text="Privat/Erhverv:" GridPane.rowIndex="3" />
             <Label text="Oprettet af:" GridPane.rowIndex="6" />
             <Label text="Kræv tilladelse:" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="createdByTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Oversigt" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
               <columns>
@@ -95,12 +95,12 @@
                </children>
             </GridPane>
             <Label text="Kommentarer:" GridPane.rowIndex="5" />
-            <TextArea prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <TextArea fx:id="commentsTextArea" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="3.0" />
                </GridPane.margin>
             </TextArea>
-            <CheckBox mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <CheckBox fx:id="needsPermissionCheckBox" mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="createButton" mnemonicParsing="false" text="Opret" GridPane.columnIndex="1" GridPane.rowIndex="11">
                <font>
                   <Font size="14.0" />
