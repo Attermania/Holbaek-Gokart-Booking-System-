@@ -3,7 +3,10 @@ package dk.gokartland.booking.dao;
 import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.FacilityBooking;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,10 +20,11 @@ public class BookingDAO {
 	}
 
 	public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-		List<FacilityBooking> facilityBookings = new ArrayList<>();
+		TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb", FacilityBooking.class);
 
-		return facilityBookings;
+		return query.getResultList();
 	}
 
 	public boolean save(Booking booking) {

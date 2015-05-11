@@ -17,15 +17,9 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-/**
- * Created by Thomas on 05-05-2015.
- */
-public class BookingController implements Initializable {
+public class BookingController implements Initializable, Observer {
 
     @FXML
     Button addGokartButton, addPaintballButton, addLasertagButton, addDiningButton, createButton;
@@ -44,10 +38,12 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        BookingController self = this;
+
         addGokartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addGokart.fxml"));
+                Stage stage = fxmlFactory.build(getClass().getResource("addGokart.fxml"), self);
                 stage.show();
             }
         });
@@ -55,7 +51,7 @@ public class BookingController implements Initializable {
         addPaintballButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addPaintball.fxml"));
+                Stage stage = fxmlFactory.build(getClass().getResource("addPaintball.fxml"), self);
                 stage.show();
             }
         });
@@ -63,7 +59,7 @@ public class BookingController implements Initializable {
         addLasertagButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addLasertag.fxml"));
+                Stage stage = fxmlFactory.build(getClass().getResource("addLasertag.fxml"), self);
                 stage.show();
             }
         });
@@ -71,7 +67,7 @@ public class BookingController implements Initializable {
         addDiningButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addDining.fxml"));
+                Stage stage = fxmlFactory.build(getClass().getResource("addDining.fxml"), self);
                 stage.show();
             }
         });
@@ -143,6 +139,19 @@ public class BookingController implements Initializable {
                 return new SimpleStringProperty("");
             }
         });
+
+    }
+
+    @Override
+    public void update(Observable o, Object obj) {
+        System.out.println("tis");
+        if(obj instanceof FacilityBooking) {
+            FacilityBooking facilityBooking = (FacilityBooking) obj;
+
+            ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
+            facilityBookings.addAll(facilityBooking);
+            facilityBookingTableView.setItems(facilityBookings);
+        }
 
     }
 }
