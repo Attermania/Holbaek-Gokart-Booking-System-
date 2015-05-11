@@ -83,7 +83,7 @@
                   </ComboBox>
                </children>
             </GridPane>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="noOfPeopleTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="addButton" mnemonicParsing="false" text="Tilføj" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Kommentar:" GridPane.rowIndex="4" />
             <TextArea fx:id="commentTextArea" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />

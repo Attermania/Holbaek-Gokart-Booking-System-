@@ -35,11 +35,11 @@ public class BookingService {
         return null;
     }
 
-    public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws Exception {
+    public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws PlaceAlreadyBookedException {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new Exception("Place is not available at the given time");
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
 
         return new PaintballBooking(from, to, comments, antal, bookablePlace);
     }
