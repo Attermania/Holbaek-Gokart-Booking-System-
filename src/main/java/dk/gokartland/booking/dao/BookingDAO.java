@@ -2,12 +2,13 @@ package dk.gokartland.booking.dao;
 
 import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.FacilityBooking;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
+import javax.transaction.Transaction;
 import java.util.Calendar;
 import java.util.List;
 
@@ -28,6 +29,15 @@ public class BookingDAO {
 	}
 
 	public boolean save(Booking booking) {
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+
+		entityManager.persist(booking);
+		entityManager.flush();
+
+		transaction.commit();
 
 		return true;
 	}
