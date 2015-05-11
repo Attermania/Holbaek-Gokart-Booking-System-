@@ -10,10 +10,12 @@ public abstract class FacilityBooking {
 	@Id
 	private int id;
 
-	@Column
+	@Column(name = "\"from\"")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar from;
 
-	@Column
+	@Column(name = "\"to\"")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar to;
 
 	@Column(length = 2000)
