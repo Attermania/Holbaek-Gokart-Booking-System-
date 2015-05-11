@@ -190,7 +190,7 @@ public class MainController implements Initializable {
         fromDatePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert logic
+                search();
             }
         });
 
@@ -198,10 +198,6 @@ public class MainController implements Initializable {
         toDatePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                LocalDate fromDate = fromDatePicker.getValue();
-                LocalDate toDate = toDatePicker.getValue();
-
                 search();
             }
         });
@@ -222,9 +218,8 @@ public class MainController implements Initializable {
         for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
 
             tempList.addAll(facilityBooking);
-            facilityBookingTableView.setItems(tempList);
-
         }
+        facilityBookingTableView.setItems(tempList);
     }
 
 }
