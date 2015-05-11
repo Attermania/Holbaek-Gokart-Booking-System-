@@ -24,9 +24,9 @@ public class BookingService {
         return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
     }
 
-    public Booking createBooking(String customerName, String phoneNumber, boolean isBusiness, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
+    public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
 
-        Booking booking = new Booking(customerName, phoneNumber, isBusiness, needsPermission, email, comments, createdBy, facilityBookings);
+        Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, facilityBookings);
 
         boolean persisted = bookingDAO.save(booking);
 

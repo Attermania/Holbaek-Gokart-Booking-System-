@@ -2,6 +2,7 @@ package dk.gokartland.booking.controllers;
 
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
+import dk.gokartland.booking.services.BookingService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,9 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -22,7 +21,19 @@ import java.util.*;
 public class BookingController implements Initializable, Observer {
 
     @FXML
+    TextField nameTextField, phoneTextField, emailTextField, createdByTextField;
+
+    @FXML
     Button addGokartButton, addPaintballButton, addLasertagButton, addDiningButton, createButton;
+
+    @FXML
+    RadioButton privateRadioButton;
+
+    @FXML
+    CheckBox needsPermissionCheckBox;
+
+    @FXML
+    TextArea commentsTextArea;
 
     @FXML
     TableView<FacilityBooking> facilityBookingTableView;
@@ -31,9 +42,13 @@ public class BookingController implements Initializable, Observer {
     TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn;
 
     private FXMLFactory fxmlFactory;
+    private BookingService bookingService;
 
-    public BookingController(FXMLFactory fxmlFactory) {
+    private ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
+
+    public BookingController(FXMLFactory fxmlFactory, BookingService bookingService) {
         this.fxmlFactory = fxmlFactory;
+        this.bookingService = bookingService;
     }
 
     @Override
@@ -75,7 +90,10 @@ public class BookingController implements Initializable, Observer {
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert logic
+                boolean isPrivateClient = privateRadioButton.isSelected();
+
+                Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(),  commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
+
             }
         });
 
@@ -144,14 +162,11 @@ public class BookingController implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object obj) {
-        System.out.println("tis");
         if(obj instanceof FacilityBooking) {
             FacilityBooking facilityBooking = (FacilityBooking) obj;
 
-            ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
-            facilityBookings.addAll(facilityBooking);
+            facilityBookings.add(facilityBooking);
             facilityBookingTableView.setItems(facilityBookings);
         }
-
     }
 }
