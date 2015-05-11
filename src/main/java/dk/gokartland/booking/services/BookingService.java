@@ -15,7 +15,7 @@ public class BookingService {
         this.bookingDAO = bookingDAO;
     }
 
-    public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws Exception {
+    public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws PlaceAlreadyBookedException {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
@@ -70,10 +70,10 @@ public class BookingService {
     private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {
 
         for(FacilityBooking facilityBooking : existingFacilityBookings) {
-            if( facilityBooking.isSamePlace(bookablePlace) ) return true;
+            if( facilityBooking.isSamePlace(bookablePlace) ) return false;
         }
 
-        return false;
+        return true;
     }
 
 }

@@ -11,25 +11,44 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 
 public class FXMLFactory implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
 	public Stage build(URL fxmlLocation) {
+		return build(fxmlLocation, null);
+	}
+
+	public Stage build(URL fxmlLocation, Observer observer) {
 		FXMLLoader loader = new FXMLLoader();
 
 		loader.setControllerFactory(new Callback<Class<?>, Object>() {
 			@Override
 			public Object call(Class<?> type) {
+				Object controller = applicationContext.getBean(type);
+
+				if(controller instanceof Observable && observer != null) {
+					Observable observable = (Observable) controller;
+					observable.addObserver(observer);
+				}
+
 				return applicationContext.getBean(type);
 			}
 		});
 
 		try {
 			loader.setLocation(fxmlLocation);
+
+			// The root element from the fxml file
 			Parent root = loader.load();
+
+			// Scene - The container of the root element
 			Scene scene = new Scene(root);
+
+			// Stage - a window
 			Stage stage = new Stage();
 			stage.setScene(scene);
 
