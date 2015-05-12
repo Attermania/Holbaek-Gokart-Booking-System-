@@ -2,12 +2,14 @@ package dk.gokartland.booking.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Place {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Column
@@ -16,8 +18,7 @@ public class Place {
     @Column
     private boolean canBeMultiBooked;
 
-    public Place(int id, String name, boolean canBeMultiBooked) {
-        this.id = id;
+    public Place(String name, boolean canBeMultiBooked) {
         this.name = name;
         this.canBeMultiBooked = canBeMultiBooked;
     }

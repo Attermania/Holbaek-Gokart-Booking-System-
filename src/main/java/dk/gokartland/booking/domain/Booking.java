@@ -1,9 +1,6 @@
 package dk.gokartland.booking.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 public class Booking {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Column
@@ -34,7 +32,7 @@ public class Booking {
     @Column
     private String createdBy;
 
-    @OneToMany(targetEntity = FacilityBooking.class)
+    @OneToMany(targetEntity = FacilityBooking.class, cascade = CascadeType.PERSIST)
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
     public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
@@ -45,6 +43,10 @@ public class Booking {
         this.email = email;
         this.comments = comments;
         this.createdBy = createdBy;
+        this.facilityBookings = facilityBookings;
+    }
+
+    protected Booking() {
     }
 
     public void addFacilityBooking(FacilityBooking facilityBooking) {

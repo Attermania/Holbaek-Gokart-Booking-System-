@@ -80,8 +80,8 @@ public class AddGokartController extends Observable implements Initializable {
                 int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
 
                 List<Place> places = new ArrayList<Place>();
-                places.add(new Place(1, "test", false));
-                BookablePlace bookablePlace = new BookablePlace(1, "test", places);
+                places.add(new Place("test", false));
+                BookablePlace bookablePlace = new BookablePlace("test", places);
 
                 try {
                     // Create Gokart Booking

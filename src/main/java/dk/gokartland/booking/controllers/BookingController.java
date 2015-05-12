@@ -100,13 +100,13 @@ public class BookingController implements Initializable, Observer {
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
         List<Place> places = new ArrayList<>();
-        places.add(new Place(1, "Bane 1", false));
-        Place actionbane = new Place(2, "Action bane", false);
+        places.add(new Place("Bane 1", false));
+        Place actionbane = new Place("Action bane", false);
         places.add(actionbane);
 
 
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", (short) 5, new BookablePlace("Bane 2", places));
 
         facilityBookings.addAll(gokartBooking, paintballBooking);
 
