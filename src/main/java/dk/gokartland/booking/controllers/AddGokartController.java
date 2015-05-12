@@ -67,6 +67,8 @@ public class AddGokartController extends Observable implements Initializable {
         toHourComboBox.setItems(hours);
         toMinuteComboBox.setItems(minutes);
 
+        setDateAndClock();
+
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -113,5 +115,14 @@ public class AddGokartController extends Observable implements Initializable {
 
         System.out.println(countObservers());
 
+    }
+
+    private void setDateAndClock() {
+        fromDatePicker.setValue(LocalDate.now());
+        toDatePicker.setValue(LocalDate.now());
+        fromHourComboBox.setValue(12);
+        fromMinuteComboBox.setValue(00);
+        toHourComboBox.setValue(12);
+        toMinuteComboBox.setValue(30);
     }
 }
