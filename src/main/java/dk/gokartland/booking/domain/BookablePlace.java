@@ -14,7 +14,7 @@ public class BookablePlace {
     @Column
     private String name;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Place.class)
+    @ManyToMany
     private List<Place> places = new ArrayList<>();
 
     public BookablePlace(String name, List<Place> places) {

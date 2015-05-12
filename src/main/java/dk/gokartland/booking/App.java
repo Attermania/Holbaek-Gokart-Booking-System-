@@ -32,7 +32,7 @@ public class App extends Application {
 		Place place4 = new Place("Restaurant", true);
 
 		BookablePlace bookablePlace1 = new BookablePlace("Bane 1", Arrays.asList(place1));
-		BookablePlace bookablePlace2 = new BookablePlace("Bane 3", Arrays.asList(place2));
+		BookablePlace bookablePlace2 = new BookablePlace("Bane 2", Arrays.asList(place2));
 		BookablePlace bookablePlace3 = new BookablePlace("Stor bane", Arrays.asList(place1, place2));
 		BookablePlace bookablePlace4 = new BookablePlace("Paintball/Lasertag", Arrays.asList(place3));
 		BookablePlace bookablePlace5 = new BookablePlace("Restaurant", Arrays.asList(place4));

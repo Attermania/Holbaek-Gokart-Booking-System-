@@ -38,7 +38,7 @@
             <Label text="Vælg bane:" GridPane.rowIndex="2" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ComboBox fx:id="placeComboBox" layoutX="-38.0" layoutY="2.0" prefWidth="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <ComboBox promptText="Vælg bane" fx:id="placeComboBox" layoutX="-38.0" layoutY="2.0" prefWidth="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
             <Label text="Til:" GridPane.rowIndex="1" />

@@ -43,18 +43,22 @@
 
 	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController">
 		<constructor-arg name="bookingService" ref="bookingService"/>
+		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
 	</bean>
 
 	<bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController">
 		<constructor-arg name="bookingService" ref="bookingService"/>
+		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
 	</bean>
 
     <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController">
         <constructor-arg name="bookingService" ref="bookingService"/>
+		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
     </bean>
 
     <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController">
         <constructor-arg name="bookingService" ref="bookingService"/>
+		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
     </bean>
 
 
@@ -63,6 +67,10 @@
 	</bean>
 
 	<bean id="bookingDAO" class="dk.gokartland.booking.dao.BookingDAO">
+		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="bookablePlaceDAO" class="dk.gokartland.booking.dao.BookablePlaceDAO">
 		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 

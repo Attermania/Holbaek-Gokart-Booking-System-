@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.dao.BookablePlaceDAO;
 import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.GokartBooking;
 import dk.gokartland.booking.domain.LasertagBooking;
@@ -24,9 +25,13 @@ import java.util.*;
 public class AddLasertagController extends Observable implements Initializable {
 
     private BookingService bookingService;
+    private BookablePlaceDAO bookablePlaceDAO;
 
     @FXML
     Button addButton;
+
+    @FXML
+    ComboBox<BookablePlace> placeComboBox;
 
     @FXML
     ComboBox<Integer> fromHourComboBox, fromMinuteComboBox, toHourComboBox, toMinuteComboBox;
@@ -41,8 +46,9 @@ public class AddLasertagController extends Observable implements Initializable {
     TextArea commentTextArea;
 
 
-    public AddLasertagController(BookingService bookingService) {
+    public AddLasertagController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
+        this.bookablePlaceDAO = bookablePlaceDAO;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +77,8 @@ public class AddLasertagController extends Observable implements Initializable {
 
         setDateAndClock();
 
+        placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
+
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -82,10 +90,6 @@ public class AddLasertagController extends Observable implements Initializable {
                 int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
 
-                List<Place> places = new ArrayList<Place>();
-                places.add(new Place("test", false));
-                BookablePlace bookablePlace = new BookablePlace("test", places);
-
 
                 // Create Lasertag Booking
                 try {
@@ -93,7 +97,7 @@ public class AddLasertagController extends Observable implements Initializable {
                             calendarTo,
                             noOfPeopleTextField.getText(),
                             noOfPeople,
-                            bookablePlace);
+                            placeComboBox.getValue());
 
                     // Observer pattern notify booking window
                     setChanged();

@@ -24,7 +24,7 @@ public abstract class FacilityBooking {
 	@Column
 	private int numberOfPeople;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
     private BookablePlace bookablePlace;
 
 	public FacilityBooking(Calendar from, Calendar to, String comments, int numberOfPeople, BookablePlace bookablePlace) {

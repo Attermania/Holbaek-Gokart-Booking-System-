@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.dao.BookablePlaceDAO;
 import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.GokartBooking;
 import dk.gokartland.booking.domain.PaintballBooking;
@@ -23,6 +24,7 @@ import java.util.*;
 public class AddPaintballController extends Observable implements Initializable {
 
     private BookingService bookingService;
+    private BookablePlaceDAO bookablePlaceDAO;
 
     @FXML
     Button addButton;
@@ -42,8 +44,9 @@ public class AddPaintballController extends Observable implements Initializable 
     @FXML
     TextField noOfPeopleTextField;
 
-    public AddPaintballController(BookingService bookingService) {
+    public AddPaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
+        this.bookablePlaceDAO = bookablePlaceDAO;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +74,8 @@ public class AddPaintballController extends Observable implements Initializable 
         toMinuteComboBox.setItems(minutes);
 
         setDateAndClock();
+
+        placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
