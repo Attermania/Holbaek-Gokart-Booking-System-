@@ -51,8 +51,14 @@ public class AddPaintballController extends Observable implements Initializable 
         ObservableList<Integer> hours = FXCollections.observableArrayList();
         ObservableList<Integer> minutes = FXCollections.observableArrayList();
 
-        for (int i = 0; i < 24; i++) {
-            hours.add(i);
+        for(int i = 24; i > 0; i--) {
+
+            String hour = "" + i;
+            if(hour.length() < 2) {
+                hour = "0" + i;
+            }
+            Integer x = Integer.parseInt(hour);
+            hours.add(x);
         }
 
         for (int i = 0; i <= 55; i += 5) {
