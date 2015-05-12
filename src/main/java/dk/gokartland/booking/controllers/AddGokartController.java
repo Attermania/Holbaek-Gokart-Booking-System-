@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.dao.BookablePlaceDAO;
 import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.GokartBooking;
@@ -21,6 +22,7 @@ import java.util.*;
 public class AddGokartController extends Observable implements Initializable {
 
     private BookingService bookingService;
+    private BookablePlaceDAO bookablePlaceDAO;
 
     @FXML
     DatePicker fromDatePicker, toDatePicker;
@@ -44,8 +46,9 @@ public class AddGokartController extends Observable implements Initializable {
     Button addButton;
 
 
-    public AddGokartController(BookingService bookingService) {
+    public AddGokartController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
+        this.bookablePlaceDAO = bookablePlaceDAO;
     }
 
     @Override
@@ -75,6 +78,8 @@ public class AddGokartController extends Observable implements Initializable {
 
         setDateAndClock();
 
+        placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
+
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -87,22 +92,18 @@ public class AddGokartController extends Observable implements Initializable {
                 int adultCarts = Integer.parseInt(adultCartsTextField.getText());
                 int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
 
-                List<Place> places = new ArrayList<Place>();
-                places.add(new Place(1, "test", false));
-                BookablePlace bookablePlace = new BookablePlace(1, "test", places);
-
                 try {
                     // Create Gokart Booking
                     GokartBooking gokartBooking = bookingService.createGokartBooking(
-                            calendarFrom,
-                            calendarTo,
-                            commentTextArea.getText(),
-                            adultCarts,
-                            childrenCarts,
-                            bookablePlace, ///////////// SLIMED - Change it!
-                            champagneCheckBox.isSelected(),
-                            medalsCheckBox.isSelected()
-                    );
+							calendarFrom,
+							calendarTo,
+							commentTextArea.getText(),
+							adultCarts,
+							childrenCarts,
+							placeComboBox.getValue(),
+							champagneCheckBox.isSelected(),
+							medalsCheckBox.isSelected()
+					);
 
                     // Observer pattern notify booking window
                     setChanged();

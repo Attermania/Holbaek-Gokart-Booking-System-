@@ -69,8 +69,8 @@ public class MainController implements Initializable, Observer {
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
         List<Place> places = new ArrayList<>();
-        places.add(new Place(1, "Bane 1", false));
-        Place actionbane = new Place(2, "Action bane", false);
+        places.add(new Place("Bane 1", false));
+        Place actionbane = new Place("Action bane", false);
         places.add(actionbane);
 
         Calendar toDate = new GregorianCalendar();
@@ -80,10 +80,10 @@ public class MainController implements Initializable, Observer {
         Calendar restaurantToTime = new GregorianCalendar();
         restaurantToTime.add(10, 80);
 
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
-        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace(1, "Action Bane", places));
-        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace(1, "Diner", places));
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace("Bane 2", places));
+        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace("Action Bane", places));
+        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace("Diner", places));
 
 
         facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);
@@ -241,8 +241,8 @@ public class MainController implements Initializable, Observer {
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
         List<Place> places = new ArrayList<>();
-        places.add(new Place(1, "Bane 1", false));
-        Place actionbane = new Place(2, "Action bane", false);
+        places.add(new Place("Bane 1", false));
+        Place actionbane = new Place("Action bane", false);
         places.add(actionbane);
 
         Calendar toDate = new GregorianCalendar();
@@ -252,10 +252,10 @@ public class MainController implements Initializable, Observer {
         Calendar restaurantToTime = new GregorianCalendar();
         restaurantToTime.add(10, 80);
 
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
-        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace(1, "Action Bane", places));
-        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace(1, "Diner", places));
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace("Bane 2", places));
+        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace("Action Bane", places));
+        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace("Diner", places));
 
 
         facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);

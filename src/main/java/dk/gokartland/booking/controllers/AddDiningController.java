@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.dao.BookablePlaceDAO;
 import dk.gokartland.booking.domain.BookablePlace;
 import dk.gokartland.booking.domain.LasertagBooking;
 import dk.gokartland.booking.domain.Place;
@@ -27,9 +28,13 @@ import java.util.*;
 public class AddDiningController extends Observable implements Initializable {
 
     private BookingService bookingService;
+    private BookablePlaceDAO bookablePlaceDAO;
 
     @FXML
     Button addButton;
+
+    @FXML
+    ComboBox<BookablePlace> placeComboBox;
 
     @FXML
     ComboBox<Integer> fromHourComboBox, fromMinuteComboBox, toHourComboBox, toMinuteComboBox;
@@ -40,8 +45,9 @@ public class AddDiningController extends Observable implements Initializable {
     @FXML
     DatePicker fromDatePicker, toDatePicker;
 
-    public AddDiningController(BookingService bookingService) {
+    public AddDiningController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
+        this.bookablePlaceDAO = bookablePlaceDAO;
     }
 
     @Override
@@ -72,6 +78,8 @@ public class AddDiningController extends Observable implements Initializable {
 
         setDateAndClock();
 
+        placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
+        
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -83,18 +91,13 @@ public class AddDiningController extends Observable implements Initializable {
                 int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
 
-                List<Place> places = new ArrayList<Place>();
-                places.add(new Place(1, "test", false));
-                BookablePlace bookablePlace = new BookablePlace(1, "test", places);
-
-
                 // Create Lasertag Booking
                 try {
                     RestaurantBooking restaurantBooking = bookingService.createRestaurantBooking(calendarFrom,
                             calendarTo,
                             noOfPeopleTextField.getText(),
                             noOfPeople,
-                            bookablePlace);
+                            placeComboBox.getValue());
 
                     // Observer pattern notify booking window
                     setChanged();

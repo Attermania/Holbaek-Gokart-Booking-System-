@@ -1,9 +1,6 @@
 package dk.gokartland.booking.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +8,16 @@ import java.util.List;
 public class BookablePlace {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Column
     private String name;
 
-    @ManyToMany(targetEntity = Place.class)
+    @ManyToMany
     private List<Place> places = new ArrayList<>();
 
-    public BookablePlace(int id, String name, List<Place> places) {
-        this.id = id;
+    public BookablePlace(String name, List<Place> places) {
         this.name = name;
         this.places = places;
     }

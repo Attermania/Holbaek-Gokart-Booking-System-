@@ -30,7 +30,7 @@
             <Label text="Antal:" GridPane.rowIndex="3" />
             <Label text="Vælg bane:" GridPane.rowIndex="2" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="placeComboBox" prefHeight="25.0" prefWidth="309.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox promptText="Vælg bane" fx:id="placeComboBox" prefHeight="25.0" prefWidth="309.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Til:" GridPane.rowIndex="1" />
             <Label text="Fra:" />
             <GridPane GridPane.columnIndex="1">
