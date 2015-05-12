@@ -1,9 +1,7 @@
 package dk.gokartland.booking;
 
 import dk.gokartland.booking.dao.BookingDAO;
-import dk.gokartland.booking.domain.BookablePlace;
-import dk.gokartland.booking.domain.Booking;
-import dk.gokartland.booking.domain.Place;
+import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
 import dk.gokartland.booking.services.BookingService;
 import javafx.application.Application;
@@ -14,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.Arrays;
+import java.util.*;
 
 public class App extends Application {
 
@@ -37,6 +35,16 @@ public class App extends Application {
 		BookablePlace bookablePlace4 = new BookablePlace("Paintball/Lasertag", Arrays.asList(place3));
 		BookablePlace bookablePlace5 = new BookablePlace("Restaurant", Arrays.asList(place4));
 
+        Calendar from = new GregorianCalendar();
+        Calendar to = new GregorianCalendar();
+
+        GokartBooking gokartBooking = new GokartBooking(from, to, "Test", 1, 2, bookablePlace1, true, true);
+
+        List<FacilityBooking> facilityBookingList = new ArrayList<>();
+        facilityBookingList.add(gokartBooking);
+
+        Booking booking1 = new Booking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", facilityBookingList);
+
 		EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -53,6 +61,8 @@ public class App extends Application {
 		entityManager.persist(bookablePlace3);
 		entityManager.persist(bookablePlace4);
 		entityManager.persist(bookablePlace5);
+
+        entityManager.persist(booking1);
 
 		entityManager.flush();
 
