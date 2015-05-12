@@ -51,11 +51,11 @@ public class AddPaintballController extends Observable implements Initializable 
         ObservableList<Integer> hours = FXCollections.observableArrayList();
         ObservableList<Integer> minutes = FXCollections.observableArrayList();
 
-        for(int i = 0; i < 24; i++) {
+        for (int i = 0; i < 24; i++) {
             hours.add(i);
         }
 
-        for(int i = 0; i <= 55; i += 5) {
+        for (int i = 0; i <= 55; i += 5) {
             minutes.add(i);
         }
 
@@ -63,6 +63,8 @@ public class AddPaintballController extends Observable implements Initializable 
         fromMinuteComboBox.setItems(minutes);
         toHourComboBox.setItems(hours);
         toMinuteComboBox.setItems(minutes);
+
+        setDateAndClock();
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -100,5 +102,16 @@ public class AddPaintballController extends Observable implements Initializable 
 
         System.out.println(countObservers());
 
-        }
     }
+
+    private void setDateAndClock() {
+        fromDatePicker.setValue(LocalDate.now());
+        toDatePicker.setValue(LocalDate.now());
+        fromHourComboBox.setValue(12);
+        fromMinuteComboBox.setValue(00);
+        toHourComboBox.setValue(12);
+        toMinuteComboBox.setValue(30);
+    }
+
+
+}

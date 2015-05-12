@@ -55,7 +55,7 @@ public class Booking {
         return customerName;
     }
 
-
-
-
+    public List<FacilityBooking> getFacilityBookings() {
+        return facilityBookings;
+    }
 }

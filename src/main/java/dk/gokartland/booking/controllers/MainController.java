@@ -20,7 +20,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable, Observer {
 
     @FXML
     private Button newBookingButton, resetButton;
@@ -55,10 +55,13 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        Observer self = this;
+
         newBookingButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"));
+                Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"), self);
                 stage.show();
             }
         });
@@ -130,6 +133,7 @@ public class MainController implements Initializable {
         typeSearchComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
 
 
                 ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
@@ -221,5 +225,44 @@ public class MainController implements Initializable {
         }
         facilityBookingTableView.setItems(tempList);
     }
+
+    @Override
+    public void update(Observable o, Object obj) {
+
+        if(obj instanceof Booking) {
+
+            //fillList();
+            System.out.println("Test");
+        }
+
+    }
+
+    public void fillList() {
+        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
+
+        List<Place> places = new ArrayList<>();
+        places.add(new Place(1, "Bane 1", false));
+        Place actionbane = new Place(2, "Action bane", false);
+        places.add(actionbane);
+
+        Calendar toDate = new GregorianCalendar();
+        toDate.add(10, 1);
+        Calendar restaurantFromTime = new GregorianCalendar();
+        restaurantFromTime.add(10, -100);
+        Calendar restaurantToTime = new GregorianCalendar();
+        restaurantToTime.add(10, 80);
+
+        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace(1, "Bane 1", places), true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace(1, "Bane 2", places));
+        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace(1, "Action Bane", places));
+        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace(1, "Diner", places));
+
+
+        facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);
+
+
+        facilityBookingTableView.setItems(facilityBookings);
+    }
+
 
 }

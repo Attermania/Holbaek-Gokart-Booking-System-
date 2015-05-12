@@ -63,6 +63,8 @@ public class AddLasertagController extends Observable implements Initializable {
         toHourComboBox.setItems(hours);
         toMinuteComboBox.setItems(minutes);
 
+        setDateAndClock();
+
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -101,6 +103,15 @@ public class AddLasertagController extends Observable implements Initializable {
             }
         });
 
+    }
+
+    private void setDateAndClock(){
+        fromDatePicker.setValue(LocalDate.now());
+        toDatePicker.setValue(LocalDate.now());
+        fromHourComboBox.setValue(12);
+        fromMinuteComboBox.setValue(00);
+        toHourComboBox.setValue(12);
+        toMinuteComboBox.setValue(30);
     }
 
 }
