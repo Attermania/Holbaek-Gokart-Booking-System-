@@ -18,7 +18,7 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.*;
 
-public class BookingController implements Initializable, Observer {
+public class BookingController extends Observable implements Initializable, Observer {
 
     @FXML
     TextField nameTextField, phoneTextField, emailTextField, createdByTextField;
@@ -94,6 +94,9 @@ public class BookingController implements Initializable, Observer {
 
                 Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(),  commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
 
+                setChanged();
+                notifyObservers(booking);
+                clearChanged();
             }
         });
 
