@@ -57,10 +57,10 @@ public class AddGokartController extends Observable implements Initializable {
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();
 
-        for(int i = 24; i > 0; i--) {
+        for (int i = 24; i > 0; i--) {
 
             String hour = "" + i;
-            if(hour.length() < 2) {
+            if (hour.length() < 2) {
                 hour = "0" + i;
             }
             hours.add(hour);
@@ -133,6 +133,20 @@ public class AddGokartController extends Observable implements Initializable {
 
         System.out.println(countObservers());
 
+        fromDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
     }
 
     private void setDateAndClock() {
@@ -142,5 +156,20 @@ public class AddGokartController extends Observable implements Initializable {
         fromMinuteComboBox.setValue("00");
         toHourComboBox.setValue("12");
         toMinuteComboBox.setValue("30");
+    }
+
+    private void changeDateAndClock() {
+
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+
+        Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), Integer.parseInt(fromHourComboBox.getValue()), Integer.parseInt(fromMinuteComboBox.getValue()));
+        Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), Integer.parseInt(toHourComboBox.getValue()), Integer.parseInt(toMinuteComboBox.getValue()));
+
+        if (calendarTo.before(calendarFrom)) {
+            toDatePicker.setValue(fromDatePicker.getValue());
+        } else if (calendarTo.equals(calendarFrom)) {
+            toHourComboBox.setValue(fromHourComboBox.getValue()+1);
+        }
     }
 }

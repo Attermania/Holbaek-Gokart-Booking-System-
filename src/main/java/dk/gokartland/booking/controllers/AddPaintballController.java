@@ -112,6 +112,19 @@ public class AddPaintballController extends Observable implements Initializable 
         });
 
         System.out.println(countObservers());
+        fromDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toDatePicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
 
     }
 
@@ -122,6 +135,21 @@ public class AddPaintballController extends Observable implements Initializable 
         fromMinuteComboBox.setValue(00);
         toHourComboBox.setValue(12);
         toMinuteComboBox.setValue(30);
+    }
+
+    private void changeDateAndClock() {
+
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+
+        Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHourComboBox.getValue(), fromMinuteComboBox.getValue());
+        Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHourComboBox.getValue(), toMinuteComboBox.getValue());
+
+        if (calendarTo.before(calendarFrom)) {
+            toDatePicker.setValue(fromDatePicker.getValue());
+        } else if (calendarTo.equals(calendarFrom)) {
+            toHourComboBox.setValue(fromHourComboBox.getValue()+1);
+        }
     }
 
 
