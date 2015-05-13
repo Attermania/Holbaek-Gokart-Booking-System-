@@ -106,15 +106,15 @@ public class AddGokartController extends Observable implements Initializable {
                 try {
                     // Create Gokart Booking
                     GokartBooking gokartBooking = bookingService.createGokartBooking(
-							calendarFrom,
-							calendarTo,
-							commentTextArea.getText(),
-							adultCarts,
-							childrenCarts,
-							placeComboBox.getValue(),
-							champagneCheckBox.isSelected(),
-							medalsCheckBox.isSelected()
-					);
+                            calendarFrom,
+                            calendarTo,
+                            commentTextArea.getText(),
+                            adultCarts,
+                            childrenCarts,
+                            placeComboBox.getValue(),
+                            champagneCheckBox.isSelected(),
+                            medalsCheckBox.isSelected()
+                    );
 
                     // Observer pattern notify booking window
                     setChanged();
@@ -147,6 +147,34 @@ public class AddGokartController extends Observable implements Initializable {
             }
         });
 
+        fromHourComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toHourComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        fromMinuteComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toMinuteComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
     }
 
     private void setDateAndClock() {
@@ -163,13 +191,26 @@ public class AddGokartController extends Observable implements Initializable {
         LocalDate fromDate = fromDatePicker.getValue();
         LocalDate toDate = toDatePicker.getValue();
 
+
         Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), Integer.parseInt(fromHourComboBox.getValue()), Integer.parseInt(fromMinuteComboBox.getValue()));
         Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), Integer.parseInt(toHourComboBox.getValue()), Integer.parseInt(toMinuteComboBox.getValue()));
 
         if (calendarTo.before(calendarFrom)) {
             toDatePicker.setValue(fromDatePicker.getValue());
         } else if (calendarTo.equals(calendarFrom)) {
-            toHourComboBox.setValue(fromHourComboBox.getValue()+1);
+            calendarTo.add(Calendar.HOUR_OF_DAY, 1);
+
+            for(String time : toHourComboBox.getItems()) {
+                int hour = calendarTo.get(Calendar.HOUR_OF_DAY);
+                String sHour = hour < 10 ? "0" + hour : hour + "";
+
+                if(time.equals(sHour)) {
+                    // Select the current string
+                    toHourComboBox.getSelectionModel().select(time);
+                    break;
+                }
+            }
+
         }
     }
 }
