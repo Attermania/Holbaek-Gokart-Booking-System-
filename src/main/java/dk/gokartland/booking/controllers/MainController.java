@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -109,14 +110,24 @@ public class MainController implements Initializable, Observer {
             }
         });
 
+        // Opens specific booking window
+        facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    System.out.println(facilityBookingTableView.getSelectionModel().getSelectedItem());
+                    Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"));
+                    stage.show();
+                }
+            }
+        });
+
         typeSearchComboBox.setItems(types);
         types.addAll(typeGokart, typePaintBall, typeLasertag, typeDining);
 
         typeSearchComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
 
                 ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
 
@@ -212,7 +223,7 @@ public class MainController implements Initializable, Observer {
     public void update(Observable o, Object obj) {
 
         if(obj instanceof Booking) {
-            //fillList();
+            fillList();
         }
     }
 

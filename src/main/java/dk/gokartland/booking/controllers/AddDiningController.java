@@ -37,7 +37,7 @@ public class AddDiningController extends Observable implements Initializable {
     ComboBox<BookablePlace> placeComboBox;
 
     @FXML
-    ComboBox<Integer> fromHourComboBox, fromMinuteComboBox, toHourComboBox, toMinuteComboBox;
+    ComboBox<String> fromHourComboBox, fromMinuteComboBox, toHourComboBox, toMinuteComboBox;
 
     @FXML
     TextField noOfPeopleTextField;
@@ -53,22 +53,25 @@ public class AddDiningController extends Observable implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ObservableList<Integer> hours = FXCollections.observableArrayList();
-        ObservableList<Integer> minutes = FXCollections.observableArrayList();
+        ObservableList<String> hours = FXCollections.observableArrayList();
+        ObservableList<String> minutes = FXCollections.observableArrayList();
 
-        for(int i = 24; i > 0; i--) {
+        for (int i = 24; i > 0; i--) {
 
             String hour = "" + i;
-            if(hour.length() < 2) {
+            if (hour.length() < 2) {
                 hour = "0" + i;
             }
-            Integer x = Integer.parseInt(hour);
-            hours.add(x);
+            hours.add(hour);
         }
-        
 
-        for (int i = 0; i <= 55; i += 5) {
-            minutes.add(i);
+        for(int i = 55; i >= 0; i -= 5) {
+
+            String minute = "" +i;
+            if(minute.length() < 2){
+                minute = "0" +i;
+            }
+            minutes.add(minute);
         }
 
         fromHourComboBox.setItems(hours);
@@ -78,6 +81,11 @@ public class AddDiningController extends Observable implements Initializable {
 
         setDateAndClock();
 
+        Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
+        Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
+        Integer toHour = Integer.parseInt(toHourComboBox.getValue());
+        Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
+
         placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
         
         addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -85,8 +93,8 @@ public class AddDiningController extends Observable implements Initializable {
             public void handle(ActionEvent event) {
                 LocalDate fromDate = fromDatePicker.getValue();
 
-                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHourComboBox.getValue(), fromMinuteComboBox.getValue());
-                Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toHourComboBox.getValue(), toMinuteComboBox.getValue());
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
+                Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
                 int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
@@ -127,15 +135,43 @@ public class AddDiningController extends Observable implements Initializable {
             }
         });
 
+        fromHourComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toHourComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        fromMinuteComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
+        toMinuteComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeDateAndClock();
+            }
+        });
+
     }
 
-    private void setDateAndClock(){
+    private void setDateAndClock() {
         fromDatePicker.setValue(LocalDate.now());
         toDatePicker.setValue(LocalDate.now());
-        fromHourComboBox.setValue(12);
-        fromMinuteComboBox.setValue(00);
-        toHourComboBox.setValue(12);
-        toMinuteComboBox.setValue(30);
+        fromHourComboBox.setValue("12");
+        fromMinuteComboBox.setValue("00");
+        toHourComboBox.setValue("12");
+        toMinuteComboBox.setValue("30");
     }
 
     private void changeDateAndClock() {
@@ -143,13 +179,26 @@ public class AddDiningController extends Observable implements Initializable {
         LocalDate fromDate = fromDatePicker.getValue();
         LocalDate toDate = toDatePicker.getValue();
 
-        Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHourComboBox.getValue(), fromMinuteComboBox.getValue());
-        Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHourComboBox.getValue(), toMinuteComboBox.getValue());
+
+        Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), Integer.parseInt(fromHourComboBox.getValue()), Integer.parseInt(fromMinuteComboBox.getValue()));
+        Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), Integer.parseInt(toHourComboBox.getValue()), Integer.parseInt(toMinuteComboBox.getValue()));
 
         if (calendarTo.before(calendarFrom)) {
             toDatePicker.setValue(fromDatePicker.getValue());
         } else if (calendarTo.equals(calendarFrom)) {
-            toHourComboBox.setValue(fromHourComboBox.getValue()+1);
+            calendarTo.add(Calendar.HOUR_OF_DAY, 1);
+
+            for(String time : toHourComboBox.getItems()) {
+                int hour = calendarTo.get(Calendar.HOUR_OF_DAY);
+                String sHour = hour < 10 ? "0" + hour : hour + "";
+
+                if(time.equals(sHour)) {
+                    // Select the current string
+                    toHourComboBox.getSelectionModel().select(time);
+                    break;
+                }
+            }
+
         }
     }
 }

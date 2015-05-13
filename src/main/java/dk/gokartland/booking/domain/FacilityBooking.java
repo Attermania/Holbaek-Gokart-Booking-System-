@@ -8,6 +8,7 @@ import java.util.Calendar;
 public abstract class FacilityBooking {
 
 	@Id
+    @GeneratedValue
 	private int id;
 
 	@Column(name = "\"from\"")
@@ -63,6 +64,6 @@ public abstract class FacilityBooking {
     }
 
     public boolean isSamePlace(BookablePlace bookablePlace) {
-		return bookablePlace.isSamePlace(bookablePlace);
+		return this.bookablePlace.isSamePlace(bookablePlace);
 	}
 }

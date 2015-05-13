@@ -37,13 +37,22 @@ public class App extends Application {
 
         Calendar from = new GregorianCalendar();
         Calendar to = new GregorianCalendar();
+        Calendar from1 = new GregorianCalendar();
+        from1.add(10, 100);
+        Calendar to1 = new GregorianCalendar();
+        to1.add(10, 100);
 
         GokartBooking gokartBooking = new GokartBooking(from, to, "Test", 1, 2, bookablePlace1, true, true);
+        PaintballBooking paintballBooking = new PaintballBooking(from1, to1, "Test", 2, bookablePlace4);
 
-        List<FacilityBooking> facilityBookingList = new ArrayList<>();
-        facilityBookingList.add(gokartBooking);
+        List<FacilityBooking> gokartlist = new ArrayList<>();
+        gokartlist.add(gokartBooking);
 
-        Booking booking1 = new Booking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", facilityBookingList);
+        List<FacilityBooking> paintballlist = new ArrayList<>();
+        paintballlist.add(paintballBooking);
+
+        Booking booking1 = new Booking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", gokartlist);
+        Booking booking2 = new Booking("Jane", "123", true, false, "mail", "Test", "JFK", paintballlist);
 
 		EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -63,6 +72,7 @@ public class App extends Application {
 		entityManager.persist(bookablePlace5);
 
         entityManager.persist(booking1);
+        entityManager.persist(booking2);
 
 		entityManager.flush();
 
