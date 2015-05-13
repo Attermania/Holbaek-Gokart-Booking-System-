@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -92,7 +93,7 @@ public class BookingController extends Observable implements Initializable, Obse
             public void handle(ActionEvent event) {
                 boolean isPrivateClient = privateRadioButton.isSelected();
 
-                Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(),  commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
+                Booking booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(), commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
 
                 setChanged();
                 notifyObservers(booking);
@@ -165,7 +166,7 @@ public class BookingController extends Observable implements Initializable, Obse
 
     @Override
     public void update(Observable o, Object obj) {
-        if(obj instanceof FacilityBooking) {
+        if (obj instanceof FacilityBooking) {
             FacilityBooking facilityBooking = (FacilityBooking) obj;
 
             facilityBookings.add(facilityBooking);

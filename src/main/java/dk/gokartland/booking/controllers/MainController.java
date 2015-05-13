@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -66,28 +67,10 @@ public class MainController implements Initializable, Observer {
             }
         });
 
-        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
-
-        List<Place> places = new ArrayList<>();
-        places.add(new Place("Bane 1", false));
-        Place actionbane = new Place("Action bane", false);
-        places.add(actionbane);
-
-        Calendar toDate = new GregorianCalendar();
-        toDate.add(10, 1);
-        Calendar restaurantFromTime = new GregorianCalendar();
-        restaurantFromTime.add(10, -100);
-        Calendar restaurantToTime = new GregorianCalendar();
-        restaurantToTime.add(10, 80);
-
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace("Bane 2", places));
-        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace("Action Bane", places));
-        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace("Diner", places));
-
-
-        facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);
-
+        Calendar from = new GregorianCalendar();
+        Calendar to = new GregorianCalendar();
+        to.add(Calendar.HOUR, 1);
+        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
 
         facilityBookingTableView.setItems(facilityBookings);
 
@@ -127,14 +110,24 @@ public class MainController implements Initializable, Observer {
             }
         });
 
+        // Opens specific booking window
+        facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    System.out.println(facilityBookingTableView.getSelectionModel().getSelectedItem());
+                    Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"));
+                    stage.show();
+                }
+            }
+        });
+
         typeSearchComboBox.setItems(types);
         types.addAll(typeGokart, typePaintBall, typeLasertag, typeDining);
 
         typeSearchComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
 
                 ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
 
@@ -230,37 +223,22 @@ public class MainController implements Initializable, Observer {
     public void update(Observable o, Object obj) {
 
         if(obj instanceof Booking) {
-
-            //fillList();
-            System.out.println("Test");
+            fillList();
         }
-
     }
 
     public void fillList() {
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
-        List<Place> places = new ArrayList<>();
-        places.add(new Place("Bane 1", false));
-        Place actionbane = new Place("Action bane", false);
-        places.add(actionbane);
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
 
-        Calendar toDate = new GregorianCalendar();
-        toDate.add(10, 1);
-        Calendar restaurantFromTime = new GregorianCalendar();
-        restaurantFromTime.add(10, -100);
-        Calendar restaurantToTime = new GregorianCalendar();
-        restaurantToTime.add(10, 80);
+        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue(), fromDate.getDayOfMonth());
+        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue(), toDate.getDayOfMonth());
 
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), toDate, "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), toDate, "Comment", (short) 5, new BookablePlace("Bane 2", places));
-        LasertagBooking lasertagBooking = new LasertagBooking(new GregorianCalendar(), toDate, "Comment", 5, new BookablePlace("Action Bane", places));
-        RestaurantBooking restaurantBooking = new RestaurantBooking(restaurantFromTime, restaurantToTime, "comment", 10, new BookablePlace("Diner", places));
-
-
-        facilityBookings.addAll(gokartBooking, paintballBooking, lasertagBooking, restaurantBooking);
-
-
+        for(FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
+            facilityBookings.add(facilityBooking);
+        }
         facilityBookingTableView.setItems(facilityBookings);
     }
 

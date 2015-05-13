@@ -100,6 +100,7 @@ public class AddGokartController extends Observable implements Initializable {
                 Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
                 Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
+
                 int adultCarts = Integer.parseInt(adultCartsTextField.getText());
                 int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
 

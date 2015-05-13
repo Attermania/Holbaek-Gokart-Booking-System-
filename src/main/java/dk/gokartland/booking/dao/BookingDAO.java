@@ -4,10 +4,7 @@ import dk.gokartland.booking.domain.Booking;
 import dk.gokartland.booking.domain.FacilityBooking;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.transaction.Transaction;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +20,9 @@ public class BookingDAO {
 	public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-		TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb", FacilityBooking.class);
+		TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from OR fb.to <= :to", FacilityBooking.class);
+        query.setParameter("from", from, TemporalType.TIMESTAMP);
+        query.setParameter("to", to, TemporalType.TIMESTAMP);
 
 		return query.getResultList();
 	}
