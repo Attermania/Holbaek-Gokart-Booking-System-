@@ -34,10 +34,10 @@
             <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
             <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <fx:define>
-                <ToggleGroup fx:id="privateOrBusinessToggleGroup"/>
-            </fx:define>
             <RadioButton fx:id="privateRadioButton" mnemonicParsing="false" selected="true" text="Privat" GridPane.columnIndex="1" GridPane.rowIndex="3" toggleGroup="$privateOrBusinessToggleGroup">
+                <toggleGroup>
+                    <ToggleGroup fx:id="privateOrBusinessToggleGroup" />
+                </toggleGroup>
             </RadioButton>
             <RadioButton mnemonicParsing="false" text="Erhverv" toggleGroup="$privateOrBusinessToggleGroup" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
