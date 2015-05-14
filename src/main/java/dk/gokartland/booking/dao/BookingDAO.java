@@ -11,37 +11,42 @@ import java.util.List;
 
 public class BookingDAO {
 
-	private EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory;
 
-	public BookingDAO(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
+    public BookingDAO(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
-	public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
+    public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-		TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from OR fb.to <= :to", FacilityBooking.class);
+        //TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
+        TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
+        //from.add(1, -1);
         query.setParameter("from", from, TemporalType.TIMESTAMP);
         query.setParameter("to", to, TemporalType.TIMESTAMP);
+        System.out.println(query.getResultList().size());
 
-		return query.getResultList();
-	}
 
-	public boolean save(Booking booking) {
 
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
+        return query.getResultList();
+    }
 
-		entityManager.persist(booking);
-		entityManager.flush();
+    public boolean save(Booking booking) {
 
-		transaction.commit();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
 
-		return true;
-	}
+        entityManager.persist(booking);
+        entityManager.flush();
 
-	public boolean delete(FacilityBooking facilityBooking) {
-		return true;
-	}
+        transaction.commit();
+
+        return true;
+    }
+
+    public boolean delete(FacilityBooking facilityBooking) {
+        return true;
+    }
 }

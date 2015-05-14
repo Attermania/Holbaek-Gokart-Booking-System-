@@ -68,8 +68,10 @@ public class MainController implements Initializable, Observer {
         });
 
         Calendar from = new GregorianCalendar();
+        from.add(Calendar.HOUR, -1);
+        System.out.println(from.getTime().toString());
         Calendar to = new GregorianCalendar();
-        to.add(Calendar.HOUR, 1);
+        to.add(Calendar.HOUR, 24);
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
 
         facilityBookingTableView.setItems(facilityBookings);
@@ -116,7 +118,7 @@ public class MainController implements Initializable, Observer {
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                     System.out.println(facilityBookingTableView.getSelectionModel().getSelectedItem());
-                    Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"));
+                    Stage stage = fxmlFactory.build(getClass().getResource("updateBooking.fxml"));
                     stage.show();
                 }
             }
@@ -135,7 +137,7 @@ public class MainController implements Initializable, Observer {
                     case "Gokart":
                         for (FacilityBooking facilityBooking : facilityBookings) {
                             if (facilityBooking instanceof GokartBooking) {
-                                tempList.addAll(facilityBooking);
+                                tempList.add(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
@@ -143,7 +145,7 @@ public class MainController implements Initializable, Observer {
                     case "Paintball":
                         for (FacilityBooking facilityBooking : facilityBookings) {
                             if (facilityBooking instanceof PaintballBooking) {
-                                tempList.addAll(facilityBooking);
+                                tempList.add(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
@@ -151,7 +153,7 @@ public class MainController implements Initializable, Observer {
                     case "Lasertag":
                         for (FacilityBooking facilityBooking : facilityBookings) {
                             if (facilityBooking instanceof LasertagBooking) {
-                                tempList.addAll(facilityBooking);
+                                tempList.add(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
@@ -159,7 +161,7 @@ public class MainController implements Initializable, Observer {
                     case "Restaurant":
                         for (FacilityBooking facilityBooking : facilityBookings) {
                             if (facilityBooking instanceof RestaurantBooking) {
-                                tempList.addAll(facilityBooking);
+                                tempList.add(facilityBooking);
                                 facilityBookingTableView.setItems(tempList);
                             }
                         }
@@ -167,18 +169,26 @@ public class MainController implements Initializable, Observer {
 
                 }
 
-
             }
         });
 
         resetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
-                tempList.addAll(facilityBookings);
-                facilityBookingTableView.setItems(tempList);
                 fromDatePicker.setValue(LocalDate.now());
                 toDatePicker.setValue(LocalDate.now());
+
+                LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
+
+                Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
+                from.add(Calendar.HOUR, -1);
+                Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
+                to.add(Calendar.HOUR, 12);
+
+                ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
+                facilityBookingTableView.setItems(tempList);
+
 
             }
         });
@@ -208,13 +218,13 @@ public class MainController implements Initializable, Observer {
 
         ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
 
-        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue(), fromDate.getDayOfMonth());
-        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue(), toDate.getDayOfMonth());
-
+        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
+        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
+        to.add(Calendar.HOUR, 24); // Add time to variable 'to' - so there's a gap between the now.
 
         for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
 
-            tempList.addAll(facilityBooking);
+            tempList.add(facilityBooking);
         }
         facilityBookingTableView.setItems(tempList);
     }
@@ -222,7 +232,7 @@ public class MainController implements Initializable, Observer {
     @Override
     public void update(Observable o, Object obj) {
 
-        if(obj instanceof Booking) {
+        if (obj instanceof Booking) {
             fillList();
         }
     }
@@ -233,10 +243,13 @@ public class MainController implements Initializable, Observer {
         LocalDate fromDate = fromDatePicker.getValue();
         LocalDate toDate = toDatePicker.getValue();
 
-        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue(), fromDate.getDayOfMonth());
-        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue(), toDate.getDayOfMonth());
+        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
+        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
+        System.out.println(from.getTime().toString());
+        from.add(Calendar.HOUR, -1);
+        to.add(Calendar.HOUR, 24);
 
-        for(FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
+        for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
             facilityBookings.add(facilityBooking);
         }
         facilityBookingTableView.setItems(facilityBookings);

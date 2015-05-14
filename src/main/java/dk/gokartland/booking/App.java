@@ -38,9 +38,9 @@ public class App extends Application {
         Calendar from = new GregorianCalendar();
         Calendar to = new GregorianCalendar();
         Calendar from1 = new GregorianCalendar();
-        from1.add(10, 100);
+        from1.add(10, 47);
         Calendar to1 = new GregorianCalendar();
-        to1.add(10, 100);
+        to1.add(10, 48);
 
         GokartBooking gokartBooking = new GokartBooking(from, to, "Test", 1, 2, bookablePlace1, true, true);
         PaintballBooking paintballBooking = new PaintballBooking(from1, to1, "Test", 2, bookablePlace4);
