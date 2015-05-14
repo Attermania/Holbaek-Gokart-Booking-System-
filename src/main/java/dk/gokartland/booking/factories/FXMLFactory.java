@@ -35,7 +35,7 @@ public class FXMLFactory implements ApplicationContextAware {
 					observable.addObserver(observer);
 				}
 
-				return applicationContext.getBean(type);
+				return controller;
 			}
 		});
 
@@ -53,7 +53,6 @@ public class FXMLFactory implements ApplicationContextAware {
 			stage.setScene(scene);
 
 			return stage;
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

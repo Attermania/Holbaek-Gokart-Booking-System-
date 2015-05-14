@@ -25,9 +25,6 @@ public class BookingDAO {
         //from.add(1, -1);
         query.setParameter("from", from, TemporalType.TIMESTAMP);
         query.setParameter("to", to, TemporalType.TIMESTAMP);
-        System.out.println(query.getResultList().size());
-
-
 
         return query.getResultList();
     }

@@ -17,18 +17,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * Created by Thomas on 06-05-2015.
- */
 public class AddDiningController extends Observable implements Initializable {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
+
+    @FXML
+    AnchorPane root;
 
     @FXML
     Button addButton;
@@ -113,7 +115,8 @@ public class AddDiningController extends Observable implements Initializable {
                     clearChanged();
 
                     // Close window
-
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
                     e.printStackTrace();

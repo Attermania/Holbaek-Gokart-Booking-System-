@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import sun.swing.BakedArrayList;
 
 import java.awt.print.Book;
@@ -25,6 +27,9 @@ public class AddPaintballController extends Observable implements Initializable 
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
+
+    @FXML
+    AnchorPane root;
 
     @FXML
     Button addButton;
@@ -96,16 +101,12 @@ public class AddPaintballController extends Observable implements Initializable 
 
                 int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
-                List<Place> places = new ArrayList<Place>();
-                places.add(new Place("test", false));
-                BookablePlace bookablePlace = new BookablePlace("test", places);
-
                 try {
                     // Create Paintball Booking
                     PaintballBooking paintballBooking = bookingService.createPaintballBooking(
                             calendarFrom,
                             calendarTo,
-                            commentTextArea.getText(), noOfPeople, bookablePlace);
+                            commentTextArea.getText(), noOfPeople, placeComboBox.getValue());
 
                     // Observer pattern notify booking window
                     setChanged();
@@ -113,6 +114,8 @@ public class AddPaintballController extends Observable implements Initializable 
                     clearChanged();
 
                     // Close window
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
                     e.printStackTrace();
