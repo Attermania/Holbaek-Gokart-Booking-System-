@@ -69,7 +69,6 @@ public class MainController implements Initializable, Observer {
 
         Calendar from = new GregorianCalendar();
         from.add(Calendar.HOUR, -1);
-        System.out.println(from.getTime().toString());
         Calendar to = new GregorianCalendar();
         to.add(Calendar.HOUR, 24);
         ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
@@ -218,9 +217,8 @@ public class MainController implements Initializable, Observer {
 
         ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
 
-        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
-        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
-        to.add(Calendar.HOUR, 24); // Add time to variable 'to' - so there's a gap between the now.
+        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), 0, 0, 0);
+        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), 23, 59, 59);
 
         for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
 
