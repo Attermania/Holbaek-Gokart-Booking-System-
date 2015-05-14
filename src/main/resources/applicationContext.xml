@@ -31,37 +31,37 @@
 	<bean id="fxmlFactory" class="dk.gokartland.booking.factories.FXMLFactory">
 	</bean>
 
-	<bean id="mainController" class="dk.gokartland.booking.controllers.MainController">
+	<bean id="mainController" class="dk.gokartland.booking.controllers.MainController" scope="prototype">
 		<constructor-arg name="bookingDAO" ref="bookingDAO" />
 		<constructor-arg name="fxmlFactory" ref="fxmlFactory" />
 	</bean>
 
-    <bean id="bookingController" class="dk.gokartland.booking.controllers.BookingController">
+    <bean id="bookingController" class="dk.gokartland.booking.controllers.BookingController" scope="prototype">
         <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
         <constructor-arg name="bookingService" ref="bookingService"/>
     </bean>
 
-	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController">
+	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController" scope="prototype">
 		<constructor-arg name="bookingService" ref="bookingService"/>
 		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
 	</bean>
 
-	<bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController">
+	<bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController" scope="prototype">
 		<constructor-arg name="bookingService" ref="bookingService"/>
 		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
 	</bean>
 
-    <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController">
+    <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
 		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
     </bean>
 
-    <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController">
+    <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
 		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
     </bean>
 
-    <bean id="updateBookingController" class="dk.gokartland.booking.controllers.UpdateBookingController">
+    <bean id="updateBookingController" class="dk.gokartland.booking.controllers.UpdateBookingController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
