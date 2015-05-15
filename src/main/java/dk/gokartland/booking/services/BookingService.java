@@ -29,6 +29,10 @@ public class BookingService {
 
         Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, facilityBookings);
 
+        for(FacilityBooking facilityBooking : facilityBookings) {
+            facilityBooking.setBooking(booking);
+        }
+
         boolean persisted = bookingDAO.save(booking);
 
         if (persisted) return booking;
@@ -40,7 +44,7 @@ public class BookingService {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
-        
+
 
         if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
 

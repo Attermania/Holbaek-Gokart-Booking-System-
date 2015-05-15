@@ -3,6 +3,7 @@ package dk.gokartland.booking.controllers;
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,7 +34,7 @@ public class MainController implements Initializable, Observer {
     TableView<FacilityBooking> facilityBookingTableView;
 
     @FXML
-    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn;
+    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn, numberOfPeopleColumn, customerNameColumn;
 
     @FXML
     ComboBox<String> typeSearchComboBox;
@@ -117,16 +118,30 @@ public class MainController implements Initializable, Observer {
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                String fromDate = facilityBooking.getValue().getFrom().getTime().toString();
-                return new SimpleStringProperty(fromDate);
+                Calendar fromDate = facilityBooking.getValue().getFrom();
+                return new SimpleStringProperty(fromDate.get(Calendar.DAY_OF_MONTH) + "/" + fromDate.get(Calendar.MONTH) + "-" + fromDate.get(Calendar.YEAR) + " " + fromDate.get(Calendar.HOUR_OF_DAY) + ":" + fromDate.get(Calendar.MINUTE));
             }
         });
 
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                String toDate = facilityBooking.getValue().getFrom().getTime().toString();
-                return new SimpleStringProperty(toDate);
+                Calendar toDate = facilityBooking.getValue().getTo();
+                return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "/" + toDate.get(Calendar.MONTH) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
+            }
+        });
+
+        numberOfPeopleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
+                return new SimpleObjectProperty(param.getValue().getNumberOfPeople());
+            }
+        });
+
+        customerNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
+                return null;
             }
         });
 
