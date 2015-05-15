@@ -133,7 +133,7 @@ public class MainController implements Initializable, Observer {
         customerNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
-                return null;
+                return new SimpleStringProperty(param.getValue().getBooking().getCustomerName());
             }
         });
 

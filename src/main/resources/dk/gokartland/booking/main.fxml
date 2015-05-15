@@ -12,7 +12,7 @@
             <Button fx:id="newBookingButton" mnemonicParsing="false" text="Ny Booking" />
         </items>
       </ToolBar>
-      <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="590.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="placeColumn" prefWidth="75.0" text="Bane" />
           <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
