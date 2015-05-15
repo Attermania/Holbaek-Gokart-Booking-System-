@@ -50,6 +50,8 @@ public class AddGokartController extends Observable implements Initializable {
     @FXML
     Button addButton;
 
+    @FXML
+    Label errorLabel;
 
     public AddGokartController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
@@ -71,11 +73,11 @@ public class AddGokartController extends Observable implements Initializable {
             hours.add(hour);
         }
 
-        for(int i = 55; i >= 0; i -= 5) {
+        for (int i = 55; i >= 0; i -= 5) {
 
-            String minute = "" +i;
-            if(minute.length() < 2){
-                minute = "0" +i;
+            String minute = "" + i;
+            if (minute.length() < 2) {
+                minute = "0" + i;
             }
             minutes.add(minute);
         }
@@ -106,10 +108,11 @@ public class AddGokartController extends Observable implements Initializable {
                 Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
 
-                int adultCarts = Integer.parseInt(adultCartsTextField.getText());
-                int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
-
                 try {
+
+                    int adultCarts = Integer.parseInt(adultCartsTextField.getText());
+                    int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
+
                     // Create Gokart Booking
                     GokartBooking gokartBooking = bookingService.createGokartBooking(
                             calendarFrom,
@@ -132,7 +135,9 @@ public class AddGokartController extends Observable implements Initializable {
                     stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
-                    e.printStackTrace();
+                    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er udfyldt korrekt");
                 }
 
             }
@@ -207,11 +212,11 @@ public class AddGokartController extends Observable implements Initializable {
         } else if (calendarTo.equals(calendarFrom)) {
             calendarTo.add(Calendar.HOUR_OF_DAY, 1);
 
-            for(String time : toHourComboBox.getItems()) {
+            for (String time : toHourComboBox.getItems()) {
                 int hour = calendarTo.get(Calendar.HOUR_OF_DAY);
                 String sHour = hour < 10 ? "0" + hour : hour + "";
 
-                if(time.equals(sHour)) {
+                if (time.equals(sHour)) {
                     // Select the current string
                     toHourComboBox.getSelectionModel().select(time);
                     break;
