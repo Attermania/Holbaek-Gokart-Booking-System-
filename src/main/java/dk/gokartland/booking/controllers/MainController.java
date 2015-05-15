@@ -200,16 +200,7 @@ public class MainController implements Initializable, Observer {
                 fromDatePicker.setValue(LocalDate.now());
                 toDatePicker.setValue(LocalDate.now());
 
-                LocalDate fromDate = fromDatePicker.getValue();
-                LocalDate toDate = toDatePicker.getValue();
-
-                Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
-                from.add(Calendar.HOUR, -1);
-                Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
-                to.add(Calendar.HOUR, 12);
-
-                ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
-                facilityBookingTableView.setItems(tempList);
+                search();
             }
         });
 
