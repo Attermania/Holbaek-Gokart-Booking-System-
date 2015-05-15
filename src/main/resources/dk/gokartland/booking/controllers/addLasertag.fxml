@@ -28,7 +28,6 @@
             <Label text="Antal" GridPane.rowIndex="3" />
             <Label text="Fra:" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Button fx:id="addButton" mnemonicParsing="false" text="Tilføj" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Til:" GridPane.rowIndex="1" />
             <GridPane GridPane.columnIndex="1">
               <columnConstraints>
@@ -77,9 +76,26 @@
                </children>
             </GridPane>
             <Label text="Vælg bane:" GridPane.rowIndex="2" />
-            <ComboBox promptText="Vælg bane" fx:id="placeComboBox" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="placeComboBox" prefWidth="300.0" promptText="Vælg bane" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextArea fx:id="commentTextArea" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Kommentar" GridPane.rowIndex="4" />
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="addButton" mnemonicParsing="false" text="Tilføj" />
+                  <Label fx:id="errorLabel" textFill="#ee0f0f" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>

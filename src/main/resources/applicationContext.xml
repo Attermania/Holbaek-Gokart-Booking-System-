@@ -1,83 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<util:properties id="database" location="classpath:database.properties"/>
+    <util:properties id="database" location="classpath:database.properties"/>
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="dk.gokartland.booking.domain" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-			</props>
-		</property>
-	</bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="dk.gokartland.booking.domain"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="#{database['jdbc.url']}" />
-		<property name="username" value="#{database['jdbc.username']}" />
-		<property name="password" value="#{database['jdbc.password']}" />
-	</bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="#{database['jdbc.url']}"/>
+        <property name="username" value="#{database['jdbc.username']}"/>
+        <property name="password" value="#{database['jdbc.password']}"/>
+    </bean>
 
-	<bean id="fxmlFactory" class="dk.gokartland.booking.factories.FXMLFactory">
-	</bean>
+    <bean id="fxmlFactory" class="dk.gokartland.booking.factories.FXMLFactory">
+    </bean>
 
-	<bean id="mainController" class="dk.gokartland.booking.controllers.MainController" scope="prototype">
-		<constructor-arg name="bookingDAO" ref="bookingDAO" />
-		<constructor-arg name="fxmlFactory" ref="fxmlFactory" />
-	</bean>
+    <bean id="mainController" class="dk.gokartland.booking.controllers.MainController" scope="prototype">
+        <constructor-arg name="bookingDAO" ref="bookingDAO"/>
+        <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
+    </bean>
 
     <bean id="bookingController" class="dk.gokartland.booking.controllers.BookingController" scope="prototype">
         <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
         <constructor-arg name="bookingService" ref="bookingService"/>
     </bean>
 
-	<bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController" scope="prototype">
-		<constructor-arg name="bookingService" ref="bookingService"/>
-		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
-	</bean>
+    <bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController"
+          scope="prototype">
+        <constructor-arg name="bookingService" ref="bookingService"/>
+        <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
+    </bean>
 
-	<bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController" scope="prototype">
-		<constructor-arg name="bookingService" ref="bookingService"/>
-		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
-	</bean>
+    <bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController" scope="prototype">
+        <constructor-arg name="bookingService" ref="bookingService"/>
+        <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
+    </bean>
 
     <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
-		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
+        <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
     <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
-		<constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO" />
+        <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
-    <bean id="updateBookingController" class="dk.gokartland.booking.controllers.UpdateBookingController" scope="prototype">
+    <bean id="updateBookingController" class="dk.gokartland.booking.controllers.UpdateBookingController"
+          scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
 
-	<bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
-		<constructor-arg name="bookingDAO" ref="bookingDAO" />
-	</bean>
+    <bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
+        <constructor-arg name="bookingDAO" ref="bookingDAO"/>
+    </bean>
 
-	<bean id="bookingDAO" class="dk.gokartland.booking.dao.BookingDAO">
-		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+    <bean id="bookingDAO" class="dk.gokartland.booking.dao.BookingDAO">
+        <constructor-arg name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
-	<bean id="bookablePlaceDAO" class="dk.gokartland.booking.dao.BookablePlaceDAO">
-		<constructor-arg name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+    <bean id="bookablePlaceDAO" class="dk.gokartland.booking.dao.BookablePlaceDAO">
+        <constructor-arg name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
 
 </beans>
