@@ -18,7 +18,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class AddDiningController extends Observable implements Initializable, EditableController {
+public class DiningController extends Observable implements Initializable, EditableController {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
@@ -44,7 +44,7 @@ public class AddDiningController extends Observable implements Initializable, Ed
     @FXML
     Label errorLabel;
 
-    public AddDiningController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
+    public DiningController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
     }

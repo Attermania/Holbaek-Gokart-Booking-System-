@@ -41,23 +41,23 @@
         <constructor-arg name="bookingService" ref="bookingService"/>
     </bean>
 
-    <bean id="addPaintballController" class="dk.gokartland.booking.controllers.AddPaintballController"
+    <bean id="addPaintballController" class="dk.gokartland.booking.controllers.PaintballController"
           scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
-    <bean id="addLasertagController" class="dk.gokartland.booking.controllers.AddLasertagController" scope="prototype">
+    <bean id="addLasertagController" class="dk.gokartland.booking.controllers.LasertagController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
-    <bean id="addDiningController" class="dk.gokartland.booking.controllers.AddDiningController" scope="prototype">
+    <bean id="addDiningController" class="dk.gokartland.booking.controllers.DiningController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
-    <bean id="addGokartController" class="dk.gokartland.booking.controllers.AddGokartController" scope="prototype">
+    <bean id="addGokartController" class="dk.gokartland.booking.controllers.GokartController" scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
