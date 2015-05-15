@@ -5,6 +5,9 @@ import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
 import dk.gokartland.booking.services.BookingService;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -80,7 +83,14 @@ public class App extends Application {
 
 		FXMLFactory fxmlFactory = applicationContext.getBean(FXMLFactory.class);
 
-		Stage stage = fxmlFactory.build(getClass().getResource("main.fxml"));
+		FXMLLoader loader = fxmlFactory.build(getClass().getResource("main.fxml"));
+
+		Parent root = loader.load();
+
+		Scene scene = new Scene(root);
+
+		Stage stage = new Stage();
+		stage.setScene(scene);
 		stage.show();
 	}
 }

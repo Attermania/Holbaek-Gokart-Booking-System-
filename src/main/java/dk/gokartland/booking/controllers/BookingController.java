@@ -10,13 +10,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -63,32 +67,82 @@ public class BookingController extends Observable implements Initializable, Obse
         addGokartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addGokart.fxml"), self);
-                stage.show();
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addGokart.fxml"), self);
+
+                try {
+                    Parent root = loader.load();
+
+                    Scene scene = new Scene(root);
+
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
         addPaintballButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addPaintball.fxml"), self);
-                stage.show();
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addPaintball.fxml"), self);
+
+                try {
+                    Parent root = loader.load();
+
+                    Scene scene = new Scene(root);
+
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
         addLasertagButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addLasertag.fxml"), self);
-                stage.show();
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addLasertag.fxml"), self);
+
+                try {
+                    Parent root = loader.load();
+
+                    Scene scene = new Scene(root);
+
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         addDiningButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("addDining.fxml"), self);
-                stage.show();
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addDining.fxml"), self);
+
+                try {
+                    Parent root = loader.load();
+
+                    Scene scene = new Scene(root);
+
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
