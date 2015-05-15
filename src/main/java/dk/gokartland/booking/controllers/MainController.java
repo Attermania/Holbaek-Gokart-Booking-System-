@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -37,6 +36,7 @@ public class MainController implements Initializable, Observer {
 
     @FXML
     DatePicker fromDatePicker, toDatePicker;
+
 
     private String typeAll = "Alle";
     private String typeGokart = "Gokart";
@@ -218,7 +218,7 @@ public class MainController implements Initializable, Observer {
                 }
                 break;
             default:
-                for(FacilityBooking facilityBooking : facilityBookings) {
+                for (FacilityBooking facilityBooking : facilityBookings) {
                     tempList.add(facilityBooking);
                 }
         }
