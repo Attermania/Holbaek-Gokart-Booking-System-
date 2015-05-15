@@ -33,7 +33,7 @@ public class MainController implements Initializable, Observer {
     TableView<FacilityBooking> facilityBookingTableView;
 
     @FXML
-    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn;
+    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn, antalColumn, kundenavnColumn;
 
     @FXML
     ComboBox<String> typeSearchComboBox;
@@ -127,6 +127,20 @@ public class MainController implements Initializable, Observer {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
                 String toDate = facilityBooking.getValue().getFrom().getTime().toString();
                 return new SimpleStringProperty(toDate);
+            }
+        });
+
+        antalColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
+                return null;
+            }
+        });
+
+        kundenavnColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
+                return null;
             }
         });
 
