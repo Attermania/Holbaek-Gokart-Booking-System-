@@ -68,7 +68,7 @@ public class MainController implements Initializable, Observer {
         newBookingButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FXMLLoader loader = fxmlFactory.build(getClass().getResource("createBooking.fxml"), self);
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("booking.fxml"), self);
 
                 try {
                     Parent root = loader.load();
@@ -150,20 +150,19 @@ public class MainController implements Initializable, Observer {
             @Override
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    System.out.println(facilityBookingTableView.getSelectionModel().getSelectedItem());
-                    FXMLLoader loader = fxmlFactory.build(getClass().getResource("updateBooking.fxml"));
+                    FXMLLoader loader = fxmlFactory.build(getClass().getResource("booking.fxml"));
 
                     try {
                         Parent root = loader.load();
-                        UpdateBookingController controller = loader.getController();
-
+                        BookingController controller = loader.getController();
+                        
 
                         Scene scene = new Scene(root);
 
                         Stage stage = new Stage();
                         stage.setScene(scene);
 
-                        controller.setup(facilityBookingTableView.getSelectionModel().getSelectedItem().getBooking());
+                        controller.setupForEdit(facilityBookingTableView.getSelectionModel().getSelectedItem().getBooking());
 
                         stage.show();
                     } catch (IOException e) {
@@ -307,6 +306,8 @@ public class MainController implements Initializable, Observer {
         }
         facilityBookingTableView.setItems(facilityBookings);
     }
+
+
 
 
 }

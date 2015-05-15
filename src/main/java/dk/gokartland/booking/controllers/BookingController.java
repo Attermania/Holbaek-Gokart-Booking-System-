@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -50,6 +51,12 @@ public class BookingController extends Observable implements Initializable, Obse
     @FXML
     TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn;
 
+    @FXML
+    Label titleLabel;
+
+    @FXML
+    GridPane mainGrid;
+
     private FXMLFactory fxmlFactory;
     private BookingService bookingService;
 
@@ -67,7 +74,7 @@ public class BookingController extends Observable implements Initializable, Obse
         addGokartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addGokart.fxml"), self);
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("gokart.fxml"), self);
 
                 try {
                     Parent root = loader.load();
@@ -88,7 +95,7 @@ public class BookingController extends Observable implements Initializable, Obse
         addPaintballButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addPaintball.fxml"), self);
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("paintball.fxml"), self);
 
                 try {
                     Parent root = loader.load();
@@ -109,7 +116,7 @@ public class BookingController extends Observable implements Initializable, Obse
         addLasertagButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addLasertag.fxml"), self);
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("lasertag.fxml"), self);
 
                 try {
                     Parent root = loader.load();
@@ -129,7 +136,7 @@ public class BookingController extends Observable implements Initializable, Obse
         addDiningButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FXMLLoader loader = fxmlFactory.build(getClass().getResource("addDining.fxml"), self);
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("dining.fxml"), self);
 
                 try {
                     Parent root = loader.load();
@@ -209,6 +216,44 @@ public class BookingController extends Observable implements Initializable, Obse
             }
         });
 
+        facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+
+                    FacilityBooking facilityBooking = facilityBookingTableView.getSelectionModel().getSelectedItem();
+                    FXMLLoader loader;
+
+                    if (facilityBooking instanceof GokartBooking)
+                        loader = fxmlFactory.build(getClass().getResource("gokart.fxml"));
+                    else if(facilityBooking instanceof PaintballBooking)
+                        loader = fxmlFactory.build(getClass().getResource("paintball.fxml"));
+                    else if(facilityBooking instanceof LasertagBooking)
+                        loader = fxmlFactory.build(getClass().getResource("lasertag.fxml"));
+                    else
+                        loader = fxmlFactory.build(getClass().getResource("addRestaurant.fxml"));
+
+                    try {
+                        Parent root = loader.load();
+                        EditableController controller = loader.getController();
+
+
+                        Scene scene = new Scene(root);
+
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+
+                        controller.setupForEdit(facilityBookingTableView.getSelectionModel().getSelectedItem());
+
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
     }
 
     @Override
@@ -218,6 +263,36 @@ public class BookingController extends Observable implements Initializable, Obse
 
             facilityBookings.add(facilityBooking);
             facilityBookingTableView.setItems(facilityBookings);
+        }
+    }
+
+    public void setupForEdit(Booking booking) {
+
+        titleLabel.setText("Booking #" + booking.getId());
+
+        Button updateButton = new Button("Gem");
+        updateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("");
+            }
+        });
+
+        mainGrid.getChildren().remove(createButton);
+        mainGrid.add(updateButton, 1, 11);
+
+        nameTextField.setText(booking.getCustomerName());
+        phoneTextField.setText(booking.getPhoneNumber());
+        emailTextField.setText(booking.getEmail());
+        privateRadioButton.selectedProperty().setValue(booking.isPrivateClient());
+        needsPermissionCheckBox.selectedProperty().setValue(booking.isNeedsPermission());
+        commentsTextArea.setText(booking.getComments());
+        createdByTextField.setText(booking.getCreatedBy());
+
+        for (FacilityBooking facilityBooking : booking.getFacilityBookings()) {
+            facilityBookings.add(facilityBooking);
+            facilityBookingTableView.setItems(facilityBookings);
+
         }
     }
 }

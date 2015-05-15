@@ -62,14 +62,6 @@
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
     </bean>
 
-    <bean id="updateBookingController" class="dk.gokartland.booking.controllers.UpdateBookingController"
-          scope="prototype">
-        <constructor-arg name="bookingService" ref="bookingService"/>
-        <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
-        <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
-    </bean>
-
-
     <bean id="bookingService" class="dk.gokartland.booking.services.BookingService">
         <constructor-arg name="bookingDAO" ref="bookingDAO"/>
     </bean>

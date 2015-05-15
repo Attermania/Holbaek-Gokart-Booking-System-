@@ -1,10 +1,7 @@
 package dk.gokartland.booking.controllers;
 
 import dk.gokartland.booking.dao.BookablePlaceDAO;
-import dk.gokartland.booking.domain.BookablePlace;
-import dk.gokartland.booking.domain.LasertagBooking;
-import dk.gokartland.booking.domain.Place;
-import dk.gokartland.booking.domain.RestaurantBooking;
+import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
 import dk.gokartland.booking.services.BookingService;
 import javafx.collections.FXCollections;
@@ -21,7 +18,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class AddDiningController extends Observable implements Initializable {
+public class AddDiningController extends Observable implements Initializable, EditableController {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
@@ -204,5 +201,10 @@ public class AddDiningController extends Observable implements Initializable {
             }
 
         }
+    }
+
+    @Override
+    public void setupForEdit(FacilityBooking facilityBooking) {
+
     }
 }
