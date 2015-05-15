@@ -66,6 +66,7 @@
           scope="prototype">
         <constructor-arg name="bookingService" ref="bookingService"/>
         <constructor-arg name="bookablePlaceDAO" ref="bookablePlaceDAO"/>
+        <constructor-arg name="fxmlFactory" ref="fxmlFactory"/>
     </bean>
 
 
