@@ -24,7 +24,7 @@ import java.util.*;
 public class MainController implements Initializable, Observer {
 
     @FXML
-    private Button newBookingButton, resetButton;
+    private Button newBookingButton, resetButton, toDayButton;
 
     @FXML
     TableView<FacilityBooking> facilityBookingTableView;
@@ -174,6 +174,14 @@ public class MainController implements Initializable, Observer {
         resetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
+
+            }
+        });
+
+        toDayButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
                 fromDatePicker.setValue(LocalDate.now());
                 toDatePicker.setValue(LocalDate.now());
 
@@ -187,8 +195,6 @@ public class MainController implements Initializable, Observer {
 
                 ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
                 facilityBookingTableView.setItems(tempList);
-
-
             }
         });
 
