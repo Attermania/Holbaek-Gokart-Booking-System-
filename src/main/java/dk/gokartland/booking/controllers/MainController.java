@@ -87,14 +87,6 @@ public class MainController implements Initializable, Observer {
             }
         });
 
-        Calendar from = new GregorianCalendar();
-        from.add(Calendar.HOUR, -1);
-        Calendar to = new GregorianCalendar();
-        to.add(Calendar.HOUR, 24);
-        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
-
-        facilityBookingTableView.setItems(facilityBookings);
-
         typeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
@@ -220,7 +212,7 @@ public class MainController implements Initializable, Observer {
             }
         });
 
-
+        search();
     }
 
     private void search() {
