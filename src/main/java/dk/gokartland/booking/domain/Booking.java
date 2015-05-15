@@ -60,4 +60,32 @@ public class Booking {
     public List<FacilityBooking> getFacilityBookings() {
         return facilityBookings;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public boolean isPrivateClient() {
+        return isPrivateClient;
+    }
+
+    public boolean isNeedsPermission() {
+        return needsPermission;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
 }
