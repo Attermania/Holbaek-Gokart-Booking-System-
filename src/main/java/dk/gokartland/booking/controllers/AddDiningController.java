@@ -13,10 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -46,6 +43,9 @@ public class AddDiningController extends Observable implements Initializable {
 
     @FXML
     DatePicker fromDatePicker, toDatePicker;
+
+    @FXML
+    Label errorLabel;
 
     public AddDiningController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
@@ -98,11 +98,10 @@ public class AddDiningController extends Observable implements Initializable {
                 Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
                 Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
-                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-
-
                 // Create Lasertag Booking
                 try {
+
+                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
                     RestaurantBooking restaurantBooking = bookingService.createRestaurantBooking(calendarFrom,
                             calendarTo,
                             noOfPeopleTextField.getText(),
@@ -119,7 +118,9 @@ public class AddDiningController extends Observable implements Initializable {
                     stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
-                    e.printStackTrace();
+                    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
                 }
             }
         });

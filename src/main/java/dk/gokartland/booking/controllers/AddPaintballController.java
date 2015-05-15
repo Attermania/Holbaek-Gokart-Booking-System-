@@ -49,6 +49,9 @@ public class AddPaintballController extends Observable implements Initializable 
     @FXML
     TextField noOfPeopleTextField;
 
+    @FXML
+    Label errorLabel;
+
     public AddPaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
@@ -99,9 +102,9 @@ public class AddPaintballController extends Observable implements Initializable 
                 Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
                 Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
-                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-
                 try {
+
+                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
                     // Create Paintball Booking
                     PaintballBooking paintballBooking = bookingService.createPaintballBooking(
                             calendarFrom,
@@ -118,7 +121,9 @@ public class AddPaintballController extends Observable implements Initializable 
                     stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
-                    e.printStackTrace();
+                    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
                 }
             }
         });

@@ -47,6 +47,9 @@ public class AddLasertagController extends Observable implements Initializable {
     @FXML
     TextArea commentTextArea;
 
+    @FXML
+    Label errorLabel;
+
 
     public AddLasertagController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
@@ -98,11 +101,9 @@ public class AddLasertagController extends Observable implements Initializable {
                 Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
                 Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
 
-                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-
-
                 // Create Lasertag Booking
                 try {
+                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
                     LasertagBooking lasertagBookingBooking = bookingService.createLasertagBooking(calendarFrom,
                             calendarTo,
                             noOfPeopleTextField.getText(),
@@ -119,7 +120,9 @@ public class AddLasertagController extends Observable implements Initializable {
                     stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
-                    e.printStackTrace();
+                    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe){
+                    errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
                 }
             }
         });
