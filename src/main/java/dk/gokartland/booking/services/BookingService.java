@@ -3,6 +3,8 @@ package dk.gokartland.booking.services;
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
+import org.apache.commons.validator.Validator;
+import org.apache.commons.validator.ValidatorResources;
 
 import java.util.Calendar;
 import java.util.List;
@@ -38,6 +40,8 @@ public class BookingService {
     public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws PlaceAlreadyBookedException {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        
 
         if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
 
