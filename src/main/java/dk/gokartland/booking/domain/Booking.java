@@ -32,7 +32,8 @@ public class Booking {
     @Column
     private String createdBy;
 
-    @OneToMany(targetEntity = FacilityBooking.class, cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "booking_id")
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
     public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {

@@ -25,6 +25,9 @@ public abstract class FacilityBooking {
 	@ManyToOne
     private BookablePlace bookablePlace;
 
+	@ManyToOne
+	private Booking booking;
+
 	public FacilityBooking(Calendar from, Calendar to, String comments, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
@@ -61,4 +64,11 @@ public abstract class FacilityBooking {
 
 	public abstract int getNumberOfPeople();
 
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+	public Booking getBooking() {
+		return booking;
+	}
 }
