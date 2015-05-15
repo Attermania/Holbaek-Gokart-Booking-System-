@@ -70,17 +70,6 @@ public class UpdateBookingController extends Observable implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Place bane1 = new Place("Bane 1", false);
-        List<Place> places = new ArrayList<Place>();
-        places.add(bane1);
-        BookablePlace bookablePlace = new BookablePlace("Bane 1", places);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Test", 1, bookablePlace);
-        List<FacilityBooking> facilityBookings1 = new ArrayList<FacilityBooking>();
-        facilityBookings1.add(paintballBooking);
-        Booking booking = new Booking("JFK", "1234", true, false, "mail", "comment", "Jane", facilityBookings1);
-
-        setup(booking);
-
         UpdateBookingController self = this;
 
         addGokartButton.setOnAction(new EventHandler<ActionEvent>() {

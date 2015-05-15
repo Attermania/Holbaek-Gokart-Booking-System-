@@ -155,11 +155,15 @@ public class MainController implements Initializable, Observer {
 
                     try {
                         Parent root = loader.load();
+                        UpdateBookingController controller = loader.getController();
+
 
                         Scene scene = new Scene(root);
 
                         Stage stage = new Stage();
                         stage.setScene(scene);
+
+                        controller.setup(facilityBookingTableView.getSelectionModel().getSelectedItem().getBooking());
 
                         stage.show();
                     } catch (IOException e) {
