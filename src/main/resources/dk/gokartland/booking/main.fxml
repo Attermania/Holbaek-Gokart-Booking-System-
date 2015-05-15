@@ -16,9 +16,9 @@
         <columns>
           <TableColumn fx:id="placeColumn" prefWidth="75.0" text="Bane" />
           <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
-          <TableColumn fx:id="fromColumn" minWidth="75.0" prefWidth="-1.0" text="Fra" />
-          <TableColumn fx:id="toColumn" minWidth="75.0" prefWidth="-1.0" text="Til" />
-            <TableColumn fx:id="numberOfPeopleColumn" minWidth="75.0" prefWidth="98.0" text="Antal" />
+          <TableColumn fx:id="fromColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" text="Fra" />
+          <TableColumn fx:id="toColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" text="Til" />
+            <TableColumn fx:id="numberOfPeopleColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="60.0" text="Antal" />
             <TableColumn fx:id="customerNameColumn" minWidth="35.0" prefWidth="224.0" text="Kundenavn" />
         </columns>
       </TableView>
