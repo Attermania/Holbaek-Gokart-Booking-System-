@@ -22,17 +22,13 @@ public abstract class FacilityBooking {
 	@Column(length = 2000)
 	private String comments;
 
-	@Column
-	private int numberOfPeople;
-
 	@ManyToOne
     private BookablePlace bookablePlace;
 
-	public FacilityBooking(Calendar from, Calendar to, String comments, int numberOfPeople, BookablePlace bookablePlace) {
+	public FacilityBooking(Calendar from, Calendar to, String comments, BookablePlace bookablePlace) {
 		this.from = from;
 		this.to = to;
 		this.comments = comments;
-		this.numberOfPeople = numberOfPeople;
         this.bookablePlace = bookablePlace;
     }
 
@@ -55,10 +51,6 @@ public abstract class FacilityBooking {
 		return comments;
 	}
 
-	public int getNumberOfPeople() {
-		return numberOfPeople;
-	}
-
     public BookablePlace getBookablePlace() {
         return bookablePlace;
     }
@@ -66,4 +58,7 @@ public abstract class FacilityBooking {
     public boolean isSamePlace(BookablePlace bookablePlace) {
 		return this.bookablePlace.isSamePlace(bookablePlace);
 	}
+
+	public abstract int getNumberOfPeople();
+
 }

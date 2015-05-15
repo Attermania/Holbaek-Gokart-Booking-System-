@@ -22,7 +22,7 @@ public class GokartBooking extends FacilityBooking {
 	private boolean medals;
 
 	public GokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
-		super(from, to, comments, (short) (adultCarts + childrenCarts), bookablePlace);
+		super(from, to, comments, bookablePlace);
 		this.adultCarts = adultCarts;
 		this.childrenCarts = childrenCarts;
 		this.champagne = champagne;
@@ -30,6 +30,11 @@ public class GokartBooking extends FacilityBooking {
 	}
 
 	protected GokartBooking() {
+	}
+
+	@Override
+	public int getNumberOfPeople() {
+		return adultCarts + childrenCarts;
 	}
 
 	public int getAdultCarts() {
