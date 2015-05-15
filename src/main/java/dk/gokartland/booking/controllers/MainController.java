@@ -10,13 +10,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -63,8 +67,22 @@ public class MainController implements Initializable, Observer {
         newBookingButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = fxmlFactory.build(getClass().getResource("createBooking.fxml"), self);
-                stage.show();
+                FXMLLoader loader = fxmlFactory.build(getClass().getResource("createBooking.fxml"), self);
+
+                try {
+                    Parent root = loader.load();
+                    // Scene - The container of the root element
+                    Scene scene = new Scene(root);
+
+                    // Stage - a window
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -118,8 +136,21 @@ public class MainController implements Initializable, Observer {
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                     System.out.println(facilityBookingTableView.getSelectionModel().getSelectedItem());
-                    Stage stage = fxmlFactory.build(getClass().getResource("updateBooking.fxml"));
-                    stage.show();
+                    FXMLLoader loader = fxmlFactory.build(getClass().getResource("updateBooking.fxml"));
+
+                    try {
+                        Parent root = loader.load();
+
+                        Scene scene = new Scene(root);
+
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });

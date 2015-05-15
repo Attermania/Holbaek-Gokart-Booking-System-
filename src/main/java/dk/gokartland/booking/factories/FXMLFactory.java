@@ -18,11 +18,11 @@ public class FXMLFactory implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
-	public Stage build(URL fxmlLocation) {
+	public FXMLLoader build(URL fxmlLocation) {
 		return build(fxmlLocation, null);
 	}
 
-	public Stage build(URL fxmlLocation, Observer observer) {
+	public FXMLLoader build(URL fxmlLocation, Observer observer) {
 		FXMLLoader loader = new FXMLLoader();
 
 		loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -39,25 +39,10 @@ public class FXMLFactory implements ApplicationContextAware {
 			}
 		});
 
-		try {
-			loader.setLocation(fxmlLocation);
 
-			// The root element from the fxml file
-			Parent root = loader.load();
+		loader.setLocation(fxmlLocation);
 
-			// Scene - The container of the root element
-			Scene scene = new Scene(root);
-
-			// Stage - a window
-			Stage stage = new Stage();
-			stage.setScene(scene);
-
-			return stage;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+		return loader;
 	}
 
 	@Override
