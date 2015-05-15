@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,6 +25,9 @@ public class AddGokartController extends Observable implements Initializable {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
+
+    @FXML
+    AnchorPane root;
 
     @FXML
     DatePicker fromDatePicker, toDatePicker;
@@ -123,7 +128,8 @@ public class AddGokartController extends Observable implements Initializable {
                     clearChanged();
 
                     // Close window
-
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
                     e.printStackTrace();

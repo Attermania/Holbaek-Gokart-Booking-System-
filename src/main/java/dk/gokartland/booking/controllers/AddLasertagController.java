@@ -14,18 +14,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * Created by Dion on 05-05-2015.
- */
 public class AddLasertagController extends Observable implements Initializable {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
+
+    @FXML
+    AnchorPane root;
 
     @FXML
     Button addButton;
@@ -113,7 +115,8 @@ public class AddLasertagController extends Observable implements Initializable {
                     clearChanged();
 
                     // Close window
-
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
 
                 } catch (PlaceAlreadyBookedException e) {
                     e.printStackTrace();

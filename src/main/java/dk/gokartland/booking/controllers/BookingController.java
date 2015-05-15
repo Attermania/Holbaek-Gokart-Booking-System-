@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -20,6 +21,9 @@ import java.net.URL;
 import java.util.*;
 
 public class BookingController extends Observable implements Initializable, Observer {
+
+    @FXML
+    AnchorPane root;
 
     @FXML
     TextField nameTextField, phoneTextField, emailTextField, createdByTextField;
@@ -98,22 +102,11 @@ public class BookingController extends Observable implements Initializable, Obse
                 setChanged();
                 notifyObservers(booking);
                 clearChanged();
+
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.close();
             }
         });
-
-        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
-
-        List<Place> places = new ArrayList<>();
-        places.add(new Place("Bane 1", false));
-        Place actionbane = new Place("Action bane", false);
-        places.add(actionbane);
-
-
-        GokartBooking gokartBooking = new GokartBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", 5, 5, new BookablePlace("Bane 1", places), true, true);
-        PaintballBooking paintballBooking = new PaintballBooking(new GregorianCalendar(), new GregorianCalendar(), "Comment", (short) 5, new BookablePlace("Bane 2", places));
-
-        facilityBookings.addAll(gokartBooking, paintballBooking);
-
 
         facilityBookingTableView.setItems(facilityBookings);
 
