@@ -1,5 +1,6 @@
 package dk.gokartland.booking;
 
+import dk.gokartland.booking.controllers.MainController;
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
@@ -84,7 +85,7 @@ public class App extends Application {
 		// Make window
 		FXMLFactory fxmlFactory = applicationContext.getBean(FXMLFactory.class);
 
-		FXMLLoader loader = fxmlFactory.build(getClass().getResource("main.fxml"));
+		FXMLLoader loader = fxmlFactory.build(MainController.class.getResource("main.fxml"));
 
 		Parent root = loader.load();
 
