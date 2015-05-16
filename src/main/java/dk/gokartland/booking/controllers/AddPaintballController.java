@@ -45,7 +45,7 @@ public class AddPaintballController extends Observable implements Initializable,
     TextField noOfPeopleTextField;
 
     @FXML
-    Label errorLabel;
+    Label errorLabel, titleLabel;
 
     public AddPaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
@@ -208,6 +208,6 @@ public class AddPaintballController extends Observable implements Initializable,
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
-
+        titleLabel.setText("");
     }
 }
