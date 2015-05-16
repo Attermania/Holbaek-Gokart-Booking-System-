@@ -16,15 +16,6 @@ public class BookingService {
         this.bookingDAO = bookingDAO;
     }
 
-    public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws PlaceAlreadyBookedException {
-
-        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
-
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
-
-        return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
-    }
-
     public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) {
 
         Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, facilityBookings);
@@ -38,6 +29,19 @@ public class BookingService {
         if (persisted) return booking;
 
         return null;
+    }
+
+    public boolean updateBooking(Booking booking) {
+        return bookingDAO.update(booking);
+    }
+
+    public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws PlaceAlreadyBookedException {
+
+        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
+
+        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
+
+        return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
     }
 
     public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws PlaceAlreadyBookedException {

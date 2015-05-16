@@ -32,7 +32,7 @@ public class Booking {
     @Column
     private String createdBy;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id")
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
@@ -45,12 +45,23 @@ public class Booking {
         this.comments = comments;
         this.createdBy = createdBy;
         this.facilityBookings = facilityBookings;
+
+        for(FacilityBooking facilityBooking : facilityBookings) {
+            facilityBooking.setBooking(this);
+        }
     }
 
     protected Booking() {
     }
 
     public void addFacilityBooking(FacilityBooking facilityBooking) {
+        // Return if the facility booking already exists
+        for(FacilityBooking fb : facilityBookings) {
+            if(fb == facilityBooking) return;
+        }
+
+        facilityBooking.setBooking(this);
+
         facilityBookings.add(facilityBooking);
     }
 
@@ -88,5 +99,9 @@ public class Booking {
 
     public String getCreatedBy() {
         return createdBy;
+    }
+
+    public void changeCustomerName(String newName) {
+        this.customerName = newName;
     }
 }

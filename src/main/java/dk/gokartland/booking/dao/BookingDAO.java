@@ -43,6 +43,20 @@ public class BookingDAO {
         return true;
     }
 
+    public boolean update(Booking booking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(booking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
     public boolean delete(FacilityBooking facilityBooking) {
         return true;
     }

@@ -265,7 +265,13 @@ public class BookingController extends Observable implements Initializable, Obse
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("");
+                booking.changeCustomerName(nameTextField.getText());
+
+                for(FacilityBooking facilityBooking : facilityBookings) {
+                    booking.addFacilityBooking(facilityBooking);
+                }
+
+                bookingService.updateBooking(booking);
             }
         });
 
