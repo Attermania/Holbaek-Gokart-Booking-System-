@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.gokartland.booking.controllers.AddLasertagController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.gokartland.booking.controllers.LasertagController">
    <children>
       <Label layoutX="140.0" layoutY="14.0" styleClass="title" text="Tilføj Lasertag" AnchorPane.leftAnchor="140.0">
       </Label>

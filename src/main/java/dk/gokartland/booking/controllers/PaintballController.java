@@ -18,7 +18,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class AddPaintballController extends Observable implements Initializable, EditableController {
+public class PaintballController extends Observable implements Initializable, EditableController {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
@@ -47,7 +47,7 @@ public class AddPaintballController extends Observable implements Initializable,
     @FXML
     Label errorLabel, titleLabel;
 
-    public AddPaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
+    public PaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
     }

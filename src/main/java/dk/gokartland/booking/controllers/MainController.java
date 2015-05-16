@@ -87,14 +87,6 @@ public class MainController implements Initializable, Observer {
             }
         });
 
-        Calendar from = new GregorianCalendar();
-        from.add(Calendar.HOUR, -1);
-        Calendar to = new GregorianCalendar();
-        to.add(Calendar.HOUR, 24);
-        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
-
-        facilityBookingTableView.setItems(facilityBookings);
-
         typeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
@@ -141,7 +133,7 @@ public class MainController implements Initializable, Observer {
         customerNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
-                return null;
+                return new SimpleStringProperty(param.getValue().getBooking().getCustomerName());
             }
         });
 
@@ -200,16 +192,7 @@ public class MainController implements Initializable, Observer {
                 fromDatePicker.setValue(LocalDate.now());
                 toDatePicker.setValue(LocalDate.now());
 
-                LocalDate fromDate = fromDatePicker.getValue();
-                LocalDate toDate = toDatePicker.getValue();
-
-                Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
-                from.add(Calendar.HOUR, -1);
-                Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
-                to.add(Calendar.HOUR, 12);
-
-                ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList(bookingDAO.getFacilityBookingsWithin(from, to));
-                facilityBookingTableView.setItems(tempList);
+                search();
             }
         });
 
@@ -229,7 +212,7 @@ public class MainController implements Initializable, Observer {
             }
         });
 
-
+        search();
     }
 
     private void search() {

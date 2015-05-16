@@ -18,7 +18,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class AddGokartController extends Observable implements Initializable, EditableController {
+public class GokartController extends Observable implements Initializable, EditableController {
 
     private BookingService bookingService;
     private BookablePlaceDAO bookablePlaceDAO;
@@ -50,7 +50,7 @@ public class AddGokartController extends Observable implements Initializable, Ed
     @FXML
     Label errorLabel, titleLabel;
 
-    public AddGokartController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
+    public GokartController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
     }
