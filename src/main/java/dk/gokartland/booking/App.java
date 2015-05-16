@@ -69,17 +69,27 @@ public class App extends Application {
 		Calendar to1 = new GregorianCalendar();
 		to1.add(10, 48);
 
-		GokartBooking gokartBooking = new GokartBooking(from, to, "Test", 1, 2, bookablePlace1, true, true);
-		PaintballBooking paintballBooking = new PaintballBooking(from1, to1, "Test", 2, bookablePlace4);
+		GokartBooking gokartBooking = new GokartBooking(from, to, "Gokart", 1, 2, bookablePlace1, true, true);
+		PaintballBooking paintballBooking = new PaintballBooking(from1, to1, "Paintball", 2, bookablePlace4);
+        LasertagBooking lasertagBooking = new LasertagBooking(from, to, "Lasertag", 5, bookablePlace4);
+        RestaurantBooking restaurantBooking = new RestaurantBooking(from1, to1, "Restaurant", 12, bookablePlace5);
 
 		List<FacilityBooking> gokartlist = new ArrayList<>();
 		gokartlist.add(gokartBooking);
 
-		List<FacilityBooking> paintballlist = new ArrayList<>();
+		List<FacilityBooking> paintballlist = new ArrayList<FacilityBooking>();
 		paintballlist.add(paintballBooking);
 
+        List<FacilityBooking> lasertaglist = new ArrayList<>();
+        lasertaglist.add(lasertagBooking);
+
+        List<FacilityBooking> restaurantlist = new ArrayList<>();
+        restaurantlist.add(restaurantBooking);
+
 		Booking booking1 = bookingService.createBooking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", gokartlist);
-		bookingService.createBooking("Jane", "123", true, false, "mail", "Test", "JFK", paintballlist);
+		bookingService.createBooking("Jane", "123", true, false, "mail", "Paintball", "JFK", paintballlist);
+        bookingService.createBooking("Alice", "1234", true, true, "Gmail", "Lasertag", "OLI", lasertaglist);
+        bookingService.createBooking("Grethe", "123456", true, false, "Hotmail.com", "Restaurant", "BDK",  restaurantlist);
 
 		// Make window
 		FXMLFactory fxmlFactory = applicationContext.getBean(FXMLFactory.class);
