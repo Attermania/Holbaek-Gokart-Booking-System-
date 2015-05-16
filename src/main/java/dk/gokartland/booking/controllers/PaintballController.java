@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -46,6 +47,9 @@ public class PaintballController extends Observable implements Initializable, Ed
 
     @FXML
     Label errorLabel, titleLabel;
+
+    @FXML
+    GridPane bottomGrid;
 
     public PaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
@@ -93,9 +97,10 @@ public class PaintballController extends Observable implements Initializable, Ed
             @Override
             public void handle(ActionEvent event) {
                 LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
 
                 Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
-                Calendar calendarTo = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), toMinute, toMinute);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
 
                 try {
 
@@ -208,6 +213,33 @@ public class PaintballController extends Observable implements Initializable, Ed
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
-        titleLabel.setText("");
+        titleLabel.setText("Paintballbooking #" + facilityBooking.getId());
+
+        Calendar from = facilityBooking.getFrom();
+        Calendar to = facilityBooking.getTo();
+
+        fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
+        toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
+
+        fromHourComboBox.setValue(String.valueOf(from.get(Calendar.HOUR_OF_DAY)));
+        fromMinuteComboBox.setValue(String.valueOf(from.get(Calendar.MINUTE)));
+        toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
+        toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
+
+        placeComboBox.setValue(facilityBooking.getBookablePlace());
+        noOfPeopleTextField.setText(String.valueOf(facilityBooking.getNumberOfPeople()));
+        commentTextArea.setText(facilityBooking.getComments());
+
+        Button updateButton = new Button("Gem");
+        updateButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Insert save logic
+            }
+        });
+
+        bottomGrid.getChildren().remove(addButton);
+        bottomGrid.add(updateButton, 0, 1);
+
     }
 }

@@ -34,7 +34,7 @@
             <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
             <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <RadioButton fx:id="privateRadioButton" mnemonicParsing="false" selected="true" text="Privat" GridPane.columnIndex="1" GridPane.rowIndex="3" toggleGroup="$privateOrBusinessToggleGroup">
+            <RadioButton fx:id="privateRadioButton" mnemonicParsing="false" selected="true" text="Privat" toggleGroup="$privateOrBusinessToggleGroup" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <toggleGroup>
                     <ToggleGroup fx:id="privateOrBusinessToggleGroup" />
                 </toggleGroup>
@@ -52,9 +52,9 @@
             <TableView fx:id="facilityBookingTableView" maxHeight="-Infinity" prefHeight="120.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
               <columns>
                 <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
-                <TableColumn fx:id="placeColumn" prefWidth="75.0" text="Bane" />
-                  <TableColumn fx:id="fromColumn" prefWidth="75.0" text="Fra" />
-                  <TableColumn fx:id="toColumn" prefWidth="75.0" text="Til" />
+                <TableColumn fx:id="placeColumn" minWidth="-Infinity" text="Bane" />
+                  <TableColumn fx:id="fromColumn" minWidth="-Infinity" prefWidth="130.0" text="Fra" />
+                  <TableColumn fx:id="toColumn" minWidth="-Infinity" prefWidth="130.0" text="Til" />
               </columns>
             </TableView>
             <Label alignment="CENTER" prefHeight="20.0" prefWidth="487.0" text="Tilføj aktivitet" GridPane.columnIndex="1" GridPane.rowIndex="7">

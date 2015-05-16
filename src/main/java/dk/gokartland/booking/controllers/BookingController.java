@@ -195,7 +195,7 @@ public class BookingController extends Observable implements Initializable, Obse
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
                 Calendar fromDate = facilityBooking.getValue().getFrom();
-                return new SimpleStringProperty(fromDate.get(Calendar.DAY_OF_MONTH) + "-" + fromDate.get(Calendar.MONTH) + "-" + fromDate.get(Calendar.YEAR) + " " + fromDate.get(Calendar.HOUR_OF_DAY) + ":" + fromDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty(fromDate.get(Calendar.DAY_OF_MONTH) + "-" + (fromDate.get(Calendar.MONTH)+1) + "-" + fromDate.get(Calendar.YEAR) + " " + fromDate.get(Calendar.HOUR_OF_DAY) + ":" + fromDate.get(Calendar.MINUTE));
             }
         });
 
@@ -203,7 +203,7 @@ public class BookingController extends Observable implements Initializable, Obse
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
                 Calendar toDate = facilityBooking.getValue().getTo();
-                return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + toDate.get(Calendar.MONTH) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + (toDate.get(Calendar.MONTH)+1) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
             }
         });
 
@@ -222,7 +222,7 @@ public class BookingController extends Observable implements Initializable, Obse
                     else if(facilityBooking instanceof LasertagBooking)
                         loader = fxmlFactory.build(getClass().getResource("lasertag.fxml"));
                     else
-                        loader = fxmlFactory.build(getClass().getResource("addRestaurant.fxml"));
+                        loader = fxmlFactory.build(getClass().getResource("dining.fxml"));
 
                     try {
                         Parent root = loader.load();
