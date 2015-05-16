@@ -75,8 +75,8 @@
                         </ComboBox>
                     </children>
                 </GridPane>
-                <Label text="Vælg bane:" GridPane.rowIndex="2" />
-                <ComboBox fx:id="placeComboBox" prefWidth="300.0" promptText="Vælg bane" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label text="Vælg sted:" GridPane.rowIndex="2" />
+                <ComboBox fx:id="placeComboBox" prefWidth="300.0" promptText="Vælg sted" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextArea fx:id="commentTextArea" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Label text="Kommentar" GridPane.rowIndex="4" />
             <GridPane fx:id="bottomGrid" GridPane.columnIndex="1" GridPane.rowIndex="5">
