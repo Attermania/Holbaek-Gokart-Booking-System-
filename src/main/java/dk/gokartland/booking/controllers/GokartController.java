@@ -260,7 +260,49 @@ public class GokartController extends Observable implements Initializable, Edita
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert save logic
+                LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
+
+                Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
+                Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
+                Integer toHour = Integer.parseInt(toHourComboBox.getValue());
+                Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
+
+
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
+
+                try {
+
+                    int adultCarts = Integer.parseInt(adultCartsTextField.getText());
+                    int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
+
+                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
+                    GokartBooking gokartBooking = new GokartBooking(
+                            calendarFrom,
+                            calendarTo,
+                            commentTextArea.getText(),
+                            adultCarts,
+                            childrenCarts,
+                            placeComboBox.getValue(),
+                            champagneCheckBox.isSelected(),
+                            medalsCheckBox.isSelected()
+                    );
+
+                    // Observer pattern notify booking window
+                    setChanged();
+                    notifyObservers(gokartBooking);
+                    clearChanged();
+
+                    // Close window
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
+
+                //} catch (PlaceAlreadyBookedException e) {
+                  //  errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er udfyldt korrekt");
+                }
             }
         });
 
@@ -269,4 +311,5 @@ public class GokartController extends Observable implements Initializable, Edita
 
 
     }
+
 }

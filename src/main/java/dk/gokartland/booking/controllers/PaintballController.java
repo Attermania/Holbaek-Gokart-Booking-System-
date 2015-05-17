@@ -234,7 +234,41 @@ public class PaintballController extends Observable implements Initializable, Ed
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert save logic
+
+                Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
+                Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
+                Integer toHour = Integer.parseInt(toHourComboBox.getValue());
+                Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
+
+                LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
+
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
+
+                try {
+
+                    int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
+                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
+                    PaintballBooking paintballBooking = new PaintballBooking(
+                            calendarFrom,
+                            calendarTo,
+                            commentTextArea.getText(), noOfPeople, placeComboBox.getValue());
+
+                    // Observer pattern notify booking window
+                    setChanged();
+                    notifyObservers(paintballBooking);
+                    clearChanged();
+
+                    // Close window
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
+
+                //} catch (PlaceAlreadyBookedException e) {
+                //    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
+                }
             }
         });
 

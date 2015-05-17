@@ -234,7 +234,44 @@ public class DiningController extends Observable implements Initializable, Edita
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert save logic
+                Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
+                Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
+                Integer toHour = Integer.parseInt(toHourComboBox.getValue());
+                Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
+
+                LocalDate fromDate = fromDatePicker.getValue();
+                LocalDate toDate = toDatePicker.getValue();
+
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
+
+                // Create Lasertag Booking
+                try {
+
+                    int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
+
+                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
+                    RestaurantBooking restaurantBooking = new RestaurantBooking(calendarFrom,
+                            calendarTo,
+                            noOfPeopleTextField.getText(),
+                            noOfPeople,
+                            placeComboBox.getValue());
+
+                    // Observer pattern notify booking window
+                    setChanged();
+                    notifyObservers(restaurantBooking);
+                    clearChanged();
+                    System.out.println(restaurantBooking.getNumberOfPeople());
+
+                    // Close window
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
+
+                //} catch (PlaceAlreadyBookedException e) {
+                //    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
+                    errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
+                }
             }
         });
 
