@@ -24,4 +24,8 @@ public class LasertagBooking extends FacilityBooking {
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
+
+    public void changeNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
 }

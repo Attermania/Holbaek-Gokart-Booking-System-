@@ -250,18 +250,19 @@ public class DiningController extends Observable implements Initializable, Edita
 
                     int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
-                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
-                    RestaurantBooking restaurantBooking = new RestaurantBooking(calendarFrom,
-                            calendarTo,
-                            noOfPeopleTextField.getText(),
-                            noOfPeople,
-                            placeComboBox.getValue());
+                    facilityBooking.changeFrom(calendarFrom);
+                    facilityBooking.changeTo(calendarTo);
+                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
+                    facilityBooking.changeComments(commentTextArea.getText());
+                    if(facilityBooking instanceof RestaurantBooking) ((RestaurantBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
+
+                    // Insert bookingService updateMethod and use facilityBooking below
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(restaurantBooking);
+                    notifyObservers(facilityBooking);
                     clearChanged();
-                    System.out.println(restaurantBooking.getNumberOfPeople());
+
 
                     // Close window
                     Stage stage = (Stage) root.getScene().getWindow();

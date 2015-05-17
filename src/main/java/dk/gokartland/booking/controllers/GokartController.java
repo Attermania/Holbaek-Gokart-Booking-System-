@@ -273,25 +273,25 @@ public class GokartController extends Observable implements Initializable, Edita
                 Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
 
                 try {
-
                     int adultCarts = Integer.parseInt(adultCartsTextField.getText());
                     int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
 
-                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
-                    GokartBooking gokartBooking = new GokartBooking(
-                            calendarFrom,
-                            calendarTo,
-                            commentTextArea.getText(),
-                            adultCarts,
-                            childrenCarts,
-                            placeComboBox.getValue(),
-                            champagneCheckBox.isSelected(),
-                            medalsCheckBox.isSelected()
-                    );
+                    facilityBooking.changeFrom(calendarFrom);
+                    facilityBooking.changeTo(calendarTo);
+                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
+                    facilityBooking.changeComments(commentTextArea.getText());
+                    if(facilityBooking instanceof GokartBooking) {
+                         ((GokartBooking) facilityBooking).changeAdultCarts(adultCarts);
+                        ((GokartBooking) facilityBooking).changeChildrenCarts(childrenCarts);
+                        ((GokartBooking) facilityBooking).changeChampagne(champagneCheckBox.isSelected());
+                        ((GokartBooking) facilityBooking).changeMedals(medalsCheckBox.isSelected());
+                    }
+
+                    // Insert bookingService updateMethod and use facilityBooking below
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(gokartBooking);
+                    notifyObservers(facilityBooking);
                     clearChanged();
 
                     // Close window

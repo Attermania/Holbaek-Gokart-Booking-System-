@@ -24,4 +24,8 @@ public class PaintballBooking extends FacilityBooking {
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
+
+    public void changeNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
 }

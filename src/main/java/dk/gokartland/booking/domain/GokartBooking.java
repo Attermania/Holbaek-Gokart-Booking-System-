@@ -52,4 +52,20 @@ public class GokartBooking extends FacilityBooking {
 	public boolean wantsMedals() {
 		return medals;
 	}
+
+    public void changeAdultCarts(int adultCarts) {
+        this.adultCarts = adultCarts;
+    }
+
+    public void changeChildrenCarts(int childrenCarts) {
+        this.childrenCarts = childrenCarts;
+    }
+
+    public void changeChampagne(boolean champagne) {
+        this.champagne = champagne;
+    }
+
+    public void changeMedals(boolean medals) {
+        this.medals = medals;
+    }
 }

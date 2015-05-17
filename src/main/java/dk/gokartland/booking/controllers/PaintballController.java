@@ -249,15 +249,18 @@ public class PaintballController extends Observable implements Initializable, Ed
                 try {
 
                     int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
-                    PaintballBooking paintballBooking = new PaintballBooking(
-                            calendarFrom,
-                            calendarTo,
-                            commentTextArea.getText(), noOfPeople, placeComboBox.getValue());
+
+                    facilityBooking.changeFrom(calendarFrom);
+                    facilityBooking.changeTo(calendarTo);
+                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
+                    facilityBooking.changeComments(commentTextArea.getText());
+                    if(facilityBooking instanceof PaintballBooking) ((PaintballBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
+
+                    // Insert bookingService updateMethod and use facilityBooking below
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(paintballBooking);
+                    notifyObservers(facilityBooking);
                     clearChanged();
 
                     // Close window

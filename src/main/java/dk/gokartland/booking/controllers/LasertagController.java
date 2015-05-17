@@ -248,16 +248,18 @@ public class LasertagController extends Observable implements Initializable, Edi
                 //
                 try {
                     int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-                    // CHANGE OBJECT BELOW SO IT IS CREATED VIA BOOKINGSERVICE -----------!_!_!_!_!
-                    LasertagBooking lasertagBookingBooking = new LasertagBooking(calendarFrom,
-                            calendarTo,
-                            noOfPeopleTextField.getText(),
-                            noOfPeople,
-                            placeComboBox.getValue());
+
+                    facilityBooking.changeFrom(calendarFrom);
+                    facilityBooking.changeTo(calendarTo);
+                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
+                    facilityBooking.changeComments(commentTextArea.getText());
+                    if(facilityBooking instanceof LasertagBooking) ((LasertagBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
+
+                    // Insert bookingService updateMethod and use facilityBooking below
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(lasertagBookingBooking);
+                    notifyObservers(facilityBooking);
                     clearChanged();
 
                     // Close window

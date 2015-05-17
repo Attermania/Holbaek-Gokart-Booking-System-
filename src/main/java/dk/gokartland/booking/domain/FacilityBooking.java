@@ -71,4 +71,22 @@ public abstract class FacilityBooking {
 	public Booking getBooking() {
 		return booking;
 	}
+
+    public void changeFrom(Calendar from) {
+        this.from = from;
+    }
+
+    public void changeTo(Calendar to) {
+        this.to = to;
+    }
+
+    public void changeComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void changeBookablePlace(BookablePlace bookablePlace) {
+        this.bookablePlace = bookablePlace;
+    }
+
+
 }
