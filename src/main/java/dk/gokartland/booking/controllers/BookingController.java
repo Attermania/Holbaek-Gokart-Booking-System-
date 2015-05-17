@@ -284,8 +284,9 @@ public class BookingController extends Observable implements Initializable, Obse
                 booking.changeCreatedBy(createdByTextField.getText());
 
                 // Insert bookingService updateMethod and use facilityBooking below
+                bookingService.updateBooking(booking);
 
-                // Observer pattern notify booking window
+                // Observer pattern notify main window
                 setChanged();
                 notifyObservers(booking);
                 clearChanged();
@@ -298,7 +299,6 @@ public class BookingController extends Observable implements Initializable, Obse
                     booking.addFacilityBooking(facilityBooking);
                 }
 
-                bookingService.updateBooking(booking);
             }
         });
 
