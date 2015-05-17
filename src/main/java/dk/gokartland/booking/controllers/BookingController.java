@@ -276,6 +276,23 @@ public class BookingController extends Observable implements Initializable, Obse
             @Override
             public void handle(ActionEvent event) {
                 booking.changeCustomerName(nameTextField.getText());
+                booking.changePhoneNumber(phoneTextField.getText());
+                booking.changeEmail(emailTextField.getText());
+                booking.changeComments(commentsTextArea.getText());
+                booking.changeNeedsPermission(needsPermissionCheckBox.isSelected());
+                booking.changePrivateClient(privateRadioButton.isSelected());
+                booking.changeCreatedBy(createdByTextField.getText());
+
+                // Insert bookingService updateMethod and use facilityBooking below
+
+                // Observer pattern notify booking window
+                setChanged();
+                notifyObservers(booking);
+                clearChanged();
+
+                // Close window
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.close();
 
                 for (FacilityBooking facilityBooking : facilityBookings) {
                     booking.addFacilityBooking(facilityBooking);

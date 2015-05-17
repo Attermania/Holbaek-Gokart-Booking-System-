@@ -104,4 +104,28 @@ public class Booking {
     public void changeCustomerName(String newName) {
         this.customerName = newName;
     }
+
+    public void changePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void changePrivateClient(boolean isPrivateClient) {
+        this.isPrivateClient = isPrivateClient;
+    }
+
+    public void changeNeedsPermission(boolean needsPermission) {
+        this.needsPermission = needsPermission;
+    }
+
+    public void changeEmail(String email) {
+        this.email = email;
+    }
+
+    public void changeComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void changeCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 }
