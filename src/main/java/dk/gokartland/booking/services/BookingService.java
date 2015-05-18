@@ -2,6 +2,7 @@ package dk.gokartland.booking.services;
 
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
+import dk.gokartland.booking.domain.exceptions.MissingInformationException;
 import dk.gokartland.booking.domain.exceptions.NoFacilityBookingsException;
 import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
 
@@ -17,7 +18,7 @@ public class BookingService {
         this.bookingDAO = bookingDAO;
     }
 
-    public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) throws NoFacilityBookingsException{
+    public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) throws NoFacilityBookingsException, MissingInformationException {
 
         Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, facilityBookings);
 

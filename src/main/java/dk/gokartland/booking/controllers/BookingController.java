@@ -1,6 +1,7 @@
 package dk.gokartland.booking.controllers;
 
 import dk.gokartland.booking.domain.*;
+import dk.gokartland.booking.domain.exceptions.MissingInformationException;
 import dk.gokartland.booking.domain.exceptions.NoFacilityBookingsException;
 import dk.gokartland.booking.factories.FXMLFactory;
 import dk.gokartland.booking.services.BookingService;
@@ -162,17 +163,20 @@ public class BookingController extends Observable implements Initializable, Obse
 
                 Booking booking = null;
                 try {
+
                     booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(), commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
 
-                setChanged();
-                notifyObservers(booking);
-                clearChanged();
+                    setChanged();
+                    notifyObservers(booking);
+                    clearChanged();
 
-                Stage stage = (Stage) root.getScene().getWindow();
-                stage.close();
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.close();
 
                 } catch (NoFacilityBookingsException e) {
                     errorLabel.setText("Tilføj venligst mindst en aktivitet");
+                } catch (MissingInformationException e) {
+                    errorLabel.setText("Udfyld venligste alle felter market med *");
                 }
 
             }
@@ -275,13 +279,17 @@ public class BookingController extends Observable implements Initializable, Obse
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                booking.changeCustomerName(nameTextField.getText());
-                booking.changePhoneNumber(phoneTextField.getText());
-                booking.changeEmail(emailTextField.getText());
-                booking.changeComments(commentsTextArea.getText());
-                booking.changeNeedsPermission(needsPermissionCheckBox.isSelected());
-                booking.changePrivateClient(privateRadioButton.isSelected());
-                booking.changeCreatedBy(createdByTextField.getText());
+                try {
+                    booking.changeCustomerName(nameTextField.getText());
+                    booking.changePhoneNumber(phoneTextField.getText());
+                    booking.changeEmail(emailTextField.getText());
+                    booking.changeComments(commentsTextArea.getText());
+                    booking.changeNeedsPermission(needsPermissionCheckBox.isSelected());
+                    booking.changePrivateClient(privateRadioButton.isSelected());
+                    booking.changeCreatedBy(createdByTextField.getText());
+                } catch (MissingInformationException e) {
+                    errorLabel.setText("Udfyld venligst alle felter markeret med *");
+                }
 
                 // Insert bookingService updateMethod and use facilityBooking below
 
