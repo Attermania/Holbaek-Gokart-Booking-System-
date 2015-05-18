@@ -1,5 +1,7 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.controllers.helpers.CalendarComparator;
+import dk.gokartland.booking.controllers.helpers.CalendarFormatHelper;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.domain.exceptions.MissingInformationException;
 import dk.gokartland.booking.domain.exceptions.NoFacilityBookingsException;
@@ -212,6 +214,8 @@ public class BookingController extends Observable implements Initializable, Obse
             }
         });
 
+        fromColumn.setComparator(new CalendarComparator());
+
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
@@ -219,6 +223,8 @@ public class BookingController extends Observable implements Initializable, Obse
                 return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + (toDate.get(Calendar.MONTH) + 1) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
             }
         });
+
+        toColumn.setComparator(new CalendarComparator());
 
         deleteColumn.setCellFactory(new Callback<TableColumn<FacilityBooking, String>, TableCell<FacilityBooking, String>>() {
 

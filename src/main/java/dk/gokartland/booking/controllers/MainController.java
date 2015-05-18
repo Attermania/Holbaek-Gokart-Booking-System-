@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.controllers.helpers.CalendarComparator;
 import dk.gokartland.booking.controllers.helpers.CalendarFormatHelper;
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
@@ -117,6 +118,8 @@ public class MainController implements Initializable, Observer {
             }
         });
 
+        fromColumn.setComparator(new CalendarComparator());
+
 
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
@@ -124,6 +127,8 @@ public class MainController implements Initializable, Observer {
                 return new SimpleStringProperty(CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getTo()));
             }
         });
+
+        toColumn.setComparator(new CalendarComparator());
 
         numberOfPeopleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
