@@ -230,10 +230,16 @@ public class GokartController extends Observable implements Initializable, Edita
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        if( !(facilityBooking instanceof GokartBooking) ) stage.close();
+
+        GokartBooking gokartBooking = (GokartBooking) facilityBooking;
+
         titleLabel.setText("Gokartbooking #" + facilityBooking.getId());
 
-        Calendar from = facilityBooking.getFrom();
-        Calendar to = facilityBooking.getTo();
+        Calendar from = gokartBooking.getFrom();
+        Calendar to = gokartBooking.getTo();
 
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
         toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
@@ -243,18 +249,12 @@ public class GokartController extends Observable implements Initializable, Edita
         toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
         toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
 
-        placeComboBox.setValue(facilityBooking.getBookablePlace());
-        if (facilityBooking instanceof GokartBooking) {
-            int adultCarts = ((GokartBooking) facilityBooking).getAdultCarts();
-            int childrenCarts = ((GokartBooking) facilityBooking).getChildrenCarts();
-            adultCartsTextField.setText(String.valueOf(adultCarts));
-            childrenCartsTextField.setText(String.valueOf(childrenCarts));
-            boolean medals = ((GokartBooking) facilityBooking).wantsMedals();
-            boolean champagne = ((GokartBooking) facilityBooking).wantsChampagne();
-            medalsCheckBox.selectedProperty().setValue(medals);
-            champagneCheckBox.selectedProperty().setValue(champagne);
-        }
-        commentTextArea.setText(facilityBooking.getComments());
+        placeComboBox.setValue(gokartBooking.getBookablePlace());
+        adultCartsTextField.setText(String.valueOf(gokartBooking.getAdultCarts()));
+        childrenCartsTextField.setText(String.valueOf(gokartBooking.getChildrenCarts()));
+        medalsCheckBox.selectedProperty().setValue(gokartBooking.wantsMedals());
+        champagneCheckBox.selectedProperty().setValue(gokartBooking.wantsChampagne());
+        commentTextArea.setText(gokartBooking.getComments());
 
         Button updateButton = new Button("Gem");
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -269,25 +269,24 @@ public class GokartController extends Observable implements Initializable, Edita
                 Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
 
 
-                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
-                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute, 0);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute, 0);
 
                 try {
                     int adultCarts = Integer.parseInt(adultCartsTextField.getText());
                     int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
 
-                    facilityBooking.changeFrom(calendarFrom);
-                    facilityBooking.changeTo(calendarTo);
-                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
-                    facilityBooking.changeComments(commentTextArea.getText());
-                    if(facilityBooking instanceof GokartBooking) {
-                         ((GokartBooking) facilityBooking).changeAdultCarts(adultCarts);
-                        ((GokartBooking) facilityBooking).changeChildrenCarts(childrenCarts);
-                        ((GokartBooking) facilityBooking).changeChampagne(champagneCheckBox.isSelected());
-                        ((GokartBooking) facilityBooking).changeMedals(medalsCheckBox.isSelected());
-                    }
+                    GokartBooking gokartBooking = (GokartBooking) facilityBooking;
 
-                    // Insert bookingService updateMethod and use facilityBooking below
+                    gokartBooking.changeFrom(calendarFrom);
+                    gokartBooking.changeTo(calendarTo);
+                    gokartBooking.changeBookablePlace(placeComboBox.getValue());
+                    gokartBooking.changeComments(commentTextArea.getText());
+
+                    gokartBooking.changeAdultCarts(adultCarts);
+                    gokartBooking.changeChildrenCarts(childrenCarts);
+                    gokartBooking.changeChampagne(champagneCheckBox.isSelected());
+                    gokartBooking.changeMedals(medalsCheckBox.isSelected());
 
                     // Observer pattern notify booking window
                     setChanged();
@@ -295,7 +294,6 @@ public class GokartController extends Observable implements Initializable, Edita
                     clearChanged();
 
                     // Close window
-                    Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();
 
                 //} catch (PlaceAlreadyBookedException e) {

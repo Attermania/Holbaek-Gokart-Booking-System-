@@ -100,7 +100,7 @@
                   <Insets bottom="3.0" />
                </GridPane.margin>
             </TextArea>
-            <CheckBox fx:id="needsPermissionCheckBox" mnemonicParsing="false" text="Gokart: 16+   |   Paintball 16+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <CheckBox fx:id="needsPermissionCheckBox" mnemonicParsing="false" text="Gokart: 6-16   |   Paintball 16-18" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <GridPane fx:id="bottomGrid" GridPane.columnIndex="1" GridPane.rowIndex="11">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />

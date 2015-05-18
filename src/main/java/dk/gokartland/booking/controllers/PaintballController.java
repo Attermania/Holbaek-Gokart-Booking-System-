@@ -106,10 +106,7 @@ public class PaintballController extends Observable implements Initializable, Ed
 
                 int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
                     // Create Paintball Booking
-                    PaintballBooking paintballBooking = bookingService.createPaintballBooking(
-                            calendarFrom,
-                            calendarTo,
-                            commentTextArea.getText(), noOfPeople, placeComboBox.getValue());
+                    PaintballBooking paintballBooking = bookingService.createPaintballBooking(calendarFrom, calendarTo, commentTextArea.getText(), noOfPeople, placeComboBox.getValue());
 
                     // Observer pattern notify booking window
                     setChanged();
@@ -128,7 +125,6 @@ public class PaintballController extends Observable implements Initializable, Ed
             }
         });
 
-        System.out.println(countObservers());
         fromDatePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -213,10 +209,16 @@ public class PaintballController extends Observable implements Initializable, Ed
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
-        titleLabel.setText("Paintballbooking #" + facilityBooking.getId());
+        Stage stage = (Stage) root.getScene().getWindow();
 
-        Calendar from = facilityBooking.getFrom();
-        Calendar to = facilityBooking.getTo();
+        if( !(facilityBooking instanceof PaintballBooking) ) stage.close();
+
+        PaintballBooking paintballBooking = (PaintballBooking) facilityBooking;
+
+        titleLabel.setText("Paintballbooking #" + paintballBooking.getId());
+
+        Calendar from = paintballBooking.getFrom();
+        Calendar to = paintballBooking.getTo();
 
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
         toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
@@ -226,9 +228,9 @@ public class PaintballController extends Observable implements Initializable, Ed
         toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
         toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
 
-        placeComboBox.setValue(facilityBooking.getBookablePlace());
-        noOfPeopleTextField.setText(String.valueOf(facilityBooking.getNumberOfPeople()));
-        commentTextArea.setText(facilityBooking.getComments());
+        placeComboBox.setValue(paintballBooking.getBookablePlace());
+        noOfPeopleTextField.setText(String.valueOf(paintballBooking.getNumberOfPeople()));
+        commentTextArea.setText(paintballBooking.getComments());
 
         Button updateButton = new Button("Gem");
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -247,16 +249,11 @@ public class PaintballController extends Observable implements Initializable, Ed
                 Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
 
                 try {
-
-                    int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-
-                    facilityBooking.changeFrom(calendarFrom);
-                    facilityBooking.changeTo(calendarTo);
-                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
-                    facilityBooking.changeComments(commentTextArea.getText());
-                    if(facilityBooking instanceof PaintballBooking) ((PaintballBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
-
-                    // Insert bookingService updateMethod and use facilityBooking below
+                    paintballBooking.changeFrom(calendarFrom);
+                    paintballBooking.changeTo(calendarTo);
+                    paintballBooking.changeBookablePlace(placeComboBox.getValue());
+                    paintballBooking.changeComments(commentTextArea.getText());
+                    paintballBooking.changeNumberOfPeople(Integer.parseInt(noOfPeopleTextField.getText()));
 
                     // Observer pattern notify booking window
                     setChanged();
@@ -264,7 +261,6 @@ public class PaintballController extends Observable implements Initializable, Ed
                     clearChanged();
 
                     // Close window
-                    Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();
 
                 //} catch (PlaceAlreadyBookedException e) {

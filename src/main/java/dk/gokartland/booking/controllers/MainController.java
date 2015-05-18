@@ -127,7 +127,18 @@ public class MainController implements Initializable, Observer {
         numberOfPeopleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
-                return new SimpleObjectProperty(param.getValue().getNumberOfPeople());
+                FacilityBooking facilityBooking = param.getValue();
+
+                if(facilityBooking instanceof GokartBooking) {
+                    GokartBooking gokartBooking = (GokartBooking) facilityBooking;
+
+                    int numberOfAdults = gokartBooking.getAdultCarts();
+                    int noOfChildren = gokartBooking.getChildrenCarts();
+
+                    return new SimpleObjectProperty(facilityBooking.getNumberOfPeople() + " (V: " + numberOfAdults+ " - "+"B: " + noOfChildren +")");
+                }
+
+                return new SimpleStringProperty(String.valueOf(param.getValue().getNumberOfPeople()));
             }
         });
 
@@ -143,7 +154,7 @@ public class MainController implements Initializable, Observer {
             @Override
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    FXMLLoader loader = fxmlFactory.build(getClass().getResource("booking.fxml"));
+                    FXMLLoader loader = fxmlFactory.build(getClass().getResource("booking.fxml"), self);
 
                     try {
                         Parent root = loader.load();
@@ -223,72 +234,51 @@ public class MainController implements Initializable, Observer {
         Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), 0, 0, 0);
         Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), 23, 59, 59);
 
-        List<FacilityBooking> facilityBookings = bookingDAO.getFacilityBookingsWithin(from, to);
+        List<FacilityBooking> temporaryList = bookingDAO.getFacilityBookingsWithin(from, to);
 
-        ObservableList<FacilityBooking> tempList = FXCollections.observableArrayList();
+        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
 
         switch (typeSearchComboBox.getSelectionModel().getSelectedItem()) {
             case "Gokart":
-                for (FacilityBooking facilityBooking : facilityBookings) {
+                for (FacilityBooking facilityBooking : temporaryList) {
                     if (facilityBooking instanceof GokartBooking) {
-                        tempList.add(facilityBooking);
+                        facilityBookings.add(facilityBooking);
                     }
                 }
                 break;
             case "Paintball":
-                for (FacilityBooking facilityBooking : facilityBookings) {
+                for (FacilityBooking facilityBooking : temporaryList) {
                     if (facilityBooking instanceof PaintballBooking) {
-                        tempList.add(facilityBooking);
+                        facilityBookings.add(facilityBooking);
                     }
                 }
                 break;
             case "Lasertag":
-                for (FacilityBooking facilityBooking : facilityBookings) {
+                for (FacilityBooking facilityBooking : temporaryList) {
                     if (facilityBooking instanceof LasertagBooking) {
-                        tempList.add(facilityBooking);
+                        facilityBookings.add(facilityBooking);
                     }
                 }
                 break;
             case "Restaurant":
-                for (FacilityBooking facilityBooking : facilityBookings) {
+                for (FacilityBooking facilityBooking : temporaryList) {
                     if (facilityBooking instanceof RestaurantBooking) {
-                        tempList.add(facilityBooking);
+                        facilityBookings.add(facilityBooking);
                     }
                 }
                 break;
             default:
-                for (FacilityBooking facilityBooking : facilityBookings) {
-                    tempList.add(facilityBooking);
+                for (FacilityBooking facilityBooking : temporaryList) {
+                    facilityBookings.add(facilityBooking);
                 }
         }
 
-        facilityBookingTableView.setItems(tempList);
+        facilityBookingTableView.setItems(facilityBookings);
     }
 
     @Override
     public void update(Observable o, Object obj) {
-
-        if (obj instanceof Booking) {
-            fillList();
-        }
-    }
-
-    public void fillList() {
-        ObservableList<FacilityBooking> facilityBookings = FXCollections.observableArrayList();
-
-        LocalDate fromDate = fromDatePicker.getValue();
-        LocalDate toDate = toDatePicker.getValue();
-
-        Calendar from = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth());
-        Calendar to = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth());
-        System.out.println(from.getTime().toString());
-        from.add(Calendar.HOUR, -1);
-        to.add(Calendar.HOUR, 24);
-
-        for (FacilityBooking facilityBooking : bookingDAO.getFacilityBookingsWithin(from, to)) {
-            facilityBookings.add(facilityBooking);
-        }
-        facilityBookingTableView.setItems(facilityBookings);
+        search();
     }
 
 
