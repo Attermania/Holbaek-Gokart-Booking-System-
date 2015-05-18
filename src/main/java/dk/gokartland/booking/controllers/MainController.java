@@ -126,7 +126,18 @@ public class MainController implements Initializable, Observer {
         numberOfPeopleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
-                return new SimpleObjectProperty(param.getValue().getNumberOfPeople());
+                FacilityBooking facilityBooking = param.getValue();
+
+                if(facilityBooking instanceof GokartBooking) {
+                    GokartBooking gokartBooking = (GokartBooking) facilityBooking;
+
+                    int numberOfAdults = gokartBooking.getAdultCarts();
+                    int noOfChildren = gokartBooking.getChildrenCarts();
+
+                    return new SimpleObjectProperty(facilityBooking.getNumberOfPeople() + " (V: " + numberOfAdults+ " - "+"B: " + noOfChildren +")");
+                }
+
+                return new SimpleStringProperty(String.valueOf(param.getValue().getNumberOfPeople()));
             }
         });
 
