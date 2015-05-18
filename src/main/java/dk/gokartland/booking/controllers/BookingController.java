@@ -52,7 +52,7 @@ public class BookingController extends Observable implements Initializable, Obse
     TableView<FacilityBooking> facilityBookingTableView;
 
     @FXML
-    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn;
+    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn, deleteColumn;
 
     @FXML
     Label titleLabel, errorLabel;
@@ -218,6 +218,26 @@ public class BookingController extends Observable implements Initializable, Obse
                 Calendar toDate = facilityBooking.getValue().getTo();
                 return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + (toDate.get(Calendar.MONTH) + 1) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
             }
+        });
+
+        deleteColumn.setCellFactory(new Callback<TableColumn<FacilityBooking, String>, TableCell<FacilityBooking, String>>() {
+
+            @Override
+            public TableCell<FacilityBooking, String> call(TableColumn<FacilityBooking, String> p) {
+                return new TableCell<FacilityBooking, String>() {
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if(!empty) {
+                            Button button = new Button("Slet");
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+
         });
 
         facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {

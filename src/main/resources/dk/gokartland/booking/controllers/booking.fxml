@@ -57,6 +57,7 @@
                 <TableColumn fx:id="placeColumn" minWidth="-Infinity" text="Bane" />
                   <TableColumn fx:id="fromColumn" minWidth="-Infinity" prefWidth="130.0" text="Fra" />
                   <TableColumn fx:id="toColumn" minWidth="-Infinity" prefWidth="130.0" text="Til" />
+                  <TableColumn fx:id="deleteColumn" prefWidth="75.0" />
               </columns>
             </TableView>
             <Label alignment="CENTER" prefHeight="20.0" prefWidth="487.0" text="Tilføj aktivitet" GridPane.columnIndex="1" GridPane.rowIndex="9">
