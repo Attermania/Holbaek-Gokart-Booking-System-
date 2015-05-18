@@ -220,7 +220,7 @@ public class BookingController extends Observable implements Initializable, Obse
             }
         });
 
-        deleteColumn.setCellFactory(new Callback<TableColumn<FacilityBooking, String>, TableCell<FacilityBooking, String>>() {
+        deleteColumn.setCellFactory(new Callback<TableColumn<FacilityBooking, String> , TableCell<FacilityBooking, String>>() {
 
             @Override
             public TableCell<FacilityBooking, String> call(TableColumn<FacilityBooking, String> p) {
@@ -230,9 +230,18 @@ public class BookingController extends Observable implements Initializable, Obse
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        if(!empty) {
+                        if (!empty) {
                             Button button = new Button("Slet");
                             setGraphic(button);
+
+                            button.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    FacilityBooking facilityBooking = facilityBookingTableView.getSelectionModel().getSelectedItem();
+                                    //bookingService.deleteFacilityBooking(facilityBooking);
+                                    // Make delete function work
+                                }
+                            });
                         }
                     }
                 };
@@ -295,7 +304,6 @@ public class BookingController extends Observable implements Initializable, Obse
         titleLabel.setText("Booking #" + booking.getId());
 
         Button updateButton = new Button("Gem");
-        updateButton.setFont(new Font(14));
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -332,8 +340,17 @@ public class BookingController extends Observable implements Initializable, Obse
             }
         });
 
+        Button deleteButton = new Button("Slet");
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Insert delete Booking logic
+            }
+        });
+
         bottomGrid.getChildren().remove(createButton);
         bottomGrid.add(updateButton, 1, 11);
+        bottomGrid.add(deleteButton, 2, 11);
 
         nameTextField.setText(booking.getCustomerName());
         phoneTextField.setText(booking.getPhoneNumber());
