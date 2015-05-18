@@ -211,12 +211,16 @@ public class LasertagController extends Observable implements Initializable, Edi
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
-        titleLabel.setText("Lasertagbooking #" + facilityBooking.getId());
-        // from
-        // to
+        Stage stage = (Stage) root.getScene().getWindow();
 
-        Calendar from = facilityBooking.getFrom();
-        Calendar to = facilityBooking.getTo();
+        titleLabel.setText("Lasertagbooking #" + facilityBooking.getId());
+
+        if( !(facilityBooking instanceof LasertagBooking) ) stage.close();
+
+        LasertagBooking lasertagBooking = (LasertagBooking) facilityBooking;
+
+        Calendar from = lasertagBooking.getFrom();
+        Calendar to = lasertagBooking.getTo();
 
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
         toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
@@ -226,9 +230,9 @@ public class LasertagController extends Observable implements Initializable, Edi
         toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
         toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
 
-        placeComboBox.setValue(facilityBooking.getBookablePlace());
-        noOfPeopleTextField.setText(String.valueOf(facilityBooking.getNumberOfPeople()));
-        commentTextArea.setText(facilityBooking.getComments());
+        placeComboBox.setValue(lasertagBooking.getBookablePlace());
+        noOfPeopleTextField.setText(String.valueOf(lasertagBooking.getNumberOfPeople()));
+        commentTextArea.setText(lasertagBooking.getComments());
 
         Button updateButton = new Button("Gem");
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -242,28 +246,22 @@ public class LasertagController extends Observable implements Initializable, Edi
                 Integer toHour = Integer.parseInt(toHourComboBox.getValue());
                 Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
 
-                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute);
-                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute);
+                Calendar calendarFrom = new GregorianCalendar(fromDate.getYear(), fromDate.getMonthValue() - 1, fromDate.getDayOfMonth(), fromHour, fromMinute, 0);
+                Calendar calendarTo = new GregorianCalendar(toDate.getYear(), toDate.getMonthValue() - 1, toDate.getDayOfMonth(), toHour, toMinute, 0);
 
-                //
                 try {
-                    int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
-
-                    facilityBooking.changeFrom(calendarFrom);
-                    facilityBooking.changeTo(calendarTo);
-                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
-                    facilityBooking.changeComments(commentTextArea.getText());
-                    if(facilityBooking instanceof LasertagBooking) ((LasertagBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
-
-                    // Insert bookingService updateMethod and use facilityBooking below
+                    lasertagBooking.changeFrom(calendarFrom);
+                    lasertagBooking.changeTo(calendarTo);
+                    lasertagBooking.changeBookablePlace(placeComboBox.getValue());
+                    lasertagBooking.changeComments(commentTextArea.getText());
+                    lasertagBooking.changeNumberOfPeople(Integer.parseInt(noOfPeopleTextField.getText()));
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(facilityBooking);
+                    notifyObservers(lasertagBooking);
                     clearChanged();
 
                     // Close window
-                    Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();
 
                 //} catch (PlaceAlreadyBookedException e) {

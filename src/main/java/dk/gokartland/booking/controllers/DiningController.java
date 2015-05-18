@@ -213,10 +213,16 @@ public class DiningController extends Observable implements Initializable, Edita
 
     @Override
     public void setupForEdit(FacilityBooking facilityBooking) {
-        titleLabel.setText("Restaurantbooking #" + facilityBooking.getId());
+        Stage stage = (Stage) root.getScene().getWindow();
 
-        Calendar from = facilityBooking.getFrom();
-        Calendar to = facilityBooking.getTo();
+        if( !(facilityBooking instanceof RestaurantBooking) ) stage.close();
+
+        RestaurantBooking restaurantBooking = (RestaurantBooking) facilityBooking;
+
+        titleLabel.setText("Restaurantbooking #" + restaurantBooking.getId());
+
+        Calendar from = restaurantBooking.getFrom();
+        Calendar to = restaurantBooking.getTo();
 
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
         toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
@@ -226,9 +232,9 @@ public class DiningController extends Observable implements Initializable, Edita
         toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
         toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
 
-        placeComboBox.setValue(facilityBooking.getBookablePlace());
-        noOfPeopleTextField.setText(String.valueOf(facilityBooking.getNumberOfPeople()));
-        commentTextArea.setText(facilityBooking.getComments());
+        placeComboBox.setValue(restaurantBooking.getBookablePlace());
+        noOfPeopleTextField.setText(String.valueOf(restaurantBooking.getNumberOfPeople()));
+        commentTextArea.setText(restaurantBooking.getComments());
 
         Button updateButton = new Button("Gem");
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -250,22 +256,21 @@ public class DiningController extends Observable implements Initializable, Edita
 
                     int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
-                    facilityBooking.changeFrom(calendarFrom);
-                    facilityBooking.changeTo(calendarTo);
-                    facilityBooking.changeBookablePlace(placeComboBox.getValue());
-                    facilityBooking.changeComments(commentTextArea.getText());
-                    if(facilityBooking instanceof RestaurantBooking) ((RestaurantBooking) facilityBooking).changeNumberOfPeople(noOfPeople);
+                    restaurantBooking.changeFrom(calendarFrom);
+                    restaurantBooking.changeTo(calendarTo);
+                    restaurantBooking.changeBookablePlace(placeComboBox.getValue());
+                    restaurantBooking.changeComments(commentTextArea.getText());
+                    if(restaurantBooking instanceof RestaurantBooking) ((RestaurantBooking) restaurantBooking).changeNumberOfPeople(noOfPeople);
 
-                    // Insert bookingService updateMethod and use facilityBooking below
+                    // Insert bookingService updateMethod and use restaurantBooking below
 
                     // Observer pattern notify booking window
                     setChanged();
-                    notifyObservers(facilityBooking);
+                    notifyObservers(restaurantBooking);
                     clearChanged();
 
 
                     // Close window
-                    Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();
 
                 //} catch (PlaceAlreadyBookedException e) {
