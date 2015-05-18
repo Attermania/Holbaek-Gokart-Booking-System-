@@ -34,7 +34,7 @@ public class BookingController extends Observable implements Initializable, Obse
     AnchorPane root;
 
     @FXML
-    TextField nameTextField, phoneTextField, emailTextField, createdByTextField;
+    TextField nameTextField, phoneTextField, emailTextField, createdByTextField, referenceNumberTextField;
 
     @FXML
     Button addGokartButton, addPaintballButton, addLasertagButton, addDiningButton, createButton;
@@ -43,7 +43,7 @@ public class BookingController extends Observable implements Initializable, Obse
     RadioButton privateRadioButton;
 
     @FXML
-    CheckBox needsPermissionCheckBox;
+    CheckBox needsPermissionCheckBox, isPaidCheckBox;
 
     @FXML
     TextArea commentsTextArea;
@@ -164,7 +164,7 @@ public class BookingController extends Observable implements Initializable, Obse
                 Booking booking = null;
                 try {
 
-                    booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(), commentsTextArea.getText(), createdByTextField.getText(), facilityBookings);
+                    booking = bookingService.createBooking(nameTextField.getText(), phoneTextField.getText(), isPrivateClient, needsPermissionCheckBox.isSelected(), emailTextField.getText(), commentsTextArea.getText(), createdByTextField.getText(), isPaidCheckBox.isSelected(), referenceNumberTextField.getText(), facilityBookings);
 
                     setChanged();
                     notifyObservers(booking);
@@ -287,6 +287,8 @@ public class BookingController extends Observable implements Initializable, Obse
                     booking.changeNeedsPermission(needsPermissionCheckBox.isSelected());
                     booking.changePrivateClient(privateRadioButton.isSelected());
                     booking.changeCreatedBy(createdByTextField.getText());
+                    booking.changePaid(isPaidCheckBox.isSelected());
+                    booking.changeReferenceNumber(referenceNumberTextField.getText());
                 } catch (MissingInformationException e) {
                     errorLabel.setText("Udfyld venligst alle felter markeret med *");
                 }
@@ -320,6 +322,8 @@ public class BookingController extends Observable implements Initializable, Obse
         needsPermissionCheckBox.selectedProperty().setValue(booking.isNeedsPermission());
         commentsTextArea.setText(booking.getComments());
         createdByTextField.setText(booking.getCreatedBy());
+        isPaidCheckBox.selectedProperty().setValue(booking.getIsPaid());
+        referenceNumberTextField.setText(booking.getReferenceNumber());
 
         for (FacilityBooking facilityBooking : booking.getFacilityBookings()) {
             facilityBookings.add(facilityBooking);

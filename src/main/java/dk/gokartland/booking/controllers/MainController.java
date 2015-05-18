@@ -35,7 +35,7 @@ public class MainController implements Initializable, Observer {
     TableView<FacilityBooking> facilityBookingTableView;
 
     @FXML
-    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn, numberOfPeopleColumn, customerNameColumn;
+    TableColumn<FacilityBooking, String> typeColumn, placeColumn, fromColumn, toColumn, numberOfPeopleColumn, customerNameColumn, isPaidColumn;
 
     @FXML
     ComboBox<String> typeSearchComboBox;
@@ -148,6 +148,18 @@ public class MainController implements Initializable, Observer {
                 return new SimpleStringProperty(param.getValue().getBooking().getCustomerName());
             }
         });
+
+        isPaidColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
+                String isPaid = "";
+                if(param.getValue().getBooking().getIsPaid()) isPaid = "Ja";
+                else isPaid = "Nej";
+                return new SimpleStringProperty(isPaid);
+            }
+        });
+
+
 
         // Opens specific booking window
         facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {

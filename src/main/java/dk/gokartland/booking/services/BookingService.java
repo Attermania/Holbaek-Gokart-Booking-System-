@@ -18,9 +18,9 @@ public class BookingService {
         this.bookingDAO = bookingDAO;
     }
 
-    public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) throws NoFacilityBookingsException, MissingInformationException {
+    public Booking createBooking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, boolean isPaid, String referenceNumber, List<FacilityBooking> facilityBookings) throws NoFacilityBookingsException, MissingInformationException {
 
-        Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, facilityBookings);
+        Booking booking = new Booking(customerName, phoneNumber, isPrivateClient, needsPermission, email, comments, createdBy, isPaid, referenceNumber,  facilityBookings);
 
         for(FacilityBooking facilityBooking : facilityBookings) {
             facilityBooking.setBooking(booking);

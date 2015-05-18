@@ -87,10 +87,10 @@ public class App extends Application {
         List<FacilityBooking> restaurantlist = new ArrayList<>();
         restaurantlist.add(restaurantBooking);
 
-		Booking booking1 = bookingService.createBooking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", gokartlist);
-		bookingService.createBooking("Jane", "123", true, false, "mail", "Paintball", "JFK", paintballlist);
-        bookingService.createBooking("Alice", "1234", true, true, "Gmail", "Lasertag", "OLI", lasertaglist);
-        bookingService.createBooking("Grethe", "123456", true, false, "Hotmail.com", "Restaurant", "BDK",  restaurantlist);
+		Booking booking1 = bookingService.createBooking("John", "123456", true, false, "John@gmail.com", "Test", "JFK", true, "1233", gokartlist);
+		bookingService.createBooking("Jane", "123", true, false, "mail", "Paintball", "JFK",false, "1233", paintballlist);
+        bookingService.createBooking("Alice", "1234", true, true, "Gmail", "Lasertag", "OLI",false, "1233", lasertaglist);
+        bookingService.createBooking("Grethe", "123456", true, false, "Hotmail.com", "Restaurant", "BDK", true, "1233", restaurantlist);
 
 		// Make window
 		FXMLFactory fxmlFactory = applicationContext.getBean(FXMLFactory.class);

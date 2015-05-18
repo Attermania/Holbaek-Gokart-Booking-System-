@@ -34,11 +34,17 @@ public class Booking {
     @Column
     private String createdBy;
 
+    @Column
+    private boolean isPaid;
+
+    @Column
+    private String referenceNumber;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id")
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
-    public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, List<FacilityBooking> facilityBookings) throws MissingInformationException {
+    public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, boolean isPaid, String referenceNumber, List<FacilityBooking> facilityBookings) throws MissingInformationException {
         changeCustomerName(customerName);
         changePhoneNumber(phoneNumber);
         this.isPrivateClient = isPrivateClient;
@@ -47,6 +53,8 @@ public class Booking {
         this.comments = comments;
         changeCreatedBy(createdBy);
         this.facilityBookings = facilityBookings;
+        this.isPaid = isPaid;
+        this.referenceNumber = referenceNumber;
 
         for(FacilityBooking facilityBooking : facilityBookings) {
             facilityBooking.setBooking(this);
@@ -132,5 +140,21 @@ public class Booking {
     public void changeCreatedBy(String createdBy) throws MissingInformationException{
         if(createdBy.equals("")) throw new MissingInformationException("Missing 'created by' signature ");
         this.createdBy = createdBy;
+    }
+
+    public boolean getIsPaid() {
+        return isPaid;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void changeReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public void changePaid(boolean isPaid) {
+        this.isPaid = isPaid;
     }
 }
