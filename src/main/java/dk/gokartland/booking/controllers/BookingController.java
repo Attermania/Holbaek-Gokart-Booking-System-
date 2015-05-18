@@ -22,7 +22,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -209,8 +208,7 @@ public class BookingController extends Observable implements Initializable, Obse
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                Calendar fromDate = facilityBooking.getValue().getFrom();
-                return new SimpleStringProperty(fromDate.get(Calendar.DAY_OF_MONTH) + "-" + (fromDate.get(Calendar.MONTH) + 1) + "-" + fromDate.get(Calendar.YEAR) + " " + fromDate.get(Calendar.HOUR_OF_DAY) + ":" + fromDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty( CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getFrom()) );
             }
         });
 
@@ -219,10 +217,10 @@ public class BookingController extends Observable implements Initializable, Obse
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                Calendar toDate = facilityBooking.getValue().getTo();
-                return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + (toDate.get(Calendar.MONTH) + 1) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty(CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getTo()));
             }
         });
+
 
         toColumn.setComparator(new CalendarComparator());
 
@@ -236,9 +234,18 @@ public class BookingController extends Observable implements Initializable, Obse
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        if(!empty) {
+                        if (!empty) {
                             Button button = new Button("Slet");
                             setGraphic(button);
+
+                            button.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    FacilityBooking facilityBooking = facilityBookingTableView.getSelectionModel().getSelectedItem();
+                                    //bookingService.deleteFacilityBooking(facilityBooking);
+                                    // Make delete function work
+                                }
+                            });
                         }
                     }
                 };
@@ -301,7 +308,6 @@ public class BookingController extends Observable implements Initializable, Obse
         titleLabel.setText("Booking #" + booking.getId());
 
         Button updateButton = new Button("Gem");
-        updateButton.setFont(new Font(14));
         updateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -338,8 +344,17 @@ public class BookingController extends Observable implements Initializable, Obse
             }
         });
 
+        Button deleteButton = new Button("Slet");
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Insert delete Booking logic
+            }
+        });
+
         bottomGrid.getChildren().remove(createButton);
         bottomGrid.add(updateButton, 1, 11);
+        bottomGrid.add(deleteButton, 2, 11);
 
         nameTextField.setText(booking.getCustomerName());
         phoneTextField.setText(booking.getPhoneNumber());

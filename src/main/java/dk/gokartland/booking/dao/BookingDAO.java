@@ -58,6 +58,15 @@ public class BookingDAO {
     }
 
     public boolean delete(FacilityBooking facilityBooking) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.remove(facilityBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
         return true;
     }
 }
