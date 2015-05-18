@@ -1,5 +1,6 @@
 package dk.gokartland.booking.controllers;
 
+import dk.gokartland.booking.controllers.helpers.CalendarFormatHelper;
 import dk.gokartland.booking.dao.BookingDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.factories.FXMLFactory;
@@ -23,6 +24,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -111,16 +113,15 @@ public class MainController implements Initializable, Observer {
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                Calendar fromDate = facilityBooking.getValue().getFrom();
-                return new SimpleStringProperty(fromDate.get(Calendar.DAY_OF_MONTH) + "-" + (fromDate.get(Calendar.MONTH)+1) + "-" + fromDate.get(Calendar.YEAR) + " " + fromDate.get(Calendar.HOUR_OF_DAY) + ":" + fromDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty( CalendarFormatHelper.toFormattedString( facilityBooking.getValue().getFrom() ) );
             }
         });
+
 
         toColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                Calendar toDate = facilityBooking.getValue().getTo();
-                return new SimpleStringProperty(toDate.get(Calendar.DAY_OF_MONTH) + "-" + (toDate.get(Calendar.MONTH) +1) + "-" + toDate.get(Calendar.YEAR) + " " + toDate.get(Calendar.HOUR_OF_DAY) + ":" + toDate.get(Calendar.MINUTE));
+                return new SimpleStringProperty(CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getTo()));
             }
         });
 

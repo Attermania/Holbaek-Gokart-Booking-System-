@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.*;
 
 public class App extends Application {
@@ -62,8 +63,8 @@ public class App extends Application {
 
 		BookingService bookingService = applicationContext.getBean(BookingService.class);
 
-
-		Calendar from = new GregorianCalendar();
+		LocalDate localDate = LocalDate.now();
+		Calendar from = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue() + 1, localDate.getDayOfMonth(), 7, 9);
 		Calendar to = new GregorianCalendar();
 		Calendar from1 = new GregorianCalendar();
 		from1.add(10, 47);
