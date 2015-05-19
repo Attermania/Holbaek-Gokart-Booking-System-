@@ -57,15 +57,18 @@ public class BookingDAO {
         return true;
     }
 
-    public boolean delete(FacilityBooking facilityBooking) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+    public boolean delete(FacilityBooking detachedFacilityBooking) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
 
-        entityManager.remove(facilityBooking);
-        entityManager.flush();
+            FacilityBooking facilityBooking = entityManager.find(FacilityBooking.class, detachedFacilityBooking.getId());
+            entityManager.remove(facilityBooking);
+            entityManager.flush();
 
-        transaction.commit();
+            transaction.commit();
+        } catch(IllegalArgumentException e) {}
 
         return true;
     }
