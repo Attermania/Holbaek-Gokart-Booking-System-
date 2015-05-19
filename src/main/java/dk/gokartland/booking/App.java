@@ -63,17 +63,20 @@ public class App extends Application {
 
 		BookingService bookingService = applicationContext.getBean(BookingService.class);
 
+
 		LocalDate localDate = LocalDate.now();
-		Calendar from = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue() + 1, localDate.getDayOfMonth(), 7, 9);
+
+		System.out.println(localDate.getMonthValue());
+		Calendar from = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth(), 7, 10);
 		Calendar to = new GregorianCalendar();
-		Calendar from1 = new GregorianCalendar();
-		from1.add(10, 47);
-		Calendar to1 = new GregorianCalendar();
-		to1.add(10, 48);
+		Calendar from1 = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth() + 1, 13, 15);
+		Calendar to1 = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth() + 1, 14, 15);
+		Calendar from2 = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth() + 1, 13, 15);
+		Calendar to2 = new GregorianCalendar(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth() + 1, 14, 15);
 
 		GokartBooking gokartBooking = new GokartBooking(from, to, "Gokart", 1, 2, bookablePlace1, true, true);
 		PaintballBooking paintballBooking = new PaintballBooking(from1, to1, "Paintball", 2, bookablePlace4);
-        LasertagBooking lasertagBooking = new LasertagBooking(from, to, "Lasertag", 5, bookablePlace4);
+        LasertagBooking lasertagBooking = new LasertagBooking(from2, to2, "Lasertag", 5, bookablePlace4);
         RestaurantBooking restaurantBooking = new RestaurantBooking(from1, to1, "Restaurant", 12, bookablePlace5);
 
 		List<FacilityBooking> gokartlist = new ArrayList<>();

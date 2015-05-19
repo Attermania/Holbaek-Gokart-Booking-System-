@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class CalendarFormatHelper {
 
-	private static String format = "d-m-y HH:mm";
+	private static String format = "dd-MM-yyyy HH:mm";
 
 	public static Calendar toCalendar(String stringDate) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
@@ -24,7 +24,7 @@ public class CalendarFormatHelper {
 		Calendar calendar = GregorianCalendar.getInstance();
 		calendar.setTime(date);
 
-		return new GregorianCalendar();
+		return calendar;
 	}
 
 	public static String toFormattedString(Calendar calendar) {
