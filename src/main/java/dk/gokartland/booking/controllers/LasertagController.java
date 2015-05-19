@@ -256,6 +256,8 @@ public class LasertagController extends Observable implements Initializable, Edi
                     lasertagBooking.changeComments(commentTextArea.getText());
                     lasertagBooking.changeNumberOfPeople(Integer.parseInt(noOfPeopleTextField.getText()));
 
+                    bookingService.updateLasertagBooking(lasertagBooking);
+
                     // Observer pattern notify booking window
                     setChanged();
                     notifyObservers(lasertagBooking);

@@ -1,7 +1,6 @@
 package dk.gokartland.booking.dao;
 
-import dk.gokartland.booking.domain.Booking;
-import dk.gokartland.booking.domain.FacilityBooking;
+import dk.gokartland.booking.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -57,12 +56,83 @@ public class BookingDAO {
         return true;
     }
 
-    public boolean delete(FacilityBooking facilityBooking) {
+    public boolean updateGokartBooking(GokartBooking gokartBooking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(gokartBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+    public boolean updatePaintBallBooking(PaintballBooking paintballBooking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(paintballBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+    public boolean updateLasertagBooking(LasertagBooking lasertagBooking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(lasertagBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+    public boolean updateRestaurantBooking(RestaurantBooking restaurantBooking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(restaurantBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+
+
+    public boolean deleteFacilityBooking(FacilityBooking facilityBooking) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
         entityManager.remove(facilityBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+    public boolean delete(Booking booking) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.remove(booking);
         entityManager.flush();
 
         transaction.commit();

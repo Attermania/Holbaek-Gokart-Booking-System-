@@ -208,7 +208,7 @@ public class BookingController extends Observable implements Initializable, Obse
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                return new SimpleStringProperty( CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getFrom()) );
+                return new SimpleStringProperty(CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getFrom()));
             }
         });
 
@@ -274,6 +274,10 @@ public class BookingController extends Observable implements Initializable, Obse
                         Parent root = loader.load();
                         EditableController controller = loader.getController();
 
+                        if (controller instanceof Observable) {
+                            Observable observable = (Observable) controller;
+                            observable.addObserver(self);
+                        }
 
                         Scene scene = new Scene(root);
 
@@ -297,8 +301,11 @@ public class BookingController extends Observable implements Initializable, Obse
     public void update(Observable o, Object obj) {
         if (obj instanceof FacilityBooking) {
             FacilityBooking facilityBooking = (FacilityBooking) obj;
+            facilityBookings.clear();
+            if (!facilityBookings.contains(facilityBooking)) {
+                facilityBookings.add(facilityBooking);
+            }
 
-            facilityBookings.add(facilityBooking);
             facilityBookingTableView.setItems(facilityBookings);
         }
     }
@@ -348,7 +355,8 @@ public class BookingController extends Observable implements Initializable, Obse
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Insert delete Booking logic
+                bookingService.deleteBooking(booking);
+
             }
         });
 

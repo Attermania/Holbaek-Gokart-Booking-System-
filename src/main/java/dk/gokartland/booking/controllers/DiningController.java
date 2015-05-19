@@ -256,6 +256,8 @@ public class DiningController extends Observable implements Initializable, Edita
 
                     int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
 
+
+
                     restaurantBooking.changeFrom(calendarFrom);
                     restaurantBooking.changeTo(calendarTo);
                     restaurantBooking.changeBookablePlace(placeComboBox.getValue());
@@ -263,6 +265,7 @@ public class DiningController extends Observable implements Initializable, Edita
                     if(restaurantBooking instanceof RestaurantBooking) ((RestaurantBooking) restaurantBooking).changeNumberOfPeople(noOfPeople);
 
                     // Insert bookingService updateMethod and use restaurantBooking below
+                    bookingService.updateRestaurantBooking(restaurantBooking);
 
                     // Observer pattern notify booking window
                     setChanged();
