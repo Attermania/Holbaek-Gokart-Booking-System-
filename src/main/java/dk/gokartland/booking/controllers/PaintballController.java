@@ -255,6 +255,8 @@ public class PaintballController extends Observable implements Initializable, Ed
                     paintballBooking.changeComments(commentTextArea.getText());
                     paintballBooking.changeNumberOfPeople(Integer.parseInt(noOfPeopleTextField.getText()));
 
+                    bookingService.updatePaintballBooking(paintballBooking);
+
                     // Observer pattern notify booking window
                     setChanged();
                     notifyObservers(facilityBooking);

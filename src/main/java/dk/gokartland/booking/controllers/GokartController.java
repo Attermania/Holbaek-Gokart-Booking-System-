@@ -292,6 +292,8 @@ public class GokartController extends Observable implements Initializable, Edita
                     gokartBooking.changeChampagne(champagneCheckBox.isSelected());
                     gokartBooking.changeMedals(medalsCheckBox.isSelected());
 
+                    bookingService.updateGokartBooking(gokartBooking);
+
                     // Observer pattern notify booking window
                     setChanged();
                     notifyObservers(facilityBooking);

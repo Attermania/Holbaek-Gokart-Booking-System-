@@ -39,6 +39,22 @@ public class BookingService {
         return bookingDAO.update(booking);
     }
 
+    public boolean updateGokartBooking(GokartBooking gokartBooking){
+        return bookingDAO.updateFacilityBooking(gokartBooking);
+    }
+
+    public boolean updatePaintballBooking(PaintballBooking paintballBooking){
+        return bookingDAO.updateFacilityBooking(paintballBooking);
+    }
+
+    public boolean updateLasertagBooking(LasertagBooking lasertagBooking) {
+        return bookingDAO.updateFacilityBooking(lasertagBooking);
+    }
+
+    public boolean updateRestaurantBooking(RestaurantBooking restaurantBooking){
+        return bookingDAO.updateFacilityBooking(restaurantBooking);
+    }
+
     public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws PlaceAlreadyBookedException {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
@@ -79,7 +95,12 @@ public class BookingService {
 
     public boolean deleteFacilityBooking(FacilityBooking facilityBooking){
 
-        return bookingDAO.delete(facilityBooking);
+        return bookingDAO.deleteFacilityBooking(facilityBooking);
+    }
+
+    public boolean deleteBooking(Booking booking) {
+
+        return bookingDAO.delete(booking);
     }
 
     private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {

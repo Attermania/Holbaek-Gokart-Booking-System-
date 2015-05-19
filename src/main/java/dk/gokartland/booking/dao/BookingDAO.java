@@ -1,7 +1,6 @@
 package dk.gokartland.booking.dao;
 
-import dk.gokartland.booking.domain.Booking;
-import dk.gokartland.booking.domain.FacilityBooking;
+import dk.gokartland.booking.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -57,7 +56,24 @@ public class BookingDAO {
         return true;
     }
 
-    public boolean delete(FacilityBooking detachedFacilityBooking) {
+
+    public boolean updateFacilityBooking(FacilityBooking facilityBooking) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.merge(facilityBooking);
+        entityManager.flush();
+
+        transaction.commit();
+
+        return true;
+    }
+
+
+
+    public boolean deleteFacilityBooking(FacilityBooking detachedFacilityBooking) {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             EntityTransaction transaction = entityManager.getTransaction();
@@ -69,6 +85,19 @@ public class BookingDAO {
 
             transaction.commit();
         } catch(IllegalArgumentException e) {}
+
+        return true;
+    }
+
+    public boolean delete(Booking booking) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.remove(booking);
+        entityManager.flush();
+
+        transaction.commit();
 
         return true;
     }

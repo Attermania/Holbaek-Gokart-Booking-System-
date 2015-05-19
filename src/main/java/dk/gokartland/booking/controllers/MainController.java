@@ -300,6 +300,7 @@ public class MainController implements Initializable, Observer {
         }
 
         facilityBookingTableView.setItems(facilityBookings);
+        facilityBookingTableView.getSelectionModel().clearSelection();
     }
 
     @Override
