@@ -112,8 +112,14 @@ public class GokartController extends Observable implements Initializable, Edita
 
                 try {
 
-                    int adultCarts = Integer.parseInt(adultCartsTextField.getText());
-                    int childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
+                    int adultCarts = 0;
+                    int childrenCarts = 0;
+                    try {
+                        adultCarts = Integer.parseInt(adultCartsTextField.getText());
+                    } catch(NumberFormatException e) {}
+                    try {
+                        childrenCarts = Integer.parseInt(childrenCartsTextField.getText());
+                    } catch (NumberFormatException e){}
 
                     // Create Gokart Booking
                     GokartBooking gokartBooking = bookingService.createGokartBooking(
@@ -138,8 +144,6 @@ public class GokartController extends Observable implements Initializable, Edita
 
                 } catch (PlaceAlreadyBookedException e) {
                     errorLabel.setText("Banen er allerede booket");
-                } catch (NumberFormatException nfe) {
-                    errorLabel.setText("Kontroller at alle felter er udfyldt korrekt");
                 }
 
             }
@@ -242,7 +246,7 @@ public class GokartController extends Observable implements Initializable, Edita
         Calendar to = gokartBooking.getTo();
 
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
-        toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
+        toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH) + 1, to.get(Calendar.DAY_OF_MONTH)));
 
         fromHourComboBox.setValue(String.valueOf(from.get(Calendar.HOUR_OF_DAY)));
         fromMinuteComboBox.setValue(String.valueOf(from.get(Calendar.MINUTE)));
