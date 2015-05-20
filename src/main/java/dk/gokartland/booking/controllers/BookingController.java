@@ -358,8 +358,15 @@ public class BookingController extends Observable implements Initializable, Obse
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 bookingService.deleteBooking(booking);
 
+                setChanged();
+                notifyObservers();
+                clearChanged();
+
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.close();
             }
         });
 
