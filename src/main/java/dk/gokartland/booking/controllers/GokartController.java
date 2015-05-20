@@ -56,6 +56,9 @@ public class GokartController extends Observable implements Initializable, Edita
     @FXML
     GridPane bottomGrid;
 
+    private String[] hourArray = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+    private String[] minuteArray = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
+
     public GokartController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
@@ -64,26 +67,8 @@ public class GokartController extends Observable implements Initializable, Edita
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ObservableList<String> hours = FXCollections.observableArrayList();
-        ObservableList<String> minutes = FXCollections.observableArrayList();
-
-        for (int i = 24; i > 0; i--) {
-
-            String hour = "" + i;
-            if (hour.length() < 2) {
-                hour = "0" + i;
-            }
-            hours.add(hour);
-        }
-
-        for (int i = 55; i >= 0; i -= 5) {
-
-            String minute = "" + i;
-            if (minute.length() < 2) {
-                minute = "0" + i;
-            }
-            minutes.add(minute);
-        }
+        ObservableList<String> hours = FXCollections.observableArrayList(hourArray);
+        ObservableList<String> minutes = FXCollections.observableArrayList(minuteArray);
 
         fromHourComboBox.setItems(hours);
         fromMinuteComboBox.setItems(minutes);
@@ -251,10 +236,10 @@ public class GokartController extends Observable implements Initializable, Edita
         fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
         toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH) + 1, to.get(Calendar.DAY_OF_MONTH)));
 
-        fromHourComboBox.setValue(String.valueOf(from.get(Calendar.HOUR_OF_DAY)));
-        fromMinuteComboBox.setValue(String.valueOf(from.get(Calendar.MINUTE)));
-        toHourComboBox.setValue(String.valueOf(to.get(Calendar.HOUR_OF_DAY)));
-        toMinuteComboBox.setValue(String.valueOf(to.get(Calendar.MINUTE)));
+        fromHourComboBox.getSelectionModel().select( getTimeForComboBox( from.get(Calendar.HOUR_OF_DAY), hourArray ) );
+        fromMinuteComboBox.getSelectionModel().select( getTimeForComboBox( from.get(Calendar.MINUTE), minuteArray ) );
+        toHourComboBox.getSelectionModel().select( getTimeForComboBox( to.get(Calendar.HOUR_OF_DAY), hourArray ) );
+        toMinuteComboBox.getSelectionModel().select( getTimeForComboBox( to.get(Calendar.MINUTE), minuteArray) );
 
         placeComboBox.setValue(gokartBooking.getBookablePlace());
         adultCartsTextField.setText(String.valueOf(gokartBooking.getAdultCarts()));
@@ -316,7 +301,16 @@ public class GokartController extends Observable implements Initializable, Edita
         bottomGrid.getChildren().remove(addButton);
         bottomGrid.add(updateButton, 0, 1);
 
+    }
 
+    private String getTimeForComboBox(int reqTime, String[] timeArray) {
+        String requestedTime = reqTime < 10 ? "0" + reqTime : "" + reqTime;
+
+        for(String time : timeArray) {
+            if(requestedTime.equals(time)) return time;
+        }
+
+        return timeArray[0];
     }
 
 }

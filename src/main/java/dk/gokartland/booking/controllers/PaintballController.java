@@ -51,6 +51,9 @@ public class PaintballController extends Observable implements Initializable, Ed
     @FXML
     GridPane bottomGrid;
 
+    private String[] hourArray = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
+    private String[] minuteArray = new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
+
     public PaintballController(BookingService bookingService, BookablePlaceDAO bookablePlaceDAO) {
         this.bookingService = bookingService;
         this.bookablePlaceDAO = bookablePlaceDAO;
@@ -58,26 +61,8 @@ public class PaintballController extends Observable implements Initializable, Ed
 
     public void initialize(URL location, ResourceBundle resources) {
 
-        ObservableList<String> hours = FXCollections.observableArrayList();
-        ObservableList<String> minutes = FXCollections.observableArrayList();
-
-        for (int i = 24; i > 0; i--) {
-
-            String hour = "" + i;
-            if (hour.length() < 2) {
-                hour = "0" + i;
-            }
-            hours.add(hour);
-        }
-
-        for (int i = 55; i >= 0; i -= 5) {
-
-            String minute = "" + i;
-            if (minute.length() < 2) {
-                minute = "0" + i;
-            }
-            minutes.add(minute);
-        }
+        ObservableList<String> hours = FXCollections.observableArrayList(hourArray);
+        ObservableList<String> minutes = FXCollections.observableArrayList(minuteArray);
 
         fromHourComboBox.setItems(hours);
         fromMinuteComboBox.setItems(minutes);
