@@ -19,9 +19,19 @@ public class BookingDAO {
     public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        //TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
         TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
         //from.add(1, -1);
+        query.setParameter("from", from, TemporalType.TIMESTAMP);
+        query.setParameter("to", to, TemporalType.TIMESTAMP);
+
+        return query.getResultList();
+    }
+
+    public List<FacilityBooking> getCollidingFacilityBookings(Calendar from, Calendar to) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE (fb.from < :to AND fb.from > :from ) OR (fb.to > :from AND fb.to < :to)", FacilityBooking.class);
+
         query.setParameter("from", from, TemporalType.TIMESTAMP);
         query.setParameter("to", to, TemporalType.TIMESTAMP);
 
@@ -56,55 +66,14 @@ public class BookingDAO {
         return true;
     }
 
-    public boolean updateGokartBooking(GokartBooking gokartBooking) {
+
+    public boolean updateFacilityBooking(FacilityBooking facilityBooking) {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        entityManager.merge(gokartBooking);
-        entityManager.flush();
-
-        transaction.commit();
-
-        return true;
-    }
-
-    public boolean updatePaintBallBooking(PaintballBooking paintballBooking) {
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-
-        entityManager.merge(paintballBooking);
-        entityManager.flush();
-
-        transaction.commit();
-
-        return true;
-    }
-
-    public boolean updateLasertagBooking(LasertagBooking lasertagBooking) {
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-
-        entityManager.merge(lasertagBooking);
-        entityManager.flush();
-
-        transaction.commit();
-
-        return true;
-    }
-
-    public boolean updateRestaurantBooking(RestaurantBooking restaurantBooking) {
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-
-        entityManager.merge(restaurantBooking);
+        entityManager.merge(facilityBooking);
         entityManager.flush();
 
         transaction.commit();
@@ -114,15 +83,18 @@ public class BookingDAO {
 
 
 
-    public boolean deleteFacilityBooking(FacilityBooking facilityBooking) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+    public boolean deleteFacilityBooking(FacilityBooking detachedFacilityBooking) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
 
-        entityManager.remove(facilityBooking);
-        entityManager.flush();
+            FacilityBooking facilityBooking = entityManager.find(FacilityBooking.class, detachedFacilityBooking.getId());
+            entityManager.remove(facilityBooking);
+            entityManager.flush();
 
-        transaction.commit();
+            transaction.commit();
+        } catch(IllegalArgumentException e) {}
 
         return true;
     }
@@ -132,7 +104,9 @@ public class BookingDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        entityManager.remove(booking);
+        Booking entity = entityManager.find(Booking.class, booking.getId());
+
+        entityManager.remove(entity);
         entityManager.flush();
 
         transaction.commit();

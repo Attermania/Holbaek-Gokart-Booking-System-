@@ -228,6 +228,7 @@ public class BookingController extends Observable implements Initializable, Obse
 
             @Override
             public TableCell<FacilityBooking, String> call(TableColumn<FacilityBooking, String> p) {
+
                 return new TableCell<FacilityBooking, String>() {
 
                     @Override
@@ -237,13 +238,15 @@ public class BookingController extends Observable implements Initializable, Obse
                         if (!empty) {
                             Button button = new Button("Slet");
                             setGraphic(button);
+                            FacilityBooking facilityBooking = (FacilityBooking) getTableRow().getItem();
+
 
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-                                    FacilityBooking facilityBooking = facilityBookingTableView.getSelectionModel().getSelectedItem();
-                                    //bookingService.deleteFacilityBooking(facilityBooking);
-                                    // Make delete function work
+                                    bookingService.deleteFacilityBooking(facilityBooking);
+
+                                    facilityBookings.remove(facilityBooking);
                                 }
                             });
                         }
