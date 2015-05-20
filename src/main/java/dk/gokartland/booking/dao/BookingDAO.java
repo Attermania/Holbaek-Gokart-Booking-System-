@@ -19,9 +19,19 @@ public class BookingDAO {
     public List<FacilityBooking> getFacilityBookingsWithin(Calendar from, Calendar to) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        //TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
         TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE fb.from >= :from AND fb.to <= :to", FacilityBooking.class);
         //from.add(1, -1);
+        query.setParameter("from", from, TemporalType.TIMESTAMP);
+        query.setParameter("to", to, TemporalType.TIMESTAMP);
+
+        return query.getResultList();
+    }
+
+    public List<FacilityBooking> getCollidingFacilityBookings(Calendar from, Calendar to) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        TypedQuery<FacilityBooking> query = entityManager.createQuery("SELECT fb FROM FacilityBooking fb WHERE (fb.from < :to AND fb.from > :from ) OR (fb.to > :from AND fb.to < :to)", FacilityBooking.class);
+
         query.setParameter("from", from, TemporalType.TIMESTAMP);
         query.setParameter("to", to, TemporalType.TIMESTAMP);
 
@@ -94,7 +104,9 @@ public class BookingDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        entityManager.remove(booking);
+        Booking entity = entityManager.find(Booking.class, booking.getId());
+
+        entityManager.remove(entity);
         entityManager.flush();
 
         transaction.commit();

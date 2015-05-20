@@ -57,29 +57,21 @@ public class BookingService {
 
     public GokartBooking createGokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws PlaceAlreadyBookedException {
 
-        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
-
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
+        if(!checkIfPlaceIsAvailable(bookablePlace, from, to)) throw new PlaceAlreadyBookedException();
 
         return new GokartBooking(from, to, comments, adultCarts, childrenCarts, bookablePlace, champagne, medals);
     }
 
     public PaintballBooking createPaintballBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws PlaceAlreadyBookedException {
 
-        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
-
-
-
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
+        if(!checkIfPlaceIsAvailable(bookablePlace, from, to)) throw new PlaceAlreadyBookedException();
 
         return new PaintballBooking(from, to, comments, antal, bookablePlace);
     }
 
     public LasertagBooking createLasertagBooking(Calendar from, Calendar to, String comments, int antal, BookablePlace bookablePlace) throws PlaceAlreadyBookedException {
 
-        List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
-
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
+        if(!checkIfPlaceIsAvailable(bookablePlace, from, to)) throw new PlaceAlreadyBookedException();
 
         return new LasertagBooking(from, to, comments, antal, bookablePlace);
     }
@@ -88,7 +80,7 @@ public class BookingService {
 
         List<FacilityBooking> facilityBookingsWithinRange = bookingDAO.getFacilityBookingsWithin(from, to);
 
-        if(!checkIfPlaceIsAvailable(bookablePlace, facilityBookingsWithinRange)) throw new PlaceAlreadyBookedException();
+        if(!checkIfPlaceIsAvailable(bookablePlace, from, to)) throw new PlaceAlreadyBookedException();
 
         return new RestaurantBooking(from, to, comments, antal, bookablePlace);
     }
@@ -103,7 +95,9 @@ public class BookingService {
         return bookingDAO.delete(booking);
     }
 
-    private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, List<FacilityBooking> existingFacilityBookings) {
+    private boolean checkIfPlaceIsAvailable(BookablePlace bookablePlace, Calendar from, Calendar to) {
+
+        List<FacilityBooking> existingFacilityBookings = bookingDAO.getCollidingFacilityBookings(from, to);
 
         for(FacilityBooking facilityBooking : existingFacilityBookings) {
             if( facilityBooking.isSamePlace(bookablePlace) ) return false;

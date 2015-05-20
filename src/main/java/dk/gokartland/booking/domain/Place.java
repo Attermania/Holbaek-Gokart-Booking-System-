@@ -41,7 +41,7 @@ public class Place {
     public boolean isSamePlace(BookablePlace bookablePlace) {
 
         for(Place place : bookablePlace.getPlaces()) {
-            if(this == place) return true;
+            if(this.getId() == place.getId()) return true;
         }
 
         return false;
