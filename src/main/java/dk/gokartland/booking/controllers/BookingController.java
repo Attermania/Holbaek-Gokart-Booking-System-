@@ -3,7 +3,7 @@ package dk.gokartland.booking.controllers;
 import dk.gokartland.booking.controllers.helpers.CalendarComparator;
 import dk.gokartland.booking.controllers.helpers.CalendarFormatHelper;
 import dk.gokartland.booking.domain.*;
-import dk.gokartland.booking.domain.exceptions.MissingInformationException;
+import dk.gokartland.booking.domain.exceptions.ValidationException;
 import dk.gokartland.booking.domain.exceptions.NoFacilityBookingsException;
 import dk.gokartland.booking.factories.FXMLFactory;
 import dk.gokartland.booking.services.BookingService;
@@ -176,7 +176,7 @@ public class BookingController extends Observable implements Initializable, Obse
 
                 } catch (NoFacilityBookingsException e) {
                     errorLabel.setText("Tilføj venligst mindst en aktivitet");
-                } catch (MissingInformationException e) {
+                } catch (ValidationException e) {
                     errorLabel.setText("Udfyld venligste alle felter market med *");
                 }
 
@@ -304,7 +304,6 @@ public class BookingController extends Observable implements Initializable, Obse
     public void update(Observable o, Object obj) {
         if (obj instanceof FacilityBooking) {
             FacilityBooking facilityBooking = (FacilityBooking) obj;
-            facilityBookings.clear();
             if (!facilityBookings.contains(facilityBooking)) {
                 facilityBookings.add(facilityBooking);
             }
@@ -331,7 +330,7 @@ public class BookingController extends Observable implements Initializable, Obse
                     booking.changeCreatedBy(createdByTextField.getText());
                     booking.changePaid(isPaidCheckBox.isSelected());
                     booking.changeReferenceNumber(referenceNumberTextField.getText());
-                } catch (MissingInformationException e) {
+                } catch (ValidationException e) {
                     errorLabel.setText("Udfyld venligst alle felter markeret med *");
                 }
 

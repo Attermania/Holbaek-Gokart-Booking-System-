@@ -1,6 +1,6 @@
 package dk.gokartland.booking.domain;
 
-import dk.gokartland.booking.domain.exceptions.MissingInformationException;
+import dk.gokartland.booking.domain.exceptions.ValidationException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class Booking {
     @JoinColumn(name = "booking_id")
     private List<FacilityBooking> facilityBookings = new ArrayList<>();
 
-    public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, boolean isPaid, String referenceNumber, List<FacilityBooking> facilityBookings) throws MissingInformationException {
+    public Booking(String customerName, String phoneNumber, boolean isPrivateClient, boolean needsPermission, String email, String comments, String createdBy, boolean isPaid, String referenceNumber, List<FacilityBooking> facilityBookings) throws ValidationException {
         changeCustomerName(customerName);
         changePhoneNumber(phoneNumber);
         this.isPrivateClient = isPrivateClient;
@@ -111,13 +111,13 @@ public class Booking {
         return createdBy;
     }
 
-    public void changeCustomerName(String newName) throws MissingInformationException {
-        if(newName.equals("")) throw new MissingInformationException("Customer name is missing");
+    public void changeCustomerName(String newName) throws ValidationException {
+        if(newName.equals("")) throw new ValidationException("Customer name is missing");
         this.customerName = newName;
     }
 
-    public void changePhoneNumber(String phoneNumber) throws MissingInformationException{
-        if(phoneNumber.equals("")) throw new MissingInformationException("Customer phonenumber is missing");
+    public void changePhoneNumber(String phoneNumber) throws ValidationException {
+        if(phoneNumber.equals("")) throw new ValidationException("Customer phonenumber is missing");
         this.phoneNumber = phoneNumber;
     }
 
@@ -137,8 +137,8 @@ public class Booking {
         this.comments = comments;
     }
 
-    public void changeCreatedBy(String createdBy) throws MissingInformationException{
-        if(createdBy.equals("")) throw new MissingInformationException("Missing 'created by' signature ");
+    public void changeCreatedBy(String createdBy) throws ValidationException {
+        if(createdBy.equals("")) throw new ValidationException("Missing 'created by' signature ");
         this.createdBy = createdBy;
     }
 
