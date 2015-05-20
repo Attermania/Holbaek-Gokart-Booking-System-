@@ -70,11 +70,11 @@ public class LasertagController extends Observable implements Initializable, Edi
             hours.add(hour);
         }
 
-        for(int i = 55; i >= 0; i -= 5) {
+        for (int i = 55; i >= 0; i -= 5) {
 
-            String minute = "" +i;
-            if(minute.length() < 2){
-                minute = "0" +i;
+            String minute = "" + i;
+            if (minute.length() < 2) {
+                minute = "0" + i;
             }
             minutes.add(minute);
         }
@@ -86,16 +86,17 @@ public class LasertagController extends Observable implements Initializable, Edi
 
         setDateAndClock();
 
-        Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
-        Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
-        Integer toHour = Integer.parseInt(toHourComboBox.getValue());
-        Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
 
         placeComboBox.setItems(FXCollections.observableArrayList(bookablePlaceDAO.getAll()));
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Integer fromHour = Integer.parseInt(fromHourComboBox.getValue());
+                Integer fromMinute = Integer.parseInt(fromMinuteComboBox.getValue());
+                Integer toHour = Integer.parseInt(toHourComboBox.getValue());
+                Integer toMinute = Integer.parseInt(toMinuteComboBox.getValue());
+
                 LocalDate fromDate = fromDatePicker.getValue();
                 LocalDate toDate = toDatePicker.getValue();
 
@@ -104,7 +105,7 @@ public class LasertagController extends Observable implements Initializable, Edi
 
                 // Create Lasertag Booking
                 try {
-                int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
+                    int noOfPeople = Integer.parseInt(noOfPeopleTextField.getText());
                     LasertagBooking lasertagBookingBooking = bookingService.createLasertagBooking(calendarFrom,
                             calendarTo,
                             noOfPeopleTextField.getText(),
@@ -122,7 +123,7 @@ public class LasertagController extends Observable implements Initializable, Edi
 
                 } catch (PlaceAlreadyBookedException e) {
                     errorLabel.setText("Banen er allerede booket");
-                } catch (NumberFormatException nfe){
+                } catch (NumberFormatException nfe) {
                     errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
                 }
             }
@@ -172,7 +173,7 @@ public class LasertagController extends Observable implements Initializable, Edi
 
     }
 
-    private void setDateAndClock(){
+    private void setDateAndClock() {
         fromDatePicker.setValue(LocalDate.now());
         toDatePicker.setValue(LocalDate.now());
         fromHourComboBox.setValue("12");
@@ -195,11 +196,11 @@ public class LasertagController extends Observable implements Initializable, Edi
         } else if (calendarTo.equals(calendarFrom)) {
             calendarTo.add(Calendar.HOUR_OF_DAY, 1);
 
-            for(String time : toHourComboBox.getItems()) {
+            for (String time : toHourComboBox.getItems()) {
                 int hour = calendarTo.get(Calendar.HOUR_OF_DAY);
                 String sHour = hour < 10 ? "0" + hour : hour + "";
 
-                if(time.equals(sHour)) {
+                if (time.equals(sHour)) {
                     // Select the current string
                     toHourComboBox.getSelectionModel().select(time);
                     break;
@@ -215,15 +216,15 @@ public class LasertagController extends Observable implements Initializable, Edi
 
         titleLabel.setText("Lasertagbooking #" + facilityBooking.getId());
 
-        if( !(facilityBooking instanceof LasertagBooking) ) stage.close();
+        if (!(facilityBooking instanceof LasertagBooking)) stage.close();
 
         LasertagBooking lasertagBooking = (LasertagBooking) facilityBooking;
 
         Calendar from = lasertagBooking.getFrom();
         Calendar to = lasertagBooking.getTo();
 
-        fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH)+1, from.get(Calendar.DAY_OF_MONTH)));
-        toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH)+1, to.get(Calendar.DAY_OF_MONTH)));
+        fromDatePicker.setValue(LocalDate.of(from.get(Calendar.YEAR), from.get(Calendar.MONTH) + 1, from.get(Calendar.DAY_OF_MONTH)));
+        toDatePicker.setValue(LocalDate.of(to.get(Calendar.YEAR), to.get(Calendar.MONTH) + 1, to.get(Calendar.DAY_OF_MONTH)));
 
         fromHourComboBox.setValue(String.valueOf(from.get(Calendar.HOUR_OF_DAY)));
         fromMinuteComboBox.setValue(String.valueOf(from.get(Calendar.MINUTE)));
@@ -266,9 +267,9 @@ public class LasertagController extends Observable implements Initializable, Edi
                     // Close window
                     stage.close();
 
-                //} catch (PlaceAlreadyBookedException e) {
-                //    errorLabel.setText("Banen er allerede booket");
-                } catch (NumberFormatException nfe){
+                    //} catch (PlaceAlreadyBookedException e) {
+                    //    errorLabel.setText("Banen er allerede booket");
+                } catch (NumberFormatException nfe) {
                     errorLabel.setText("Kontroller at alle felter er korrekt udfyldt");
                 }
             }
