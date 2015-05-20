@@ -1,5 +1,7 @@
 package dk.gokartland.booking.domain;
 
+import dk.gokartland.booking.domain.exceptions.ValidationException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -21,10 +23,9 @@ public class GokartBooking extends FacilityBooking {
 	@Column
 	private boolean medals;
 
-	public GokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) {
+	public GokartBooking(Calendar from, Calendar to, String comments, int adultCarts, int childrenCarts, BookablePlace bookablePlace, boolean champagne, boolean medals) throws ValidationException {
 		super(from, to, comments, bookablePlace);
-		this.adultCarts = adultCarts;
-		this.childrenCarts = childrenCarts;
+		changeCarts(adultCarts, childrenCarts);
 		this.champagne = champagne;
 		this.medals = medals;
 	}
@@ -53,11 +54,9 @@ public class GokartBooking extends FacilityBooking {
 		return medals;
 	}
 
-    public void changeAdultCarts(int adultCarts) {
+    public void changeCarts(int adultCarts, int childrenCarts) throws ValidationException {
+        if(adultCarts == 0 && childrenCarts == 0) throw new ValidationException("Number of adualtCarts and childrenCarts is 0");
         this.adultCarts = adultCarts;
-    }
-
-    public void changeChildrenCarts(int childrenCarts) {
         this.childrenCarts = childrenCarts;
     }
 
@@ -68,4 +67,6 @@ public class GokartBooking extends FacilityBooking {
     public void changeMedals(boolean medals) {
         this.medals = medals;
     }
+
+
 }

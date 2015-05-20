@@ -3,6 +3,7 @@ package dk.gokartland.booking.controllers;
 import dk.gokartland.booking.dao.BookablePlaceDAO;
 import dk.gokartland.booking.domain.*;
 import dk.gokartland.booking.domain.exceptions.PlaceAlreadyBookedException;
+import dk.gokartland.booking.domain.exceptions.ValidationException;
 import dk.gokartland.booking.services.BookingService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -144,6 +145,8 @@ public class GokartController extends Observable implements Initializable, Edita
 
                 } catch (PlaceAlreadyBookedException e) {
                     errorLabel.setText("Banen er allerede booket");
+                } catch (ValidationException e) {
+                    errorLabel.setText("Udfyld venligst alle felter");
                 }
 
             }
@@ -286,9 +289,7 @@ public class GokartController extends Observable implements Initializable, Edita
                     gokartBooking.changeTo(calendarTo);
                     gokartBooking.changeBookablePlace(placeComboBox.getValue());
                     gokartBooking.changeComments(commentTextArea.getText());
-
-                    gokartBooking.changeAdultCarts(adultCarts);
-                    gokartBooking.changeChildrenCarts(childrenCarts);
+                    gokartBooking.changeCarts(adultCarts, childrenCarts); // Throws exception if both numbers are 0
                     gokartBooking.changeChampagne(champagneCheckBox.isSelected());
                     gokartBooking.changeMedals(medalsCheckBox.isSelected());
 
@@ -306,6 +307,8 @@ public class GokartController extends Observable implements Initializable, Edita
                   //  errorLabel.setText("Banen er allerede booket");
                 } catch (NumberFormatException nfe) {
                     errorLabel.setText("Kontroller at alle felter er udfyldt korrekt");
+                } catch (ValidationException e) {
+                    errorLabel.setText("Tilføj venligst 1 cart som minimum");
                 }
             }
         });
