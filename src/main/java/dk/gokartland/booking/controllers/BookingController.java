@@ -307,8 +307,11 @@ public class BookingController extends Observable implements Initializable, Obse
             if (!facilityBookings.contains(facilityBooking)) {
                 facilityBookings.add(facilityBooking);
             }
-
             facilityBookingTableView.setItems(facilityBookings);
+            facilityBookingTableView.getColumns().get(2).setVisible(false);
+            facilityBookingTableView.getColumns().get(2).setVisible(true);
+            facilityBookingTableView.getColumns().get(3).setVisible(false);
+            facilityBookingTableView.getColumns().get(3).setVisible(true);
         }
     }
 
@@ -348,6 +351,7 @@ public class BookingController extends Observable implements Initializable, Obse
 
                 for (FacilityBooking facilityBooking : facilityBookings) {
                     booking.addFacilityBooking(facilityBooking);
+
                 }
 
             }

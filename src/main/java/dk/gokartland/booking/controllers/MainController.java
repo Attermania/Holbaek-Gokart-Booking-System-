@@ -115,7 +115,7 @@ public class MainController implements Initializable, Observer {
         fromColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacilityBooking, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> facilityBooking) {
-                return new SimpleStringProperty( CalendarFormatHelper.toFormattedString( facilityBooking.getValue().getFrom() ) );
+                return new SimpleStringProperty(CalendarFormatHelper.toFormattedString(facilityBooking.getValue().getFrom()));
             }
         });
 
@@ -136,13 +136,13 @@ public class MainController implements Initializable, Observer {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
                 FacilityBooking facilityBooking = param.getValue();
 
-                if(facilityBooking instanceof GokartBooking) {
+                if (facilityBooking instanceof GokartBooking) {
                     GokartBooking gokartBooking = (GokartBooking) facilityBooking;
 
                     int numberOfAdults = gokartBooking.getAdultCarts();
                     int noOfChildren = gokartBooking.getChildrenCarts();
 
-                    return new SimpleObjectProperty(facilityBooking.getNumberOfPeople() + " (V: " + numberOfAdults+ " - "+"B: " + noOfChildren +")");
+                    return new SimpleObjectProperty(facilityBooking.getNumberOfPeople() + " (V: " + numberOfAdults + " - " + "B: " + noOfChildren + ")");
                 }
 
                 return new SimpleStringProperty(String.valueOf(param.getValue().getNumberOfPeople()));
@@ -160,7 +160,7 @@ public class MainController implements Initializable, Observer {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<FacilityBooking, String> param) {
                 String isPaid = "";
-                if(param.getValue().getBooking().getIsPaid()) isPaid = "Ja";
+                if (param.getValue().getBooking().getIsPaid()) isPaid = "Ja";
                 else isPaid = "Nej";
                 return new SimpleStringProperty(isPaid);
             }
@@ -174,7 +174,6 @@ public class MainController implements Initializable, Observer {
         });
 
 
-
         // Opens specific booking window
         facilityBookingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -185,7 +184,7 @@ public class MainController implements Initializable, Observer {
                     try {
                         Parent root = loader.load();
                         BookingController controller = loader.getController();
-                        
+
 
                         Scene scene = new Scene(root);
 
@@ -307,8 +306,6 @@ public class MainController implements Initializable, Observer {
     public void update(Observable o, Object obj) {
         search();
     }
-
-
 
 
 }
